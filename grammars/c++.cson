@@ -10,6 +10,8 @@
   'hh'
   'hpp'
   'h++'
+  'ino'
+  'pde'
 ]
 'firstLineMatch': '-\\*- C\\+\\+ -\\*-'
 'keyEquivalent': '^~C'
