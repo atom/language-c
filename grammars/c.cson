@@ -344,26 +344,26 @@
           '1':
             'name': 'meta.toc-list.banner.line.c'
         'match': '^// =(\\s*.*?)\\s*=\\s*$\\n?'
-        'name': 'comment.line.banner.c++'
+        'name': 'comment.line.banner.cxx'
       }
       {
         'begin': '(^[ \\t]+)?(?=//)'
         'beginCaptures':
           '1':
-            'name': 'punctuation.whitespace.comment.leading.c++'
+            'name': 'punctuation.whitespace.comment.leading.cxx'
         'end': '(?!\\G)'
         'patterns': [
           {
             'begin': '//'
             'beginCaptures':
               '0':
-                'name': 'punctuation.definition.comment.c++'
+                'name': 'punctuation.definition.comment.cxx'
             'end': '\\n'
-            'name': 'comment.line.double-slash.c++'
+            'name': 'comment.line.double-slash.cxx'
             'patterns': [
               {
                 'match': '(?>\\\\\\s*\\n)'
-                'name': 'punctuation.separator.continuation.c++'
+                'name': 'punctuation.separator.continuation.cxx'
               }
             ]
           }
