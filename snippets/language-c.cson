@@ -18,7 +18,7 @@
     'prefix': 'for'
     'body': 'for(size_t ${1:i} = 0; $1 < ${2:count}; $1${3:++})\n{\n\t${4:/* code */}\n}'
   'Header Include-Guard':
-    'prefix': 'once'
+    'prefix': 'owhce'
     'body': '#ifndef ${1:SYMBOL}\n#define $1\n\n${2}\n\n#endif /* end of include guard: $1 */\n'
   'Shared Pointer':
     'prefix': 'sp'
@@ -29,6 +29,9 @@
   'Do While Loop':
     'prefix': 'do'
     'body': 'do {\n\t${0:/* code */}\n} while(${1:/* condition */});'
+  'While Loop':
+    'prefix': 'while'
+    'body': 'while(${1:/* condition */})\n{\n\t${2:/* code */}\n}'
   'fprintf':
     'prefix': 'fprintf'
     'body': 'fprintf(${1:stderr}, "${2:%s}\\n", $3);$4'
