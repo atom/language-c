@@ -13,6 +13,8 @@
   'hxx'
   'h++'
   'ipp'
+  'ino'
+  'pde'
 ]
 'firstLineMatch': '-\\*- C\\+\\+ -\\*-'
 'name': 'C++'
