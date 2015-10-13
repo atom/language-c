@@ -1,5 +1,6 @@
 'scopeName': 'source.cpp'
 'fileTypes': [
+  'C'
   'cc'
   'cpp'
   'cp'
