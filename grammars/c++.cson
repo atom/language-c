@@ -129,11 +129,11 @@
     'begin': '\\{'
     'beginCaptures':
       '0':
-        'name': 'punctuation.section.block.begin.c'
+        'name': 'punctuation.definition.section.block.begin.c'
     'end': '\\}'
     'endCaptures':
       '0':
-        'name': 'punctuation.section.block.end.c'
+        'name': 'punctuation.definition.section.block.end.c'
     'name': 'meta.block.cpp'
     'patterns': [
       {
@@ -272,11 +272,11 @@
             'begin': '\\{'
             'beginCaptures':
               '0':
-                'name': 'punctuation.section.block.begin.cpp'
+                'name': 'punctuation.definition.section.block.begin.cpp'
             'end': '(\\})(\\s*\\n)?'
             'endCaptures':
               '1':
-                'name': 'punctuation.section.block.end.cpp'
+                'name': 'punctuation.definition.section.block.end.cpp'
               '2':
                 'name': 'invalid.illegal.you-forgot-semicolon.cpp'
             'patterns': [
@@ -308,11 +308,11 @@
             'begin': '\\{'
             'beginCaptures':
               '0':
-                'name': 'punctuation.section.block.begin.c'
+                'name': 'punctuation.definition.section.block.begin.c'
             'end': '\\}|(?=\\s*#\\s*endif\\b)'
             'endCaptures':
               '0':
-                'name': 'punctuation.section.block.end.c'
+                'name': 'punctuation.definition.section.block.end.c'
             'patterns': [
               {
                 'include': '#special_block'

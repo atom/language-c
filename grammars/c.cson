@@ -280,11 +280,11 @@
         'begin': '\\{'
         'beginCaptures':
           '0':
-            'name': 'punctuation.section.block.begin.c'
+            'name': 'punctuation.definition.section.block.begin.c'
         'end': '\\}|(?=\\s*#\\s*endif\\b)'
         'endCaptures':
           '0':
-            'name': 'punctuation.section.block.end.c'
+            'name': 'punctuation.definition.section.block.end.c'
         'name': 'meta.block.c'
         'patterns': [
           {
@@ -435,11 +435,11 @@
     'begin': '\\('
     'beginCaptures':
       '0':
-        'name': 'punctuation.section.parens.begin.c'
+        'name': 'punctuation.definition.section.parens.begin.c'
     'end': '\\)'
     'endCaptures':
       '0':
-        'name': 'punctuation.section.parens.end.c'
+        'name': 'punctuation.definition.section.parens.end.c'
     'name': 'meta.parens.c'
     'patterns': [
       {
