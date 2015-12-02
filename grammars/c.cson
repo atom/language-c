@@ -262,6 +262,9 @@
   {
     'include': '#line_continuation_character'
   }
+  {
+    'include': '#punctuation'
+  }
 ]
 'repository':
   'access':
@@ -697,6 +700,29 @@
     'patterns': [
       {
         'include': '#block_innards'
+      }
+    ]
+  'punctuation':
+    'patterns': [
+      {
+        'match': '\\(|\\)'
+        'name': 'punctuation.other.bracket.round.c'
+      }
+      {
+        'match': '\\[|\\]'
+        'name': 'punctuation.other.bracket.square.c'
+      }
+      {
+        'match': ','
+        'name': 'punctuation.other.comma.c'
+      }
+      {
+        'match': '\\.'
+        'name': 'punctuation.other.period.c'
+      }
+      {
+        'match': ';'
+        'name': 'punctuation.other.terminator.c'
       }
     ]
   'sizeof':
