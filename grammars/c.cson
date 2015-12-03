@@ -722,7 +722,7 @@
       }
       {
         'match': ';'
-        'name': 'punctuation.other.terminator.c'
+        'name': 'punctuation.terminator.statement.c'
       }
     ]
   'sizeof':

@@ -98,7 +98,7 @@ describe "Language-C", ->
           '[': 'punctuation.other.bracket.square.c'
           ',': 'punctuation.other.comma.c'
           '.': 'punctuation.other.period.c'
-          ';': 'punctuation.other.terminator.c'
+          ';': 'punctuation.terminator.statement.c'
 
         for token, scope of punctuation
           {tokens} = grammar.tokenizeLine token
@@ -210,11 +210,11 @@ describe "Language-C", ->
             expect(tokens[10]).toEqual value: 'do', scopes: ['source.c', 'meta.preprocessor.macro.c', 'keyword.control.c']
             expect(tokens[12]).toEqual value: '{', scopes: ['source.c', 'meta.preprocessor.macro.c', 'meta.block.c', 'punctuation.definition.section.block.begin.c']
             expect(tokens[13]).toEqual value: ' a ^= b', scopes: ['source.c', 'meta.preprocessor.macro.c', 'meta.block.c']
-            expect(tokens[14]).toEqual value: ';', scopes: ['source.c', 'meta.preprocessor.macro.c', 'meta.block.c', 'punctuation.other.terminator.c']
+            expect(tokens[14]).toEqual value: ';', scopes: ['source.c', 'meta.preprocessor.macro.c', 'meta.block.c', 'punctuation.terminator.statement.c']
             expect(tokens[15]).toEqual value: ' b ^= a', scopes: ['source.c', 'meta.preprocessor.macro.c', 'meta.block.c']
-            expect(tokens[16]).toEqual value: ';', scopes: ['source.c', 'meta.preprocessor.macro.c', 'meta.block.c', 'punctuation.other.terminator.c']
+            expect(tokens[16]).toEqual value: ';', scopes: ['source.c', 'meta.preprocessor.macro.c', 'meta.block.c', 'punctuation.terminator.statement.c']
             expect(tokens[17]).toEqual value: ' a ^= b', scopes: ['source.c', 'meta.preprocessor.macro.c', 'meta.block.c']
-            expect(tokens[18]).toEqual value: ';', scopes: ['source.c', 'meta.preprocessor.macro.c', 'meta.block.c', 'punctuation.other.terminator.c']
+            expect(tokens[18]).toEqual value: ';', scopes: ['source.c', 'meta.preprocessor.macro.c', 'meta.block.c', 'punctuation.terminator.statement.c']
             expect(tokens[20]).toEqual value: '}', scopes: ['source.c', 'meta.preprocessor.macro.c', 'meta.block.c', 'punctuation.definition.section.block.end.c']
             expect(tokens[22]).toEqual value: 'while', scopes: ['source.c', 'meta.preprocessor.macro.c', 'keyword.control.c']
             expect(tokens[24]).toEqual value: '(', scopes: ['source.c', 'meta.preprocessor.macro.c', 'punctuation.other.bracket.round.c']
@@ -248,13 +248,13 @@ describe "Language-C", ->
             expect(lines[0][10]).toEqual value: '{', scopes: ['source.c', 'meta.preprocessor.macro.c', 'meta.block.c', 'punctuation.definition.section.block.begin.c']
             expect(lines[0][12]).toEqual value: '\\', scopes: ['source.c', 'meta.preprocessor.macro.c', 'meta.block.c', 'constant.character.escape.line-continuation.c']
             expect(lines[1][0]).toEqual value: '  a ^= b', scopes: ['source.c', 'meta.preprocessor.macro.c', 'meta.block.c']
-            expect(lines[1][1]).toEqual value: ';', scopes: ['source.c', 'meta.preprocessor.macro.c', 'meta.block.c', 'punctuation.other.terminator.c']
+            expect(lines[1][1]).toEqual value: ';', scopes: ['source.c', 'meta.preprocessor.macro.c', 'meta.block.c', 'punctuation.terminator.statement.c']
             expect(lines[1][3]).toEqual value: '\\', scopes: ['source.c', 'meta.preprocessor.macro.c', 'meta.block.c', 'constant.character.escape.line-continuation.c']
             expect(lines[2][0]).toEqual value: '  b ^= a', scopes: ['source.c', 'meta.preprocessor.macro.c', 'meta.block.c']
-            expect(lines[2][1]).toEqual value: ';', scopes: ['source.c', 'meta.preprocessor.macro.c', 'meta.block.c', 'punctuation.other.terminator.c']
+            expect(lines[2][1]).toEqual value: ';', scopes: ['source.c', 'meta.preprocessor.macro.c', 'meta.block.c', 'punctuation.terminator.statement.c']
             expect(lines[2][3]).toEqual value: '\\', scopes: ['source.c', 'meta.preprocessor.macro.c', 'meta.block.c', 'constant.character.escape.line-continuation.c']
             expect(lines[3][0]).toEqual value: '  a ^= b', scopes: ['source.c', 'meta.preprocessor.macro.c', 'meta.block.c']
-            expect(lines[3][1]).toEqual value: ';', scopes: ['source.c', 'meta.preprocessor.macro.c', 'meta.block.c', 'punctuation.other.terminator.c']
+            expect(lines[3][1]).toEqual value: ';', scopes: ['source.c', 'meta.preprocessor.macro.c', 'meta.block.c', 'punctuation.terminator.statement.c']
             expect(lines[3][3]).toEqual value: '\\', scopes: ['source.c', 'meta.preprocessor.macro.c', 'meta.block.c', 'constant.character.escape.line-continuation.c']
             expect(lines[4][0]).toEqual value: '}', scopes: ['source.c', 'meta.preprocessor.macro.c', 'meta.block.c', 'punctuation.definition.section.block.end.c']
 
