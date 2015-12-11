@@ -706,19 +706,19 @@
     'patterns': [
       {
         'match': '\\(|\\)'
-        'name': 'punctuation.other.bracket.round.c'
+        'name': 'punctuation.bracket.round.c'
       }
       {
         'match': '\\[|\\]'
-        'name': 'punctuation.other.bracket.square.c'
+        'name': 'punctuation.bracket.square.c'
       }
       {
         'match': ','
-        'name': 'punctuation.other.comma.c'
+        'name': 'punctuation.comma.c'
       }
       {
         'match': '\\.'
-        'name': 'punctuation.other.period.c'
+        'name': 'punctuation.period.c'
       }
       {
         'match': ';'
