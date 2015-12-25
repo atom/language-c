@@ -239,23 +239,11 @@
         'name': 'punctuation.whitespace.function.leading.c'
       '3':
         'name': 'entity.name.function.c'
-      '4':
-        'name': 'punctuation.definition.parameters.c'
-    'end': '(?<=\\})|(?=#)|(;)'
+    'end': '(?!\\G)'
     'name': 'meta.function.c'
     'patterns': [
       {
-        'include': '#comments'
-      }
-      {
-        'include': '#parens'
-      }
-      {
-        'match': '\\b(const|override|final)\\b'
-        'name': 'storage.modifier.c'
-      }
-      {
-        'include': '#block'
+        'include': '#function_params'
       }
     ]
   }
@@ -314,7 +302,7 @@
         'include': '#libc'
       }
       {
-        'include': '#c_function_call'
+        'include': '#function_call'
       }
       {
         'captures':
@@ -332,16 +320,28 @@
         'include': '$base'
       }
     ]
-  'c_function_call':
-    'captures':
+  'function_call':
+    'begin': '''(?x)
+      (?: (?= \\s )  (?:(?<=else|new|return) | (?<!\\w)) (\\s+))?
+      (\\b
+        (?!(while|for|do|if|else|switch|catch|enumerate|return|sizeof|[cr]?iterate)
+        \\s*\\()
+        (?:(?!NS)[A-Za-z_][A-Za-z0-9_]*+\\b | :: )++  # actual name
+      )
+      \\s*(?=\\()
+    '''
+    'beginCaptures':
       '1':
         'name': 'punctuation.whitespace.function-call.leading.c'
       '2':
         'name': 'support.function.any-method.c'
-      '4':
-        'name': 'punctuation.definition.parameters.c'
-    'match': '(?x) (?: (?= \\s )  (?:(?<=else|new|return) | (?<!\\w)) (\\s+))?\n\t\t\t(\\b \n\t\t\t\t(?!(while|for|do|if|else|switch|catch|enumerate|return|sizeof|[cr]?iterate)\\s*\\()(?:(?!NS)[A-Za-z_][A-Za-z0-9_]*+\\b | :: )++                  # actual name\n\t\t\t)\n\t\t\t \\s*(\\()'
+    'end': '(?!\\G)'
     'name': 'meta.function-call.c'
+    'patterns': [
+      {
+        'include': '#function_arguments'
+      }
+    ]
   'comments':
     'patterns': [
       {
@@ -408,6 +408,36 @@
         'include': '#pragma-mark'
       }
     ]
+  'function_arguments':
+    'begin': '(\\()'
+    'beginCaptures':
+      '1':
+        'name': 'punctuation.definition.arguments.begin.c'
+    'end': '(\\))'
+    'endCaptures':
+      '1':
+        'name': 'punctuation.definition.arguments.end.c'
+    'name': 'meta.arguments.c'
+    'patterns': [
+      {
+        'include': '$base'
+      }
+    ]
+  'function_params':
+    'begin': '(\\()'
+    'beginCaptures':
+      '1':
+        'name': 'punctuation.definition.parameters.begin.c'
+    'end': '(\\))'
+    'endCaptures':
+      '1':
+        'name': 'punctuation.definition.parameters.end.c'
+    'name': 'meta.parameters.c'
+    'patterns': [
+      {
+        'include': '$base'
+      }
+    ]
   'libc':
     'captures':
       '1':
@@ -429,21 +459,6 @@
       {
         'match': '\\b((0(x|X)[0-9a-fA-F]*)|(([0-9]+\\.?[0-9]*)|(\\.[0-9]+))((e|E)(\\+|-)?[0-9]+)?)(L|l|UL|ul|u|U|F|f|ll|LL|ull|ULL)?\\b'
         'name': 'constant.numeric.c'
-      }
-    ]
-  'parens':
-    'begin': '\\('
-    'beginCaptures':
-      '0':
-        'name': 'punctuation.definition.section.parens.begin.c'
-    'end': '\\)'
-    'endCaptures':
-      '0':
-        'name': 'punctuation.definition.section.parens.end.c'
-    'name': 'meta.parens.c'
-    'patterns': [
-      {
-        'include': '$base'
       }
     ]
   'pragma-mark':
@@ -705,8 +720,17 @@
   'punctuation':
     'patterns': [
       {
-        'match': '\\(|\\)'
-        'name': 'punctuation.bracket.round.c'
+        'begin': '\\('
+        'beginCaptures':
+          '0':
+            'name': 'punctuation.bracket.round.c'
+        'end': '\\)'
+        'endCaptures':
+          '0':
+            'name': 'punctuation.bracket.round.c'
+        'patterns': [
+          'include': '$base'
+        ]
       }
       {
         'match': '\\[|\\]'

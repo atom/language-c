@@ -29,13 +29,49 @@ describe "Language-C", ->
       '''
       expect(lines[0][0]).toEqual value: 'int', scopes: ['source.c', 'storage.type.c']
       expect(lines[0][2]).toEqual value: 'something', scopes: ['source.c', 'meta.function.c', 'entity.name.function.c']
-      expect(lines[0][3]).toEqual value: '(', scopes: ['source.c', 'meta.function.c', 'meta.parens.c', 'punctuation.definition.section.parens.begin.c']
-      expect(lines[0][4]).toEqual value: 'int', scopes: ['source.c', 'meta.function.c', 'meta.parens.c', 'storage.type.c']
-      expect(lines[0][6]).toEqual value: ')', scopes: ['source.c', 'meta.function.c', 'meta.parens.c', 'punctuation.definition.section.parens.end.c']
-      expect(lines[0][8]).toEqual value: '{', scopes: ['source.c', 'meta.function.c', 'meta.block.c', 'punctuation.definition.section.block.begin.c']
-      expect(lines[1][1]).toEqual value: 'return', scopes: ['source.c', 'meta.function.c', 'meta.block.c', 'keyword.control.c']
-      expect(lines[1][3]).toEqual value: '0', scopes: ['source.c', 'meta.function.c', 'meta.block.c', 'constant.numeric.c']
-      expect(lines[2][0]).toEqual value: '}', scopes: ['source.c', 'meta.function.c', 'meta.block.c', 'punctuation.definition.section.block.end.c']
+      expect(lines[0][3]).toEqual value: '(', scopes: ['source.c', 'meta.function.c', 'meta.parameters.c', 'punctuation.definition.parameters.begin.c']
+      expect(lines[0][4]).toEqual value: 'int', scopes: ['source.c', 'meta.function.c', 'meta.parameters.c', 'storage.type.c']
+      expect(lines[0][6]).toEqual value: ')', scopes: ['source.c', 'meta.function.c', 'meta.parameters.c', 'punctuation.definition.parameters.end.c']
+      expect(lines[0][8]).toEqual value: '{', scopes: ['source.c', 'meta.block.c', 'punctuation.definition.section.block.begin.c']
+      expect(lines[1][1]).toEqual value: 'return', scopes: ['source.c', 'meta.block.c', 'keyword.control.c']
+      expect(lines[1][3]).toEqual value: '0', scopes: ['source.c', 'meta.block.c', 'constant.numeric.c']
+      expect(lines[2][0]).toEqual value: '}', scopes: ['source.c', 'meta.block.c', 'punctuation.definition.section.block.end.c']
+
+      lines = grammar.tokenizeLines '''
+        int fn (
+          int p1, /* comment */
+          int * p2
+        );
+      '''
+      expect(lines[0][0]).toEqual value: 'int', scopes: ['source.c', 'storage.type.c']
+      expect(lines[0][2]).toEqual value: 'fn', scopes: ['source.c', 'meta.function.c', 'entity.name.function.c']
+      expect(lines[0][4]).toEqual value: '(', scopes: ['source.c', 'meta.function.c', 'meta.parameters.c', 'punctuation.definition.parameters.begin.c']
+      expect(lines[1][1]).toEqual value: 'int', scopes: ['source.c', 'meta.function.c', 'meta.parameters.c', 'storage.type.c']
+      expect(lines[1][2]).toEqual value: ' p1', scopes: ['source.c', 'meta.function.c', 'meta.parameters.c']
+      expect(lines[1][3]).toEqual value: ',', scopes: ['source.c', 'meta.function.c', 'meta.parameters.c', 'punctuation.comma.c']
+      expect(lines[1][5]).toEqual value: '/*', scopes: ['source.c', 'meta.function.c', 'meta.parameters.c', 'comment.block.c', 'punctuation.definition.comment.begin.c']
+      expect(lines[1][6]).toEqual value: ' comment ', scopes: ['source.c', 'meta.function.c', 'meta.parameters.c', 'comment.block.c']
+      expect(lines[1][7]).toEqual value: '*/', scopes: ['source.c', 'meta.function.c', 'meta.parameters.c', 'comment.block.c', 'punctuation.definition.comment.end.c']
+      expect(lines[2][1]).toEqual value: 'int', scopes: ['source.c', 'meta.function.c', 'meta.parameters.c', 'storage.type.c']
+      expect(lines[2][2]).toEqual value: ' * p2', scopes: ['source.c', 'meta.function.c', 'meta.parameters.c']
+      expect(lines[3][0]).toEqual value: ')', scopes: ['source.c', 'meta.function.c', 'meta.parameters.c', 'punctuation.definition.parameters.end.c']
+      expect(lines[3][1]).toEqual value: ';', scopes: ['source.c', 'punctuation.terminator.statement.c']
+
+    it "tokenizes function calls", ->
+      {tokens} = grammar.tokenizeLine('{ fn(arg1, "arg2", 123 /* comment */) }')
+      expect(tokens[2]).toEqual value: 'fn', scopes: ['source.c', 'meta.block.c', 'meta.function-call.c', 'support.function.any-method.c']
+      expect(tokens[3]).toEqual value: '(', scopes: ['source.c', 'meta.block.c', 'meta.function-call.c', 'meta.arguments.c', 'punctuation.definition.arguments.begin.c']
+      expect(tokens[4]).toEqual value: 'arg1', scopes: ['source.c', 'meta.block.c', 'meta.function-call.c', 'meta.arguments.c']
+      expect(tokens[5]).toEqual value: ',', scopes: ['source.c', 'meta.block.c', 'meta.function-call.c', 'meta.arguments.c', 'punctuation.comma.c']
+      expect(tokens[7]).toEqual value: '"', scopes: ['source.c', 'meta.block.c', 'meta.function-call.c', 'meta.arguments.c', 'string.quoted.double.c', 'punctuation.definition.string.begin.c']
+      expect(tokens[8]).toEqual value: 'arg2', scopes: ['source.c', 'meta.block.c', 'meta.function-call.c', 'meta.arguments.c', 'string.quoted.double.c']
+      expect(tokens[9]).toEqual value: '"', scopes: ['source.c', 'meta.block.c', 'meta.function-call.c', 'meta.arguments.c', 'string.quoted.double.c', 'punctuation.definition.string.end.c']
+      expect(tokens[10]).toEqual value: ',', scopes: ['source.c', 'meta.block.c', 'meta.function-call.c', 'meta.arguments.c', 'punctuation.comma.c']
+      expect(tokens[12]).toEqual value: '123', scopes: ['source.c', 'meta.block.c', 'meta.function-call.c', 'meta.arguments.c', 'constant.numeric.c']
+      expect(tokens[14]).toEqual value: '/*', scopes: ['source.c', 'meta.block.c', 'meta.function-call.c', 'meta.arguments.c', 'comment.block.c', 'punctuation.definition.comment.begin.c']
+      expect(tokens[15]).toEqual value: ' comment ', scopes: ['source.c', 'meta.block.c', 'meta.function-call.c', 'meta.arguments.c', 'comment.block.c']
+      expect(tokens[16]).toEqual value: '*/', scopes: ['source.c', 'meta.block.c', 'meta.function-call.c', 'meta.arguments.c', 'comment.block.c', 'punctuation.definition.comment.end.c']
+      expect(tokens[17]).toEqual value: ')', scopes: ['source.c', 'meta.block.c', 'meta.function-call.c', 'meta.arguments.c', 'punctuation.definition.arguments.end.c']
 
     it "tokenizes various _t types", ->
       {tokens} = grammar.tokenizeLine 'size_t var;'
@@ -92,8 +128,6 @@ describe "Language-C", ->
     describe "punctuation", ->
       it "tokenizes punctuation marks", ->
         punctuation =
-          '(': 'punctuation.bracket.round.c'
-          ')': 'punctuation.bracket.round.c'
           ']': 'punctuation.bracket.square.c'
           '[': 'punctuation.bracket.square.c'
           ',': 'punctuation.comma.c'
@@ -103,6 +137,10 @@ describe "Language-C", ->
         for token, scope of punctuation
           {tokens} = grammar.tokenizeLine token
           expect(tokens[0]).toEqual value: token, scopes: ['source.c', scope]
+
+        {tokens} = grammar.tokenizeLine '()'
+        expect(tokens[0]).toEqual value: '(', scopes: ['source.c', 'punctuation.bracket.round.c']
+        expect(tokens[1]).toEqual value: ')', scopes: ['source.c', 'punctuation.bracket.round.c']
 
     describe "preprocessor directives", ->
       it "tokenizes '#line'", ->
@@ -156,9 +194,9 @@ describe "Language-C", ->
           expect(tokens[3]).toEqual value: 'ABC', scopes: ['source.c', 'meta.preprocessor.macro.c', 'entity.name.function.preprocessor.c']
           expect(tokens[4]).toEqual value: ' ', scopes: ['source.c', 'meta.preprocessor.macro.c', 'meta.function.c', 'punctuation.whitespace.function.leading.c']
           expect(tokens[5]).toEqual value: 'XYZ', scopes: ['source.c', 'meta.preprocessor.macro.c', 'meta.function.c', 'entity.name.function.c']
-          expect(tokens[6]).toEqual value: '(', scopes: ['source.c', 'meta.preprocessor.macro.c', 'meta.function.c', 'meta.parens.c', 'punctuation.definition.section.parens.begin.c']
-          expect(tokens[7]).toEqual value: '1', scopes: ['source.c', 'meta.preprocessor.macro.c', 'meta.function.c', 'meta.parens.c', 'constant.numeric.c']
-          expect(tokens[8]).toEqual value: ')', scopes: ['source.c', 'meta.preprocessor.macro.c', 'meta.function.c', 'meta.parens.c', 'punctuation.definition.section.parens.end.c']
+          expect(tokens[6]).toEqual value: '(', scopes: ['source.c', 'meta.preprocessor.macro.c', 'meta.function.c', 'meta.parameters.c', 'punctuation.definition.parameters.begin.c']
+          expect(tokens[7]).toEqual value: '1', scopes: ['source.c', 'meta.preprocessor.macro.c', 'meta.function.c', 'meta.parameters.c', 'constant.numeric.c']
+          expect(tokens[8]).toEqual value: ')', scopes: ['source.c', 'meta.preprocessor.macro.c', 'meta.function.c', 'meta.parameters.c', 'punctuation.definition.parameters.end.c']
 
           {tokens} = grammar.tokenizeLine '#define PI_PLUS_ONE (3.14 + 1)'
           expect(tokens[0]).toEqual value: '#', scopes: ['source.c', 'meta.preprocessor.macro.c', 'keyword.control.directive.define.c', 'punctuation.definition.directive.c']
@@ -308,33 +346,35 @@ describe "Language-C", ->
       describe "conditionals", ->
         it "tokenizes if-elif-else preprocessor blocks", ->
           lines = grammar.tokenizeLines '''
-            #if defined(CREDIT)
-                credit();
-            #elif defined(DEBIT)
-                debit();
-            #else
-                printerror();
-            #endif
+            int something() {
+              #if defined(CREDIT)
+                  credit();
+              #elif defined(DEBIT)
+                  debit();
+              #else
+                  printerror();
+              #endif
+            }
           '''
-          expect(lines[0][0]).toEqual value: '#', scopes: ['source.c', 'meta.preprocessor.c', 'keyword.control.directive.conditional.c', 'punctuation.definition.directive.c']
-          expect(lines[0][1]).toEqual value: 'if', scopes: ['source.c', 'meta.preprocessor.c', 'keyword.control.directive.conditional.c']
-          expect(lines[0][2]).toEqual value: ' defined(CREDIT)', scopes: ['source.c', 'meta.preprocessor.c']
-          expect(lines[1][1]).toEqual value: 'credit', scopes: ['source.c', 'meta.function.c', 'entity.name.function.c']
-          expect(lines[1][2]).toEqual value: '(', scopes: ['source.c', 'meta.function.c', 'meta.parens.c', 'punctuation.definition.section.parens.begin.c']
-          expect(lines[1][3]).toEqual value: ')', scopes: ['source.c', 'meta.function.c', 'meta.parens.c', 'punctuation.definition.section.parens.end.c']
-          expect(lines[2][0]).toEqual value: '#', scopes: ['source.c', 'meta.preprocessor.c', 'keyword.control.directive.conditional.c', 'punctuation.definition.directive.c']
-          expect(lines[2][1]).toEqual value: 'elif', scopes: ['source.c', 'meta.preprocessor.c', 'keyword.control.directive.conditional.c']
-          expect(lines[2][2]).toEqual value: ' defined(DEBIT)', scopes: ['source.c', 'meta.preprocessor.c']
-          expect(lines[3][1]).toEqual value: 'debit', scopes: ['source.c', 'meta.function.c', 'entity.name.function.c']
-          expect(lines[3][2]).toEqual value: '(', scopes: ['source.c', 'meta.function.c', 'meta.parens.c', 'punctuation.definition.section.parens.begin.c']
-          expect(lines[3][3]).toEqual value: ')', scopes: ['source.c', 'meta.function.c', 'meta.parens.c', 'punctuation.definition.section.parens.end.c']
-          expect(lines[4][0]).toEqual value: '#', scopes: ['source.c', 'meta.preprocessor.c', 'keyword.control.directive.conditional.c', 'punctuation.definition.directive.c']
-          expect(lines[4][1]).toEqual value: 'else', scopes: ['source.c', 'meta.preprocessor.c', 'keyword.control.directive.conditional.c']
-          expect(lines[5][1]).toEqual value: 'printerror', scopes: ['source.c', 'meta.function.c', 'entity.name.function.c']
-          expect(lines[5][2]).toEqual value: '(', scopes: ['source.c', 'meta.function.c', 'meta.parens.c', 'punctuation.definition.section.parens.begin.c']
-          expect(lines[5][3]).toEqual value: ')', scopes: ['source.c', 'meta.function.c', 'meta.parens.c', 'punctuation.definition.section.parens.end.c']
-          expect(lines[6][0]).toEqual value: '#', scopes: ['source.c', 'meta.preprocessor.c', 'keyword.control.directive.conditional.c', 'punctuation.definition.directive.c']
-          expect(lines[6][1]).toEqual value: 'endif', scopes: ['source.c', 'meta.preprocessor.c', 'keyword.control.directive.conditional.c']
+          expect(lines[1][1]).toEqual value: '#', scopes: ['source.c', 'meta.block.c', 'meta.preprocessor.c', 'keyword.control.directive.conditional.c', 'punctuation.definition.directive.c']
+          expect(lines[1][2]).toEqual value: 'if', scopes: ['source.c', 'meta.block.c', 'meta.preprocessor.c', 'keyword.control.directive.conditional.c']
+          expect(lines[1][3]).toEqual value: ' defined(CREDIT)', scopes: ['source.c', 'meta.block.c', 'meta.preprocessor.c']
+          expect(lines[2][1]).toEqual value: 'credit', scopes: ['source.c', 'meta.block.c', 'meta.function-call.c', 'support.function.any-method.c']
+          expect(lines[2][2]).toEqual value: '(', scopes: ['source.c', 'meta.block.c', 'meta.function-call.c', 'meta.arguments.c', 'punctuation.definition.arguments.begin.c']
+          expect(lines[2][3]).toEqual value: ')', scopes: ['source.c', 'meta.block.c', 'meta.function-call.c', 'meta.arguments.c', 'punctuation.definition.arguments.end.c']
+          expect(lines[3][1]).toEqual value: '#', scopes: ['source.c', 'meta.block.c', 'meta.preprocessor.c', 'keyword.control.directive.conditional.c', 'punctuation.definition.directive.c']
+          expect(lines[3][2]).toEqual value: 'elif', scopes: ['source.c', 'meta.block.c', 'meta.preprocessor.c', 'keyword.control.directive.conditional.c']
+          expect(lines[3][3]).toEqual value: ' defined(DEBIT)', scopes: ['source.c', 'meta.block.c', 'meta.preprocessor.c']
+          expect(lines[4][1]).toEqual value: 'debit', scopes: ['source.c', 'meta.block.c', 'meta.function-call.c',  'support.function.any-method.c']
+          expect(lines[4][2]).toEqual value: '(', scopes: ['source.c', 'meta.block.c', 'meta.function-call.c', 'meta.arguments.c', 'punctuation.definition.arguments.begin.c']
+          expect(lines[4][3]).toEqual value: ')', scopes: ['source.c', 'meta.block.c', 'meta.function-call.c', 'meta.arguments.c', 'punctuation.definition.arguments.end.c']
+          expect(lines[5][1]).toEqual value: '#', scopes: ['source.c', 'meta.block.c', 'meta.preprocessor.c', 'keyword.control.directive.conditional.c', 'punctuation.definition.directive.c']
+          expect(lines[5][2]).toEqual value: 'else', scopes: ['source.c', 'meta.block.c', 'meta.preprocessor.c', 'keyword.control.directive.conditional.c']
+          expect(lines[6][1]).toEqual value: 'printerror', scopes: ['source.c', 'meta.block.c', 'meta.function-call.c',  'support.function.any-method.c']
+          expect(lines[6][2]).toEqual value: '(', scopes: ['source.c', 'meta.block.c', 'meta.function-call.c', 'meta.arguments.c', 'punctuation.definition.arguments.begin.c']
+          expect(lines[6][3]).toEqual value: ')', scopes: ['source.c', 'meta.block.c', 'meta.function-call.c', 'meta.arguments.c', 'punctuation.definition.arguments.end.c']
+          expect(lines[7][1]).toEqual value: '#', scopes: ['source.c', 'meta.block.c', 'meta.preprocessor.c', 'keyword.control.directive.conditional.c', 'punctuation.definition.directive.c']
+          expect(lines[7][2]).toEqual value: 'endif', scopes: ['source.c', 'meta.block.c', 'meta.preprocessor.c', 'keyword.control.directive.conditional.c']
 
         it "tokenizes if-true-else blocks", ->
           lines = grammar.tokenizeLines '''
@@ -357,16 +397,16 @@ describe "Language-C", ->
           expect(lines[0][3]).toEqual value: '1', scopes: ['source.c', 'meta.preprocessor.c', 'constant.numeric.preprocessor.c']
           expect(lines[1][0]).toEqual value: 'int', scopes: ['source.c', 'storage.type.c']
           expect(lines[1][2]).toEqual value: 'something', scopes: ['source.c', 'meta.function.c', 'entity.name.function.c']
-          expect(lines[2][1]).toEqual value: '#', scopes: ['source.c', 'meta.function.c', 'meta.block.c', 'meta.preprocessor.c', 'keyword.control.directive.conditional.c', 'punctuation.definition.directive.c']
-          expect(lines[2][2]).toEqual value: 'if', scopes: ['source.c', 'meta.function.c', 'meta.block.c', 'meta.preprocessor.c', 'keyword.control.directive.conditional.c']
-          expect(lines[2][4]).toEqual value: '1', scopes: ['source.c', 'meta.function.c', 'meta.block.c', 'meta.preprocessor.c', 'constant.numeric.preprocessor.c']
-          expect(lines[3][1]).toEqual value: 'return', scopes: ['source.c', 'meta.function.c', 'meta.block.c', 'keyword.control.c']
-          expect(lines[3][3]).toEqual value: '1', scopes: ['source.c', 'meta.function.c', 'meta.block.c', 'constant.numeric.c']
-          expect(lines[4][1]).toEqual value: '#', scopes: ['source.c', 'meta.function.c', 'meta.block.c', 'meta.preprocessor.c', 'keyword.control.directive.conditional.c', 'punctuation.definition.directive.c']
-          expect(lines[4][2]).toEqual value: 'else', scopes: ['source.c', 'meta.function.c', 'meta.block.c', 'meta.preprocessor.c', 'keyword.control.directive.conditional.c']
-          expect(lines[5][0]).toEqual value: '    return 0;', scopes: ['source.c', 'meta.function.c', 'meta.block.c', 'comment.block.preprocessor.else-branch.in-block']
-          expect(lines[6][1]).toEqual value: '#', scopes: ['source.c', 'meta.function.c', 'meta.block.c', 'meta.preprocessor.c', 'keyword.control.directive.conditional.c', 'punctuation.definition.directive.c']
-          expect(lines[6][2]).toEqual value: 'endif', scopes: ['source.c', 'meta.function.c', 'meta.block.c', 'meta.preprocessor.c', 'keyword.control.directive.conditional.c']
+          expect(lines[2][1]).toEqual value: '#', scopes: ['source.c', 'meta.block.c', 'meta.preprocessor.c', 'keyword.control.directive.conditional.c', 'punctuation.definition.directive.c']
+          expect(lines[2][2]).toEqual value: 'if', scopes: ['source.c', 'meta.block.c', 'meta.preprocessor.c', 'keyword.control.directive.conditional.c']
+          expect(lines[2][4]).toEqual value: '1', scopes: ['source.c', 'meta.block.c', 'meta.preprocessor.c', 'constant.numeric.preprocessor.c']
+          expect(lines[3][1]).toEqual value: 'return', scopes: ['source.c', 'meta.block.c', 'keyword.control.c']
+          expect(lines[3][3]).toEqual value: '1', scopes: ['source.c', 'meta.block.c', 'constant.numeric.c']
+          expect(lines[4][1]).toEqual value: '#', scopes: ['source.c', 'meta.block.c', 'meta.preprocessor.c', 'keyword.control.directive.conditional.c', 'punctuation.definition.directive.c']
+          expect(lines[4][2]).toEqual value: 'else', scopes: ['source.c', 'meta.block.c', 'meta.preprocessor.c', 'keyword.control.directive.conditional.c']
+          expect(lines[5][0]).toEqual value: '    return 0;', scopes: ['source.c', 'meta.block.c', 'comment.block.preprocessor.else-branch.in-block']
+          expect(lines[6][1]).toEqual value: '#', scopes: ['source.c', 'meta.block.c', 'meta.preprocessor.c', 'keyword.control.directive.conditional.c', 'punctuation.definition.directive.c']
+          expect(lines[6][2]).toEqual value: 'endif', scopes: ['source.c', 'meta.block.c', 'meta.preprocessor.c', 'keyword.control.directive.conditional.c']
           expect(lines[8][0]).toEqual value: '#', scopes: ['source.c', 'meta.preprocessor.c', 'keyword.control.directive.conditional.c', 'punctuation.definition.directive.c']
           expect(lines[8][1]).toEqual value: 'else', scopes: ['source.c', 'meta.preprocessor.c', 'keyword.control.directive.conditional.c']
           expect(lines[9][0]).toEqual value: 'int something() {', scopes: ['source.c', 'comment.block.preprocessor.else-branch']
@@ -385,16 +425,16 @@ describe "Language-C", ->
           '''
           expect(lines[0][0]).toEqual value: 'int', scopes: ['source.c', 'storage.type.c']
           expect(lines[0][2]).toEqual value: 'something', scopes: ['source.c', 'meta.function.c', 'entity.name.function.c']
-          expect(lines[1][1]).toEqual value: '#', scopes: ['source.c', 'meta.function.c', 'meta.block.c', 'meta.preprocessor.c', 'keyword.control.directive.conditional.c', 'punctuation.definition.directive.c']
-          expect(lines[1][2]).toEqual value: 'if', scopes: ['source.c', 'meta.function.c', 'meta.block.c', 'meta.preprocessor.c', 'keyword.control.directive.conditional.c']
-          expect(lines[1][4]).toEqual value: '0', scopes: ['source.c', 'meta.function.c', 'meta.block.c', 'meta.preprocessor.c', 'constant.numeric.preprocessor.c']
-          expect(lines[2][0]).toEqual value: '    return 1;', scopes: ['source.c', 'meta.function.c', 'meta.block.c', 'comment.block.preprocessor.if-branch.in-block']
-          expect(lines[3][1]).toEqual value: '#', scopes: ['source.c', 'meta.function.c', 'meta.block.c', 'meta.preprocessor.c', 'keyword.control.directive.conditional.c', 'punctuation.definition.directive.c']
-          expect(lines[3][2]).toEqual value: 'else', scopes: ['source.c', 'meta.function.c', 'meta.block.c', 'meta.preprocessor.c', 'keyword.control.directive.conditional.c']
-          expect(lines[4][1]).toEqual value: 'return', scopes: ['source.c', 'meta.function.c', 'meta.block.c', 'keyword.control.c']
-          expect(lines[4][3]).toEqual value: '0', scopes: ['source.c', 'meta.function.c', 'meta.block.c', 'constant.numeric.c']
-          expect(lines[5][1]).toEqual value: '#', scopes: ['source.c', 'meta.function.c', 'meta.block.c', 'meta.preprocessor.c', 'keyword.control.directive.conditional.c', 'punctuation.definition.directive.c']
-          expect(lines[5][2]).toEqual value: 'endif', scopes: ['source.c', 'meta.function.c', 'meta.block.c', 'meta.preprocessor.c', 'keyword.control.directive.conditional.c']
+          expect(lines[1][1]).toEqual value: '#', scopes: ['source.c', 'meta.block.c', 'meta.preprocessor.c', 'keyword.control.directive.conditional.c', 'punctuation.definition.directive.c']
+          expect(lines[1][2]).toEqual value: 'if', scopes: ['source.c', 'meta.block.c', 'meta.preprocessor.c', 'keyword.control.directive.conditional.c']
+          expect(lines[1][4]).toEqual value: '0', scopes: ['source.c', 'meta.block.c', 'meta.preprocessor.c', 'constant.numeric.preprocessor.c']
+          expect(lines[2][0]).toEqual value: '    return 1;', scopes: ['source.c', 'meta.block.c', 'comment.block.preprocessor.if-branch.in-block']
+          expect(lines[3][1]).toEqual value: '#', scopes: ['source.c', 'meta.block.c', 'meta.preprocessor.c', 'keyword.control.directive.conditional.c', 'punctuation.definition.directive.c']
+          expect(lines[3][2]).toEqual value: 'else', scopes: ['source.c', 'meta.block.c', 'meta.preprocessor.c', 'keyword.control.directive.conditional.c']
+          expect(lines[4][1]).toEqual value: 'return', scopes: ['source.c', 'meta.block.c', 'keyword.control.c']
+          expect(lines[4][3]).toEqual value: '0', scopes: ['source.c', 'meta.block.c', 'constant.numeric.c']
+          expect(lines[5][1]).toEqual value: '#', scopes: ['source.c', 'meta.block.c', 'meta.preprocessor.c', 'keyword.control.directive.conditional.c', 'punctuation.definition.directive.c']
+          expect(lines[5][2]).toEqual value: 'endif', scopes: ['source.c', 'meta.block.c', 'meta.preprocessor.c', 'keyword.control.directive.conditional.c']
 
           lines = grammar.tokenizeLines '''
             #if 0
