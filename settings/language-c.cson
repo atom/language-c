@@ -2,17 +2,19 @@
   'editor':
     'commentStart': '// '
     'increaseIndentPattern': '(?x)
-       ^ .* \\{ [^}"\']* $
-      |^ .* \\( [^\\)"\']* $
+       [\\{\\(]
       |^ \\s* (public|private|protected): \\s* $
       |^ \\s* @(public|private|protected) \\s* $
       |^ \\s* \\{ \\} $
       '
-    'decreaseIndentPattern': '(?x)
+    'decreaseThisIndentPattern': '(?x)
        ^ \\s* (\\s* /[*] .* [*]/ \\s*)* \\}
       |^ \\s* (\\s* /[*] .* [*]/ \\s*)* \\)
       |^ \\s* (public|private|protected): \\s* $
       |^ \\s* @(public|private|protected) \\s* $
+      '
+    'decreaseIndentPattern': '(?x)
+       [\\}\\)]
       '
 '.source.c, .source.cpp':
   'editor':
