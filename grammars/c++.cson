@@ -81,11 +81,11 @@
       '1':
         'name': 'entity.name.function.cpp'
       '2':
-        'name': 'punctuation.definition.parameters.begin.c'
+        'name': 'punctuation.definition.parameters.begin.bracket.round.c'
     'end': '\\)'
     'endCaptures':
       '0':
-        'name': 'punctuation.definition.parameters.end.c'
+        'name': 'punctuation.definition.parameters.end.bracket.round.c'
     'name': 'meta.function.destructor.cpp'
     'patterns': [
       {
@@ -99,11 +99,11 @@
       '1':
         'name': 'entity.name.function.cpp'
       '2':
-        'name': 'punctuation.definition.parameters.begin.c'
+        'name': 'punctuation.definition.parameters.begin.bracket.round.c'
     'end': '\\)'
     'endCaptures':
       '0':
-        'name': 'punctuation.definition.parameters.end.c'
+        'name': 'punctuation.definition.parameters.end.bracket.round.c'
     'name': 'meta.function.destructor.prototype.cpp'
     'patterns': [
       {
@@ -131,13 +131,13 @@
       '0':
         'name': 'meta.brace.curly.scope-is-for-back-capability.c'
       '1':
-        'name': 'punctuation.definition.section.block.begin.c'
+        'name': 'punctuation.definition.section.block.begin.bracket.curly.c'
     'end': '(})'
     'endCaptures':
       '0':
         'name': 'meta.brace.curly.scope-is-for-back-capability.c'
       '1':
-        'name': 'punctuation.definition.section.block.end.c'
+        'name': 'punctuation.definition.section.block.end.bracket.curly.c'
     'patterns': [
       {
         'captures':
@@ -277,13 +277,13 @@
               '0':
                 'name': 'meta.brace.curly.scope-is-for-back-capability.c'
               '1':
-                'name': 'punctuation.definition.section.block.begin.c'
+                'name': 'punctuation.definition.section.block.begin.bracket.curly.c'
             'end': '((}))(\\s*\\n)?'
             'endCaptures':
               '1':
                 'name': 'meta.brace.curly.scope-is-for-back-capability.c'
               '2':
-                'name': 'punctuation.definition.section.block.begin.c'
+                'name': 'punctuation.definition.section.block.begin.bracket.curly.c'
               '3':
                 'name': 'invalid.illegal.you-forgot-semicolon.cpp'
             'patterns': [
@@ -317,13 +317,13 @@
               '0':
                 'name': 'meta.brace.curly.scope-is-for-back-capability.c'
               '1':
-                'name': 'punctuation.definition.section.block.begin.c'
+                'name': 'punctuation.definition.section.block.begin.bracket.curly.c'
             'end': '((}))|(?=\\s*#\\s*endif\\b)'
             'endCaptures':
               '1':
                 'name': 'meta.brace.curly.scope-is-for-back-capability.c'
               '2':
-                'name': 'punctuation.definition.section.block.end.c'
+                'name': 'punctuation.definition.section.block.end.bracket.curly.c'
             'patterns': [
               {
                 'include': '#special_block'

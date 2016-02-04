@@ -78,13 +78,13 @@
       '3':
         'name': 'entity.name.function.preprocessor.c'
       '5':
-        'name': 'punctuation.definition.parameters.begin.c'
+        'name': 'punctuation.definition.parameters.begin.bracket.round.c'
       '6':
         'name': 'variable.parameter.preprocessor.c'
       '8':
         'name': 'punctuation.separator.parameters.c'
       '9':
-        'name': 'punctuation.definition.parameters.end.c'
+        'name': 'punctuation.definition.parameters.end.bracket.round.c'
     'end': '(?=(?://|/\\*))|(?<!\\\\)(?=\\n)'
     'name': 'meta.preprocessor.macro.c'
     'patterns': [
@@ -222,7 +222,7 @@
       '0':
         'name': 'meta.brace.curly.scope-is-for-back-capability.c'
       '1':
-        'name': 'punctuation.definition.section.block.end.c'
+        'name': 'punctuation.definition.section.block.end.bracket.curly.c'
   }
   {
     'begin': '''(?x)
@@ -278,13 +278,13 @@
           '0':
             'name': 'meta.brace.curly.scope-is-for-back-capability.c'
           '1':
-            'name': 'punctuation.definition.section.block.begin.c'
+            'name': 'punctuation.definition.section.block.begin.bracket.curly.c'
         'end': '((}))|(?=\\s*#\\s*endif\\b)'
         'endCaptures':
           '1':
             'name': 'meta.brace.curly.scope-is-for-back-capability.c'
           '2':
-            'name': 'punctuation.definition.section.block.end.c'
+            'name': 'punctuation.definition.section.block.end.bracket.curly.c'
         'patterns': [
           {
             'include': '#block_innards'
@@ -320,7 +320,7 @@
           '1':
             'name': 'variable.other.c'
           '2':
-            'name': 'punctuation.definition.parameters.c'
+            'name': 'punctuation.definition.parameters.bracket.round.c'
         'match': '(?x)\n\t\t\t        (?x)\n\t\t\t(?:  \n\t\t\t     (?: (?= \\s )           (?<!else|new|return) (?<=\\w)\\s+      #  or word + space before name\n\t\t\t     )\n\t\t\t)\n\t\t\t(\n\t\t\t\t(?: [A-Za-z_][A-Za-z0-9_]*+ | :: )++    |              # actual name\n\t\t\t\t(?: (?<=operator) (?: [-*&<>=+!]+ | \\(\\) | \\[\\] ) )  # if it is a C++ operator\n\t\t\t)\n\t\t\t \\s*(\\()'
         'name': 'meta.initialization.c'
       }
@@ -438,11 +438,11 @@
     'begin': '(\\()'
     'beginCaptures':
       '1':
-        'name': 'punctuation.definition.parameters.begin.c'
+        'name': 'punctuation.definition.parameters.begin.bracket.round.c'
     'end': '(\\))'
     'endCaptures':
       '1':
-        'name': 'punctuation.definition.parameters.end.c'
+        'name': 'punctuation.definition.parameters.end.bracket.round.c'
     'name': 'meta.parameters.c'
     'patterns': [
       {
