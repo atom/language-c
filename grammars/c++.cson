@@ -126,13 +126,17 @@
       }
     ]
   'block':
-    'begin': '{'
+    'begin': '({)'
     'beginCaptures':
       '0':
+        'name': 'meta.brace.curly.scope-is-for-back-capability.c'
+      '1':
         'name': 'punctuation.definition.section.block.begin.c'
-    'end': '}'
+    'end': '(})'
     'endCaptures':
       '0':
+        'name': 'meta.brace.curly.scope-is-for-back-capability.c'
+      '1':
         'name': 'punctuation.definition.section.block.end.c'
     'patterns': [
       {
@@ -268,15 +272,19 @@
             'include': '#angle_brackets'
           }
           {
-            'begin': '{'
+            'begin': '({)'
             'beginCaptures':
               '0':
-                'name': 'punctuation.definition.section.block.begin.cpp'
-            'end': '}(\\s*\\n)?'
+                'name': 'meta.brace.curly.scope-is-for-back-capability.c'
+              '1':
+                'name': 'punctuation.definition.section.block.begin.c'
+            'end': '((}))(\\s*\\n)?'
             'endCaptures':
               '1':
-                'name': 'punctuation.definition.section.block.end.cpp'
+                'name': 'meta.brace.curly.scope-is-for-back-capability.c'
               '2':
+                'name': 'punctuation.definition.section.block.begin.c'
+              '3':
                 'name': 'invalid.illegal.you-forgot-semicolon.cpp'
             'patterns': [
               {
@@ -304,13 +312,17 @@
         'name': 'meta.extern-block.cpp'
         'patterns': [
           {
-            'begin': '{'
+            'begin': '({)'
             'beginCaptures':
               '0':
+                'name': 'meta.brace.curly.scope-is-for-back-capability.c'
+              '1':
                 'name': 'punctuation.definition.section.block.begin.c'
-            'end': '}|(?=\\s*#\\s*endif\\b)'
+            'end': '((}))|(?=\\s*#\\s*endif\\b)'
             'endCaptures':
-              '0':
+              '1':
+                'name': 'meta.brace.curly.scope-is-for-back-capability.c'
+              '2':
                 'name': 'punctuation.definition.section.block.end.c'
             'patterns': [
               {
