@@ -48,7 +48,7 @@ describe "Language-C", ->
       expect(lines[0][4]).toEqual value: '(', scopes: ['source.c', 'meta.function.c', 'meta.parameters.c', 'punctuation.definition.parameters.begin.bracket.round.c']
       expect(lines[1][1]).toEqual value: 'int', scopes: ['source.c', 'meta.function.c', 'meta.parameters.c', 'storage.type.c']
       expect(lines[1][2]).toEqual value: ' p1', scopes: ['source.c', 'meta.function.c', 'meta.parameters.c']
-      expect(lines[1][3]).toEqual value: ',', scopes: ['source.c', 'meta.function.c', 'meta.parameters.c', 'punctuation.comma.c']
+      expect(lines[1][3]).toEqual value: ',', scopes: ['source.c', 'meta.function.c', 'meta.parameters.c', 'punctuation.separator.comma.c']
       expect(lines[1][5]).toEqual value: '/*', scopes: ['source.c', 'meta.function.c', 'meta.parameters.c', 'comment.block.c', 'punctuation.definition.comment.begin.c']
       expect(lines[1][6]).toEqual value: ' comment ', scopes: ['source.c', 'meta.function.c', 'meta.parameters.c', 'comment.block.c']
       expect(lines[1][7]).toEqual value: '*/', scopes: ['source.c', 'meta.function.c', 'meta.parameters.c', 'comment.block.c', 'punctuation.definition.comment.end.c']
@@ -62,11 +62,11 @@ describe "Language-C", ->
       expect(tokens[2]).toEqual value: 'fn', scopes: ['source.c', 'meta.function-call.c', 'support.function.any-method.c']
       expect(tokens[3]).toEqual value: '(', scopes: ['source.c', 'meta.function-call.c', 'meta.arguments.c', 'punctuation.definition.arguments.begin.c']
       expect(tokens[4]).toEqual value: 'arg1', scopes: ['source.c', 'meta.function-call.c', 'meta.arguments.c']
-      expect(tokens[5]).toEqual value: ',', scopes: ['source.c', 'meta.function-call.c', 'meta.arguments.c', 'punctuation.comma.c']
+      expect(tokens[5]).toEqual value: ',', scopes: ['source.c', 'meta.function-call.c', 'meta.arguments.c', 'punctuation.separator.comma.c']
       expect(tokens[7]).toEqual value: '"', scopes: ['source.c', 'meta.function-call.c', 'meta.arguments.c', 'string.quoted.double.c', 'punctuation.definition.string.begin.c']
       expect(tokens[8]).toEqual value: 'arg2', scopes: ['source.c', 'meta.function-call.c', 'meta.arguments.c', 'string.quoted.double.c']
       expect(tokens[9]).toEqual value: '"', scopes: ['source.c', 'meta.function-call.c', 'meta.arguments.c', 'string.quoted.double.c', 'punctuation.definition.string.end.c']
-      expect(tokens[10]).toEqual value: ',', scopes: ['source.c', 'meta.function-call.c', 'meta.arguments.c', 'punctuation.comma.c']
+      expect(tokens[10]).toEqual value: ',', scopes: ['source.c', 'meta.function-call.c', 'meta.arguments.c', 'punctuation.separator.comma.c']
       expect(tokens[12]).toEqual value: '123', scopes: ['source.c', 'meta.function-call.c', 'meta.arguments.c', 'constant.numeric.c']
       expect(tokens[14]).toEqual value: '/*', scopes: ['source.c', 'meta.function-call.c', 'meta.arguments.c', 'comment.block.c', 'punctuation.definition.comment.begin.c']
       expect(tokens[15]).toEqual value: ' comment ', scopes: ['source.c', 'meta.function-call.c', 'meta.arguments.c', 'comment.block.c']
@@ -128,8 +128,8 @@ describe "Language-C", ->
     describe "punctuation", ->
       it "tokenizes punctuation marks", ->
         punctuation =
-          ',': 'punctuation.comma.c'
-          '.': 'punctuation.period.c'
+          ',': 'punctuation.separator.comma.c'
+          '.': 'punctuation.separator.period.c'
           ';': 'punctuation.terminator.statement.c'
 
         for token, scope of punctuation
@@ -315,7 +315,7 @@ describe "Language-C", ->
           expect(tokens[4]).toEqual value: '>', scopes: ['source.c', 'meta.preprocessor.include.c', 'string.quoted.other.lt-gt.include.c', 'punctuation.definition.string.end.c']
 
           {tokens} = grammar.tokenizeLine '#include_<stdio.h>'
-          expect(tokens[1]).toEqual value: '.', scopes: ['source.c', 'punctuation.period.c']
+          expect(tokens[1]).toEqual value: '.', scopes: ['source.c', 'punctuation.separator.period.c']
 
           {tokens} = grammar.tokenizeLine '#include "file"'
           expect(tokens[0]).toEqual value: '#', scopes: ['source.c', 'meta.preprocessor.include.c', 'keyword.control.directive.include.c', 'punctuation.definition.directive.c']

@@ -759,11 +759,11 @@
       }
       {
         'match': ','
-        'name': 'punctuation.comma.c'
+        'name': 'punctuation.separator.comma.c'
       }
       {
         'match': '\\.'
-        'name': 'punctuation.period.c'
+        'name': 'punctuation.separator.period.c'
       }
       {
         'match': ';'
