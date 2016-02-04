@@ -273,7 +273,6 @@
         'endCaptures':
           '0':
             'name': 'punctuation.definition.section.block.end.c'
-        'name': 'meta.block.c'
         'patterns': [
           {
             'include': '#block_innards'

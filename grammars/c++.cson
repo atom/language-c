@@ -134,7 +134,6 @@
     'endCaptures':
       '0':
         'name': 'punctuation.definition.section.block.end.c'
-    'name': 'meta.block.cpp'
     'patterns': [
       {
         'captures':
