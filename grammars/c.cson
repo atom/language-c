@@ -217,6 +217,10 @@
     'include': '#block'
   }
   {
+    'match': '}'
+    'name': 'punctuation.definition.section.block.end.c'
+  }
+  {
     'begin': '''(?x)
       (?:
         ^ |
