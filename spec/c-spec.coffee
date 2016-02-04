@@ -32,10 +32,10 @@ describe "Language-C", ->
       expect(lines[0][3]).toEqual value: '(', scopes: ['source.c', 'meta.function.c', 'meta.parameters.c', 'punctuation.definition.parameters.begin.bracket.round.c']
       expect(lines[0][4]).toEqual value: 'int', scopes: ['source.c', 'meta.function.c', 'meta.parameters.c', 'storage.type.c']
       expect(lines[0][6]).toEqual value: ')', scopes: ['source.c', 'meta.function.c', 'meta.parameters.c', 'punctuation.definition.parameters.end.bracket.round.c']
-      expect(lines[0][8]).toEqual value: '{', scopes: ['source.c', 'meta.brace.curly.scope-is-for-back-capability.c', 'punctuation.definition.section.block.begin.bracket.curly.c']
+      expect(lines[0][8]).toEqual value: '{', scopes: ['source.c', 'punctuation.definition.section.block.begin.bracket.curly.c']
       expect(lines[1][1]).toEqual value: 'return', scopes: ['source.c', 'keyword.control.c']
       expect(lines[1][3]).toEqual value: '0', scopes: ['source.c', 'constant.numeric.c']
-      expect(lines[2][0]).toEqual value: '}', scopes: ['source.c', 'meta.brace.curly.scope-is-for-back-capability.c', 'punctuation.definition.section.block.end.bracket.curly.c']
+      expect(lines[2][0]).toEqual value: '}', scopes: ['source.c', 'punctuation.definition.section.block.end.bracket.curly.c']
 
       lines = grammar.tokenizeLines '''
         int fn (
@@ -131,18 +131,16 @@ describe "Language-C", ->
           ',': 'punctuation.separator.comma.c'
           '.': 'punctuation.separator.period.c'
           ';': 'punctuation.terminator.statement.c'
+          '[': 'punctuation.bracket.square.c'
+          ']': 'punctuation.bracket.square.c'
 
         for token, scope of punctuation
           {tokens} = grammar.tokenizeLine token
           expect(tokens[0]).toEqual value: token, scopes: ['source.c', scope]
 
         {tokens} = grammar.tokenizeLine '()'
-        expect(tokens[0]).toEqual value: '(', scopes: ['source.c', 'meta.brace.round.scope-is-for-back-capability.c', 'punctuation.bracket.round.c']
-        expect(tokens[1]).toEqual value: ')', scopes: ['source.c', 'meta.brace.round.scope-is-for-back-capability.c', 'punctuation.bracket.round.c']
-
-        {tokens} = grammar.tokenizeLine '[]'
-        expect(tokens[0]).toEqual value: '[', scopes: ['source.c', 'meta.brace.square.scope-is-for-back-capability.c', 'punctuation.bracket.square.c']
-        expect(tokens[1]).toEqual value: ']', scopes: ['source.c', 'meta.brace.square.scope-is-for-back-capability.c', 'punctuation.bracket.square.c']
+        expect(tokens[0]).toEqual value: '(', scopes: ['source.c', 'punctuation.bracket.round.c']
+        expect(tokens[1]).toEqual value: ')', scopes: ['source.c', 'punctuation.bracket.round.c']
 
     describe "preprocessor directives", ->
       it "tokenizes '#line'", ->
@@ -204,11 +202,11 @@ describe "Language-C", ->
           expect(tokens[0]).toEqual value: '#', scopes: ['source.c', 'meta.preprocessor.macro.c', 'keyword.control.directive.define.c', 'punctuation.definition.directive.c']
           expect(tokens[1]).toEqual value: 'define', scopes: ['source.c', 'meta.preprocessor.macro.c', 'keyword.control.directive.define.c']
           expect(tokens[3]).toEqual value: 'PI_PLUS_ONE', scopes: ['source.c', 'meta.preprocessor.macro.c', 'entity.name.function.preprocessor.c']
-          expect(tokens[5]).toEqual value: '(', scopes: ['source.c', 'meta.preprocessor.macro.c', 'meta.brace.round.scope-is-for-back-capability.c', 'punctuation.bracket.round.c']
+          expect(tokens[5]).toEqual value: '(', scopes: ['source.c', 'meta.preprocessor.macro.c', 'punctuation.bracket.round.c']
           expect(tokens[6]).toEqual value: '3.14', scopes: ['source.c', 'meta.preprocessor.macro.c', 'constant.numeric.c']
           expect(tokens[7]).toEqual value: ' + ', scopes: ['source.c', 'meta.preprocessor.macro.c']
           expect(tokens[8]).toEqual value: '1', scopes: ['source.c', 'meta.preprocessor.macro.c', 'constant.numeric.c']
-          expect(tokens[9]).toEqual value: ')', scopes: ['source.c', 'meta.preprocessor.macro.c', 'meta.brace.round.scope-is-for-back-capability.c', 'punctuation.bracket.round.c']
+          expect(tokens[9]).toEqual value: ')', scopes: ['source.c', 'meta.preprocessor.macro.c', 'punctuation.bracket.round.c']
 
         describe "macros", ->
           it "tokenizes them", ->
@@ -230,13 +228,13 @@ describe "Language-C", ->
             expect(tokens[6]).toEqual value: ',', scopes: ['source.c', 'meta.preprocessor.macro.c', 'variable.parameter.preprocessor.c', 'punctuation.separator.parameters.c']
             expect(tokens[7]).toEqual value: ' y', scopes: ['source.c', 'meta.preprocessor.macro.c', 'variable.parameter.preprocessor.c']
             expect(tokens[8]).toEqual value: ')', scopes: ['source.c', 'meta.preprocessor.macro.c', 'punctuation.definition.parameters.end.bracket.round.c']
-            expect(tokens[10]).toEqual value: '(', scopes: ['source.c', 'meta.preprocessor.macro.c', 'meta.brace.round.scope-is-for-back-capability.c', 'punctuation.bracket.round.c']
+            expect(tokens[10]).toEqual value: '(', scopes: ['source.c', 'meta.preprocessor.macro.c', 'punctuation.bracket.round.c']
             expect(tokens[11]).toEqual value: 'x', scopes: ['source.c', 'meta.preprocessor.macro.c']
-            expect(tokens[12]).toEqual value: ')', scopes: ['source.c', 'meta.preprocessor.macro.c', 'meta.brace.round.scope-is-for-back-capability.c', 'punctuation.bracket.round.c']
+            expect(tokens[12]).toEqual value: ')', scopes: ['source.c', 'meta.preprocessor.macro.c', 'punctuation.bracket.round.c']
             expect(tokens[13]).toEqual value: ' * ', scopes: ['source.c', 'meta.preprocessor.macro.c']
-            expect(tokens[14]).toEqual value: '(', scopes: ['source.c', 'meta.preprocessor.macro.c', 'meta.brace.round.scope-is-for-back-capability.c', 'punctuation.bracket.round.c']
+            expect(tokens[14]).toEqual value: '(', scopes: ['source.c', 'meta.preprocessor.macro.c', 'punctuation.bracket.round.c']
             expect(tokens[15]).toEqual value: 'y', scopes: ['source.c', 'meta.preprocessor.macro.c']
-            expect(tokens[16]).toEqual value: ')', scopes: ['source.c', 'meta.preprocessor.macro.c', 'meta.brace.round.scope-is-for-back-capability.c', 'punctuation.bracket.round.c']
+            expect(tokens[16]).toEqual value: ')', scopes: ['source.c', 'meta.preprocessor.macro.c', 'punctuation.bracket.round.c']
 
             {tokens} = grammar.tokenizeLine '#define SWAP(a, b)  do { a ^= b; b ^= a; a ^= b; } while ( 0 )'
             expect(tokens[0]).toEqual value: '#', scopes: ['source.c', 'meta.preprocessor.macro.c', 'keyword.control.directive.define.c', 'punctuation.definition.directive.c']
@@ -248,26 +246,26 @@ describe "Language-C", ->
             expect(tokens[7]).toEqual value: ' b', scopes: ['source.c', 'meta.preprocessor.macro.c', 'variable.parameter.preprocessor.c']
             expect(tokens[8]).toEqual value: ')', scopes: ['source.c', 'meta.preprocessor.macro.c', 'punctuation.definition.parameters.end.bracket.round.c']
             expect(tokens[10]).toEqual value: 'do', scopes: ['source.c', 'meta.preprocessor.macro.c', 'keyword.control.c']
-            expect(tokens[12]).toEqual value: '{', scopes: ['source.c', 'meta.preprocessor.macro.c', 'meta.brace.curly.scope-is-for-back-capability.c', 'punctuation.definition.section.block.begin.bracket.curly.c']
+            expect(tokens[12]).toEqual value: '{', scopes: ['source.c', 'meta.preprocessor.macro.c', 'punctuation.definition.section.block.begin.bracket.curly.c']
             expect(tokens[13]).toEqual value: ' a ^= b', scopes: ['source.c', 'meta.preprocessor.macro.c']
             expect(tokens[14]).toEqual value: ';', scopes: ['source.c', 'meta.preprocessor.macro.c', 'punctuation.terminator.statement.c']
             expect(tokens[15]).toEqual value: ' b ^= a', scopes: ['source.c', 'meta.preprocessor.macro.c']
             expect(tokens[16]).toEqual value: ';', scopes: ['source.c', 'meta.preprocessor.macro.c', 'punctuation.terminator.statement.c']
             expect(tokens[17]).toEqual value: ' a ^= b', scopes: ['source.c', 'meta.preprocessor.macro.c']
             expect(tokens[18]).toEqual value: ';', scopes: ['source.c', 'meta.preprocessor.macro.c', 'punctuation.terminator.statement.c']
-            expect(tokens[20]).toEqual value: '}', scopes: ['source.c', 'meta.preprocessor.macro.c', 'meta.brace.curly.scope-is-for-back-capability.c', 'punctuation.definition.section.block.end.bracket.curly.c']
+            expect(tokens[20]).toEqual value: '}', scopes: ['source.c', 'meta.preprocessor.macro.c', 'punctuation.definition.section.block.end.bracket.curly.c']
             expect(tokens[22]).toEqual value: 'while', scopes: ['source.c', 'meta.preprocessor.macro.c', 'keyword.control.c']
-            expect(tokens[24]).toEqual value: '(', scopes: ['source.c', 'meta.preprocessor.macro.c', 'meta.brace.round.scope-is-for-back-capability.c', 'punctuation.bracket.round.c']
+            expect(tokens[24]).toEqual value: '(', scopes: ['source.c', 'meta.preprocessor.macro.c', 'punctuation.bracket.round.c']
             expect(tokens[26]).toEqual value: '0', scopes: ['source.c', 'meta.preprocessor.macro.c', 'constant.numeric.c']
-            expect(tokens[28]).toEqual value: ')', scopes: ['source.c', 'meta.preprocessor.macro.c', 'meta.brace.round.scope-is-for-back-capability.c', 'punctuation.bracket.round.c']
+            expect(tokens[28]).toEqual value: ')', scopes: ['source.c', 'meta.preprocessor.macro.c', 'punctuation.bracket.round.c']
 
           it "tokenizes multiline macros", ->
             lines = grammar.tokenizeLines '''
               #define max(a,b) (a>b)? \\
                                 a:b
             '''
-            expect(lines[0][10]).toEqual value: '(', scopes: ['source.c', 'meta.preprocessor.macro.c', 'meta.brace.round.scope-is-for-back-capability.c', 'punctuation.bracket.round.c']
-            expect(lines[0][12]).toEqual value: ')', scopes: ['source.c', 'meta.preprocessor.macro.c', 'meta.brace.round.scope-is-for-back-capability.c', 'punctuation.bracket.round.c']
+            expect(lines[0][10]).toEqual value: '(', scopes: ['source.c', 'meta.preprocessor.macro.c', 'punctuation.bracket.round.c']
+            expect(lines[0][12]).toEqual value: ')', scopes: ['source.c', 'meta.preprocessor.macro.c', 'punctuation.bracket.round.c']
             expect(lines[0][14]).toEqual value: '\\', scopes: ['source.c', 'meta.preprocessor.macro.c', 'constant.character.escape.line-continuation.c']
 
             lines = grammar.tokenizeLines '''
@@ -285,7 +283,7 @@ describe "Language-C", ->
             expect(lines[0][6]).toEqual value: ',', scopes: ['source.c', 'meta.preprocessor.macro.c', 'variable.parameter.preprocessor.c', 'punctuation.separator.parameters.c']
             expect(lines[0][7]).toEqual value: ' b', scopes: ['source.c', 'meta.preprocessor.macro.c', 'variable.parameter.preprocessor.c']
             expect(lines[0][8]).toEqual value: ')', scopes: ['source.c', 'meta.preprocessor.macro.c', 'punctuation.definition.parameters.end.bracket.round.c']
-            expect(lines[0][10]).toEqual value: '{', scopes: ['source.c', 'meta.preprocessor.macro.c', 'meta.brace.curly.scope-is-for-back-capability.c', 'punctuation.definition.section.block.begin.bracket.curly.c']
+            expect(lines[0][10]).toEqual value: '{', scopes: ['source.c', 'meta.preprocessor.macro.c', 'punctuation.definition.section.block.begin.bracket.curly.c']
             expect(lines[0][12]).toEqual value: '\\', scopes: ['source.c', 'meta.preprocessor.macro.c', 'constant.character.escape.line-continuation.c']
             expect(lines[1][0]).toEqual value: '  a ^= b', scopes: ['source.c', 'meta.preprocessor.macro.c']
             expect(lines[1][1]).toEqual value: ';', scopes: ['source.c', 'meta.preprocessor.macro.c', 'punctuation.terminator.statement.c']
@@ -296,7 +294,7 @@ describe "Language-C", ->
             expect(lines[3][0]).toEqual value: '  a ^= b', scopes: ['source.c', 'meta.preprocessor.macro.c']
             expect(lines[3][1]).toEqual value: ';', scopes: ['source.c', 'meta.preprocessor.macro.c', 'punctuation.terminator.statement.c']
             expect(lines[3][3]).toEqual value: '\\', scopes: ['source.c', 'meta.preprocessor.macro.c', 'constant.character.escape.line-continuation.c']
-            expect(lines[4][0]).toEqual value: '}', scopes: ['source.c', 'meta.preprocessor.macro.c', 'meta.brace.curly.scope-is-for-back-capability.c', 'punctuation.definition.section.block.end.bracket.curly.c']
+            expect(lines[4][0]).toEqual value: '}', scopes: ['source.c', 'meta.preprocessor.macro.c', 'punctuation.definition.section.block.end.bracket.curly.c']
 
       describe "includes", ->
         it "tokenizes '#include'", ->
@@ -600,13 +598,13 @@ describe "Language-C", ->
       expect(lines[0][2]).toEqual value: '"', scopes: ['source.cpp', 'meta.extern-block.cpp', 'string.quoted.double.c', 'punctuation.definition.string.begin.c']
       expect(lines[0][3]).toEqual value: 'C', scopes: ['source.cpp', 'meta.extern-block.cpp', 'string.quoted.double.c']
       expect(lines[0][4]).toEqual value: '"', scopes: ['source.cpp', 'meta.extern-block.cpp', 'string.quoted.double.c', 'punctuation.definition.string.end.c']
-      expect(lines[0][6]).toEqual value: '{', scopes: ['source.cpp', 'meta.extern-block.cpp', 'meta.brace.curly.scope-is-for-back-capability.c', 'punctuation.definition.section.block.begin.bracket.curly.c']
+      expect(lines[0][6]).toEqual value: '{', scopes: ['source.cpp', 'meta.extern-block.cpp', 'punctuation.definition.section.block.begin.bracket.curly.c']
       expect(lines[1][0]).toEqual value: '#', scopes: ['source.cpp', 'meta.extern-block.cpp', 'meta.preprocessor.include.c', 'keyword.control.directive.include.c', 'punctuation.definition.directive.c']
       expect(lines[1][1]).toEqual value: 'include', scopes: ['source.cpp', 'meta.extern-block.cpp', 'meta.preprocessor.include.c', 'keyword.control.directive.include.c']
       expect(lines[1][3]).toEqual value: '"', scopes: ['source.cpp', 'meta.extern-block.cpp', 'meta.preprocessor.include.c', 'string.quoted.double.include.c', 'punctuation.definition.string.begin.c']
       expect(lines[1][4]).toEqual value: 'legacy_C_header.h', scopes: ['source.cpp', 'meta.extern-block.cpp', 'meta.preprocessor.include.c', 'string.quoted.double.include.c']
       expect(lines[1][5]).toEqual value: '"', scopes: ['source.cpp', 'meta.extern-block.cpp', 'meta.preprocessor.include.c', 'string.quoted.double.include.c', 'punctuation.definition.string.end.c']
-      expect(lines[2][0]).toEqual value: '}', scopes: ['source.cpp', 'meta.extern-block.cpp', 'meta.brace.curly.scope-is-for-back-capability.c', 'punctuation.definition.section.block.end.bracket.curly.c']
+      expect(lines[2][0]).toEqual value: '}', scopes: ['source.cpp', 'meta.extern-block.cpp', 'punctuation.definition.section.block.end.bracket.curly.c']
 
       lines = grammar.tokenizeLines '''
         #ifdef __cplusplus
@@ -624,14 +622,14 @@ describe "Language-C", ->
       expect(lines[1][2]).toEqual value: '"', scopes: ['source.cpp', 'meta.extern-block.cpp', 'string.quoted.double.c', 'punctuation.definition.string.begin.c']
       expect(lines[1][3]).toEqual value: 'C', scopes: ['source.cpp', 'meta.extern-block.cpp', 'string.quoted.double.c']
       expect(lines[1][4]).toEqual value: '"', scopes: ['source.cpp', 'meta.extern-block.cpp', 'string.quoted.double.c', 'punctuation.definition.string.end.c']
-      expect(lines[1][6]).toEqual value: '{', scopes: ['source.cpp', 'meta.extern-block.cpp', 'meta.brace.curly.scope-is-for-back-capability.c', 'punctuation.definition.section.block.begin.bracket.curly.c']
+      expect(lines[1][6]).toEqual value: '{', scopes: ['source.cpp', 'meta.extern-block.cpp', 'punctuation.definition.section.block.begin.bracket.curly.c']
       expect(lines[2][0]).toEqual value: '#', scopes: ['source.cpp', 'meta.preprocessor.c', 'keyword.control.directive.conditional.c', 'punctuation.definition.directive.c']
       expect(lines[2][1]).toEqual value: 'endif', scopes: ['source.cpp', 'meta.preprocessor.c', 'keyword.control.directive.conditional.c']
       expect(lines[3][1]).toEqual value: '//', scopes: ['source.cpp', 'comment.line.double-slash.c++', 'punctuation.definition.comment.c++']
       expect(lines[3][2]).toEqual value: ' legacy C code here', scopes: ['source.cpp', 'comment.line.double-slash.c++']
       expect(lines[4][0]).toEqual value: '#', scopes: ['source.cpp', 'meta.preprocessor.c', 'keyword.control.directive.conditional.c', 'punctuation.definition.directive.c']
       expect(lines[4][1]).toEqual value: 'ifdef', scopes: ['source.cpp', 'meta.preprocessor.c', 'keyword.control.directive.conditional.c']
-      expect(lines[5][0]).toEqual value: '}', scopes: ['source.cpp', 'meta.brace.curly.scope-is-for-back-capability.c', 'punctuation.definition.section.block.end.bracket.curly.c']
+      expect(lines[5][0]).toEqual value: '}', scopes: ['source.cpp', 'punctuation.definition.section.block.end.bracket.curly.c']
       expect(lines[6][0]).toEqual value: '#', scopes: ['source.cpp', 'meta.preprocessor.c', 'keyword.control.directive.conditional.c', 'punctuation.definition.directive.c']
       expect(lines[6][1]).toEqual value: 'endif', scopes: ['source.cpp', 'meta.preprocessor.c', 'keyword.control.directive.conditional.c']
 

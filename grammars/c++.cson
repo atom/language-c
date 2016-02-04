@@ -126,17 +126,13 @@
       }
     ]
   'block':
-    'begin': '({)'
+    'begin': '{'
     'beginCaptures':
       '0':
-        'name': 'meta.brace.curly.scope-is-for-back-capability.c'
-      '1':
         'name': 'punctuation.definition.section.block.begin.bracket.curly.c'
-    'end': '(})'
+    'end': '}'
     'endCaptures':
       '0':
-        'name': 'meta.brace.curly.scope-is-for-back-capability.c'
-      '1':
         'name': 'punctuation.definition.section.block.end.bracket.curly.c'
     'patterns': [
       {
@@ -272,19 +268,15 @@
             'include': '#angle_brackets'
           }
           {
-            'begin': '({)'
+            'begin': '{'
             'beginCaptures':
               '0':
-                'name': 'meta.brace.curly.scope-is-for-back-capability.c'
-              '1':
                 'name': 'punctuation.definition.section.block.begin.bracket.curly.c'
-            'end': '((}))(\\s*\\n)?'
+            'end': '(})(\\s*\\n)?'
             'endCaptures':
               '1':
-                'name': 'meta.brace.curly.scope-is-for-back-capability.c'
-              '2':
                 'name': 'punctuation.definition.section.block.begin.bracket.curly.c'
-              '3':
+              '2':
                 'name': 'invalid.illegal.you-forgot-semicolon.cpp'
             'patterns': [
               {
@@ -312,17 +304,13 @@
         'name': 'meta.extern-block.cpp'
         'patterns': [
           {
-            'begin': '({)'
+            'begin': '{'
             'beginCaptures':
               '0':
-                'name': 'meta.brace.curly.scope-is-for-back-capability.c'
-              '1':
                 'name': 'punctuation.definition.section.block.begin.bracket.curly.c'
-            'end': '((}))|(?=\\s*#\\s*endif\\b)'
+            'end': '(})|(?=\\s*#\\s*endif\\b)'
             'endCaptures':
               '1':
-                'name': 'meta.brace.curly.scope-is-for-back-capability.c'
-              '2':
                 'name': 'punctuation.definition.section.block.end.bracket.curly.c'
             'patterns': [
               {

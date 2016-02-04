@@ -217,11 +217,9 @@
     'include': '#block'
   }
   {
-    'match': '(})'
+    'match': '}'
     'captures':
       '0':
-        'name': 'meta.brace.curly.scope-is-for-back-capability.c'
-      '1':
         'name': 'punctuation.definition.section.block.end.bracket.curly.c'
   }
   {
@@ -273,17 +271,13 @@
   'block':
     'patterns': [
       {
-        'begin': '({)'
+        'begin': '{'
         'beginCaptures':
           '0':
-            'name': 'meta.brace.curly.scope-is-for-back-capability.c'
-          '1':
             'name': 'punctuation.definition.section.block.begin.bracket.curly.c'
-        'end': '((}))|(?=\\s*#\\s*endif\\b)'
+        'end': '(})|(?=\\s*#\\s*endif\\b)'
         'endCaptures':
           '1':
-            'name': 'meta.brace.curly.scope-is-for-back-capability.c'
-          '2':
             'name': 'punctuation.definition.section.block.end.bracket.curly.c'
         'patterns': [
           {
@@ -731,17 +725,13 @@
   'punctuation':
     'patterns': [
       {
-        'begin': '(\\()'
+        'begin': '\\('
         'beginCaptures':
           '0':
-            'name': 'meta.brace.round.scope-is-for-back-capability.c'
-          '1':
             'name': 'punctuation.bracket.round.c'
-        'end': '(\\))'
+        'end': '\\)'
         'endCaptures':
           '0':
-            'name': 'meta.brace.round.scope-is-for-back-capability.c'
-          '1':
             'name': 'punctuation.bracket.round.c'
         'patterns': [
           {
@@ -750,12 +740,8 @@
         ]
       }
       {
-        'match': '(\\[|\\])'
-        'captures':
-          '0':
-            'name': 'meta.brace.square.scope-is-for-back-capability.c'
-          '1':
-            'name': 'punctuation.bracket.square.c'
+        'match': '\\[|\\]'
+        'name': 'punctuation.bracket.square.c'
       }
       {
         'match': ','
