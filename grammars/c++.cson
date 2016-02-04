@@ -126,11 +126,11 @@
       }
     ]
   'block':
-    'begin': '\\{'
+    'begin': '{'
     'beginCaptures':
       '0':
         'name': 'punctuation.definition.section.block.begin.c'
-    'end': '\\}'
+    'end': '}'
     'endCaptures':
       '0':
         'name': 'punctuation.definition.section.block.end.c'
@@ -174,7 +174,7 @@
         'beginCaptures':
           '1':
             'name': 'punctuation.definition.parameters.c'
-        'end': '(?=\\{)'
+        'end': '(?={)'
         'name': 'meta.function.constructor.initializer-list.cpp'
         'patterns': [
           {
@@ -211,15 +211,15 @@
         'captures':
           '1':
             'name': 'keyword.control.namespace.$2'
-        'end': '(?<=\\})|(?=(;|,|\\(|\\)|>|\\[|\\]|=))'
+        'end': '(?<=})|(?=(;|,|\\(|\\)|>|\\[|\\]|=))'
         'name': 'meta.namespace-block.cpp'
         'patterns': [
           {
-            'begin': '\\{'
+            'begin': '{'
             'beginCaptures':
               '0':
                 'name': 'punctuation.definition.scope.cpp'
-            'end': '\\}'
+            'end': '}'
             'endCaptures':
               '0':
                 'name': 'punctuation.definition.scope.cpp'
@@ -269,11 +269,11 @@
             'include': '#angle_brackets'
           }
           {
-            'begin': '\\{'
+            'begin': '{'
             'beginCaptures':
               '0':
                 'name': 'punctuation.definition.section.block.begin.cpp'
-            'end': '(\\})(\\s*\\n)?'
+            'end': '}(\\s*\\n)?'
             'endCaptures':
               '1':
                 'name': 'punctuation.definition.section.block.end.cpp'
@@ -305,11 +305,11 @@
         'name': 'meta.extern-block.cpp'
         'patterns': [
           {
-            'begin': '\\{'
+            'begin': '{'
             'beginCaptures':
               '0':
                 'name': 'punctuation.definition.section.block.begin.c'
-            'end': '\\}|(?=\\s*#\\s*endif\\b)'
+            'end': '}|(?=\\s*#\\s*endif\\b)'
             'endCaptures':
               '0':
                 'name': 'punctuation.definition.section.block.end.c'

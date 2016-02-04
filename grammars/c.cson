@@ -265,11 +265,11 @@
   'block':
     'patterns': [
       {
-        'begin': '\\{'
+        'begin': '{'
         'beginCaptures':
           '0':
             'name': 'punctuation.definition.section.block.begin.c'
-        'end': '\\}|(?=\\s*#\\s*endif\\b)'
+        'end': '}|(?=\\s*#\\s*endif\\b)'
         'endCaptures':
           '0':
             'name': 'punctuation.definition.section.block.end.c'
@@ -322,11 +322,11 @@
     ]
   'function_call':
     'begin': '''(?x)
-      (?: (?= \\s )  (?:(?<=else|new|return) | (?<!\\w)) (\\s+))?
+      (?:(?=\\s)(?:(?<=else|new|return)|(?<!\\w))(\\s+))?
       (\\b
         (?!(while|for|do|if|else|switch|catch|enumerate|return|sizeof|[cr]?iterate)
         \\s*\\()
-        (?:(?!NS)[A-Za-z_][A-Za-z0-9_]*+\\b | :: )++  # actual name
+        (?:(?!NS)[A-Za-z_][A-Za-z0-9_]*+\\b|::)++ # actual name
       )
       \\s*(?=\\()
     '''
@@ -409,13 +409,13 @@
       }
     ]
   'function_arguments':
-    'begin': '(\\()'
+    'begin': '\\('
     'beginCaptures':
-      '1':
+      '0':
         'name': 'punctuation.definition.arguments.begin.c'
-    'end': '(\\))'
+    'end': '\\)'
     'endCaptures':
-      '1':
+      '0':
         'name': 'punctuation.definition.arguments.end.c'
     'name': 'meta.arguments.c'
     'patterns': [
@@ -729,7 +729,9 @@
           '0':
             'name': 'punctuation.bracket.round.c'
         'patterns': [
-          'include': '$base'
+          {
+            'include': '$base'
+          }
         ]
       }
       {
