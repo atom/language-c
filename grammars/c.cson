@@ -420,13 +420,13 @@
       }
     ]
   'function_params':
-    'begin': '(\\()'
+    'begin': '\\('
     'beginCaptures':
-      '1':
+      '0':
         'name': 'punctuation.definition.parameters.begin.bracket.round.c'
-    'end': '(\\))'
+    'end': '\\)'
     'endCaptures':
-      '1':
+      '0':
         'name': 'punctuation.definition.parameters.end.bracket.round.c'
     'name': 'meta.parameters.c'
     'patterns': [
