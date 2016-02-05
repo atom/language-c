@@ -408,11 +408,11 @@
     'begin': '\\('
     'beginCaptures':
       '0':
-        'name': 'punctuation.definition.arguments.begin.c'
+        'name': 'punctuation.definition.arguments.bracket.round.begin.c'
     'end': '\\)'
     'endCaptures':
       '0':
-        'name': 'punctuation.definition.arguments.end.c'
+        'name': 'punctuation.definition.arguments.bracket.round.end.c'
     'name': 'meta.arguments.c'
     'patterns': [
       {
