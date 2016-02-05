@@ -687,8 +687,23 @@
         ]
       }
       {
-        'match': '\\[|\\]'
-        'name': 'punctuation.bracket.square.c'
+        'begin': '\\['
+        'beginCaptures':
+          '0':
+            'name': 'punctuation.bracket.square.c'
+        'end': '\\]'
+        'endCaptures':
+          '0':
+            'name': 'punctuation.bracket.square.c'
+        'patterns': [
+          {
+            'include': '$base'
+          }
+        ]
+      }
+      {
+        'match': '\\)|}|\\]'
+        'name': 'invalid.illegal.unmatched-bracket.c'
       }
       {
         'match': ','

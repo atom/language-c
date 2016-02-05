@@ -131,8 +131,9 @@ describe "Language-C", ->
           ',': 'punctuation.separator.comma.c'
           '.': 'punctuation.separator.period.c'
           ';': 'punctuation.terminator.statement.c'
-          '[': 'punctuation.bracket.square.c'
-          ']': 'punctuation.bracket.square.c'
+          ']': 'invalid.illegal.unmatched-bracket.c'
+          '}': 'invalid.illegal.unmatched-bracket.c'
+          ')': 'invalid.illegal.unmatched-bracket.c'
 
         for token, scope of punctuation
           {tokens} = grammar.tokenizeLine token
@@ -141,6 +142,10 @@ describe "Language-C", ->
         {tokens} = grammar.tokenizeLine '()'
         expect(tokens[0]).toEqual value: '(', scopes: ['source.c', 'punctuation.bracket.round.c']
         expect(tokens[1]).toEqual value: ')', scopes: ['source.c', 'punctuation.bracket.round.c']
+
+        {tokens} = grammar.tokenizeLine '[]'
+        expect(tokens[0]).toEqual value: '[', scopes: ['source.c', 'punctuation.bracket.square.c']
+        expect(tokens[1]).toEqual value: ']', scopes: ['source.c', 'punctuation.bracket.square.c']
 
     describe "preprocessor directives", ->
       it "tokenizes '#line'", ->
