@@ -296,11 +296,12 @@
         ]
       }
       {
+        # extern "C" {}
         'begin': '\\b(extern)(?=\\s*")'
         'beginCaptures':
           '1':
             'name': 'storage.modifier.cpp'
-        'end': '(?<=\\})|(?=\\w)|(?=\\s*#\\s*endif\\b)'
+        'end': '(?<=})'
         'name': 'meta.extern-block.cpp'
         'patterns': [
           {
@@ -308,9 +309,9 @@
             'beginCaptures':
               '0':
                 'name': 'punctuation.definition.section.block.begin.bracket.curly.c'
-            'end': '(})|(?=\\s*#\\s*endif\\b)'
+            'end': '}'
             'endCaptures':
-              '1':
+              '0':
                 'name': 'punctuation.definition.section.block.end.bracket.curly.c'
             'patterns': [
               {
