@@ -320,7 +320,7 @@
     'begin': '''(?x)
       (?:(?=\\s)(?:(?<=else|new|return)|(?<!\\w))(\\s+))?
       (\\b
-        (?!(while|for|do|if|else|switch|catch|enumerate|return|sizeof|[cr]?iterate)
+        (?!(while|for|do|if|else|switch|catch|enumerate|return|sizeof)
         \\s*\\()
         (?:(?!NS)[A-Za-z_][A-Za-z0-9_]*+\\b|::)++ # actual name
       )
