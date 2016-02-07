@@ -298,7 +298,7 @@
         'include': '#libc'
       }
       {
-        'include': '#function_call'
+        'include': '#function_calls'
       }
       {
         'captures':
@@ -316,7 +316,7 @@
         'include': '$base'
       }
     ]
-  'function_call':
+  'function_calls':
     'begin': '''(?x)
       (?:(?=\\s)(?:(?<=else|new|return)|(?<!\\w))(\\s+))?
       (\\b
