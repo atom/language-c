@@ -1,4 +1,4 @@
-'.source.c, .source.cpp, .source.objc, .source.objcpp':
+'.source.nxc':
   '#ifndef … #define … #endif':
     'prefix': 'def'
     'body': '#ifndef ${1:SYMBOL}\n#define $1 ${2:value}\n#endif'
@@ -74,7 +74,7 @@
   'read file':
     'prefix': 'rf'
     'body': 'FILE *${1:fp};\n${1:fp} = fopen ("${2:filename.txt}","r");\nif (${1:fp}!=NULL)\n{\n\tfscanf(${1:fp},"${3:Some String\\\\n}", ${3:&var});\n\tfclose (${1:fp});\n}'
-'.source.cpp, .source.objcpp':
+'.source.nxc':
   'Enumeration':
     'prefix': 'enum'
     'body': 'enum ${1:name} { $0 };'

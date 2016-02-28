@@ -1,10 +1,9 @@
-'scopeName': 'source.c'
+'scopeName': 'source.nxc'
 'fileTypes': [
-  'c'
-  'h'
+  'nxc'
 ]
 'firstLineMatch': '-\\*-\\s*([Mm]ode: )?C;?\\s*-\\*-'
-'name': 'C'
+'name': 'NXC'
 'patterns': [
   {
     'include': '#preprocessor-rule-enabled'
@@ -19,33 +18,33 @@
     'include': '#comments'
   }
   {
-    'match': '\\b(break|case|continue|default|do|else|for|goto|if|_Pragma|return|switch|while)\\b'
-    'name': 'keyword.control.c'
+    'match': '\\b(break|case|until|continue|default|do|else|for|goto|if|_Pragma|return|switch|while)\\b'
+    'name': 'keyword.control.nxc'
   }
   {
     'match': '\\b(asm|__asm__|auto|bool|_Bool|char|_Complex|double|enum|float|_Imaginary|int|long|short|signed|struct|typedef|union|unsigned|void)\\b'
-    'name': 'storage.type.c'
+    'name': 'storage.type.nxc'
   }
   {
     'match': '\\b(const|extern|register|restrict|static|volatile|inline)\\b'
-    'name': 'storage.modifier.c'
+    'name': 'storage.modifier.nxc'
   }
   {
     'comment': 'common C constant naming idiom -- kConstantVariable'
     'match': '\\bk[A-Z]\\w*\\b'
-    'name': 'constant.other.variable.mac-classic.c'
+    'name': 'constant.other.variable.mac-classic.nxc'
   }
   {
     'match': '\\bg[A-Z]\\w*\\b'
-    'name': 'variable.other.readwrite.global.mac-classic.c'
+    'name': 'variable.other.readwrite.global.mac-classic.nxc'
   }
   {
     'match': '\\bs[A-Z]\\w*\\b'
-    'name': 'variable.other.readwrite.static.mac-classic.c'
+    'name': 'variable.other.readwrite.static.mac-classic.nxc'
   }
   {
     'match': '\\b(NULL|true|false|TRUE|FALSE)\\b'
-    'name': 'constant.language.c'
+    'name': 'constant.language.nxc'
   }
   {
     'include': '#sizeof'
@@ -72,21 +71,21 @@
     '''
     'beginCaptures':
       '1':
-        'name': 'keyword.control.directive.define.c'
+        'name': 'keyword.control.directive.define.nxc'
       '2':
-        'name': 'punctuation.definition.directive.c'
+        'name': 'punctuation.definition.directive.nxc'
       '3':
-        'name': 'entity.name.function.preprocessor.c'
+        'name': 'entity.name.function.preprocessor.nxc'
       '5':
-        'name': 'punctuation.definition.parameters.begin.c'
+        'name': 'punctuation.definition.parameters.begin.nxc'
       '6':
-        'name': 'variable.parameter.preprocessor.c'
+        'name': 'variable.parameter.preprocessor.nxc'
       '8':
-        'name': 'punctuation.separator.parameters.c'
+        'name': 'punctuation.separator.parameters.nxc'
       '9':
-        'name': 'punctuation.definition.parameters.end.c'
+        'name': 'punctuation.definition.parameters.end.nxc'
     'end': '(?=(?://|/\\*))|(?<!\\\\)(?=\\n)'
-    'name': 'meta.preprocessor.macro.c'
+    'name': 'meta.preprocessor.macro.nxc'
     'patterns': [
       {
         'include': '$base'
@@ -97,11 +96,11 @@
     'begin': '^\\s*((#)\\s*(error|warning))\\b'
     'captures':
       '1':
-        'name': 'keyword.control.directive.diagnostic.$3.c'
+        'name': 'keyword.control.directive.diagnostic.$3.nxc'
       '2':
-        'name': 'punctuation.definition.directive.c'
+        'name': 'punctuation.definition.directive.nxc'
     'end': '(?<!\\\\)(?=\\n)'
-    'name': 'meta.preprocessor.diagnostic.c'
+    'name': 'meta.preprocessor.diagnostic.nxc'
     'patterns': [
       {
         'include': '#line_continuation_character'
@@ -112,11 +111,11 @@
     'begin': '^\\s*((#)\\s*(include|import))\\b\\s*'
     'beginCaptures':
       '1':
-        'name': 'keyword.control.directive.$3.c'
+        'name': 'keyword.control.directive.$3.nxc'
       '2':
-        'name': 'punctuation.definition.directive.c'
+        'name': 'punctuation.definition.directive.nxc'
     'end': '(?=(?://|/\\*))|(?<!\\\\)(?=\\n)'
-    'name': 'meta.preprocessor.include.c'
+    'name': 'meta.preprocessor.include.nxc'
     'patterns': [
       {
         'include': '#line_continuation_character'
@@ -125,23 +124,23 @@
         'begin': '"'
         'beginCaptures':
           '0':
-            'name': 'punctuation.definition.string.begin.c'
+            'name': 'punctuation.definition.string.begin.nxc'
         'end': '"'
         'endCaptures':
           '0':
-            'name': 'punctuation.definition.string.end.c'
-        'name': 'string.quoted.double.include.c'
+            'name': 'punctuation.definition.string.end.nxc'
+        'name': 'string.quoted.double.include.nxc'
       }
       {
         'begin': '<'
         'beginCaptures':
           '0':
-            'name': 'punctuation.definition.string.begin.c'
+            'name': 'punctuation.definition.string.begin.nxc'
         'end': '>'
         'endCaptures':
           '0':
-            'name': 'punctuation.definition.string.end.c'
-        'name': 'string.quoted.other.lt-gt.include.c'
+            'name': 'punctuation.definition.string.end.nxc'
+        'name': 'string.quoted.other.lt-gt.include.nxc'
       }
     ]
   }
@@ -152,11 +151,11 @@
     'begin': '^\\s*((#)\\s*line)\\b'
     'beginCaptures':
       '1':
-        'name': 'keyword.control.directive.line.c'
+        'name': 'keyword.control.directive.line.nxc'
       '2':
-        'name': 'punctuation.definition.directive.c'
+        'name': 'punctuation.definition.directive.nxc'
     'end': '(?=(?://|/\\*))|(?<!\\\\)(?=\\n)'
-    'name': 'meta.preprocessor.c'
+    'name': 'meta.preprocessor.nxc'
     'patterns': [
       {
         'include': '#strings'
@@ -173,15 +172,15 @@
     'begin': '^\\s*(?:((#)\\s*(?:elif|else|if|ifdef|ifndef))|((#)\\s*(pragma|undef)))\\b'
     'beginCaptures':
       '1':
-        'name': 'keyword.control.directive.conditional.c'
+        'name': 'keyword.control.directive.conditional.nxc'
       '2':
-        'name': 'punctuation.definition.directive.c'
+        'name': 'punctuation.definition.directive.nxc'
       '3':
-        'name': 'keyword.control.directive.$5.c'
+        'name': 'keyword.control.directive.$5.nxc'
       '4':
-        'name': 'punctuation.definition.directive.c'
+        'name': 'punctuation.definition.directive.nxc'
     'end': '(?=(?://|/\\*))|(?<!\\\\)(?=\\n)'
-    'name': 'meta.preprocessor.c'
+    'name': 'meta.preprocessor.nxc'
     'patterns': [
       {
         'include': '#line_continuation_character'
@@ -190,28 +189,28 @@
   }
   {
     'match': '\\b(u_char|u_short|u_int|u_long|ushort|uint|u_quad_t|quad_t|qaddr_t|caddr_t|daddr_t|dev_t|fixpt_t|blkcnt_t|blksize_t|gid_t|in_addr_t|in_port_t|ino_t|key_t|mode_t|nlink_t|id_t|pid_t|off_t|segsz_t|swblk_t|uid_t|id_t|clock_t|size_t|ssize_t|time_t|useconds_t|suseconds_t)\\b'
-    'name': 'support.type.sys-types.c'
+    'name': 'support.type.sys-types.nxc'
   }
   {
     'match': '\\b(pthread_attr_t|pthread_cond_t|pthread_condattr_t|pthread_mutex_t|pthread_mutexattr_t|pthread_once_t|pthread_rwlock_t|pthread_rwlockattr_t|pthread_t|pthread_key_t)\\b'
-    'name': 'support.type.pthread.c'
+    'name': 'support.type.pthread.nxc'
   }
   {
     'match': '\\b(int8_t|int16_t|int32_t|int64_t|uint8_t|uint16_t|uint32_t|uint64_t|int_least8_t|int_least16_t|int_least32_t|int_least64_t|uint_least8_t|uint_least16_t|uint_least32_t|uint_least64_t|int_fast8_t|int_fast16_t|int_fast32_t|int_fast64_t|uint_fast8_t|uint_fast16_t|uint_fast32_t|uint_fast64_t|intptr_t|uintptr_t|intmax_t|intmax_t|uintmax_t|uintmax_t)\\b'
-    'name': 'support.type.stdint.c'
+    'name': 'support.type.stdint.nxc'
   }
   {
     'match': '\\b(noErr|kNilOptions|kInvalidID|kVariableLengthArray)\\b'
-    'name': 'support.constant.mac-classic.c'
+    'name': 'support.constant.mac-classic.nxc'
   }
   {
     'match': '\\b(AbsoluteTime|Boolean|Byte|ByteCount|ByteOffset|BytePtr|CompTimeValue|ConstLogicalAddress|ConstStrFileNameParam|ConstStringPtr|Duration|Fixed|FixedPtr|Float32|Float32Point|Float64|Float80|Float96|FourCharCode|Fract|FractPtr|Handle|ItemCount|LogicalAddress|OptionBits|OSErr|OSStatus|OSType|OSTypePtr|PhysicalAddress|ProcessSerialNumber|ProcessSerialNumberPtr|ProcHandle|Ptr|ResType|ResTypePtr|ShortFixed|ShortFixedPtr|SignedByte|SInt16|SInt32|SInt64|SInt8|Size|StrFileName|StringHandle|StringPtr|TimeBase|TimeRecord|TimeScale|TimeValue|TimeValue64|UInt16|UInt32|UInt64|UInt8|UniChar|UniCharCount|UniCharCountPtr|UniCharPtr|UnicodeScalarValue|UniversalProcHandle|UniversalProcPtr|UnsignedFixed|UnsignedFixedPtr|UnsignedWide|UTF16Char|UTF32Char|UTF8Char)\\b'
-    'name': 'support.type.mac-classic.c'
+    'name': 'support.type.mac-classic.nxc'
   }
   {
     'comment': 'Reserved POSIX types'
     'match': '\\b([A-Za-z0-9_]+_t)\\b'
-    'name': 'support.type.posix-reserved.c'
+    'name': 'support.type.posix-reserved.nxc'
   }
   {
     'include': '#block'
@@ -226,7 +225,7 @@
           (?=\\s*[A-Za-z_])(?<!&&)(?<=[*&>])   # type modifier before name
         )
       )
-      (\\s*)(?!(while|for|do|if|else|switch|catch|enumerate|return|sizeof|[cr]?iterate)\\s*\\()
+      (\\s*)(?!(while|for|do|until|if|else|switch|catch|enumerate|return|sizeof|[cr]?iterate)\\s*\\()
       (
         (?:[A-Za-z_][A-Za-z0-9_]*+|::)++  # actual name
         |
@@ -236,13 +235,13 @@
     '''
     'beginCaptures':
       '1':
-        'name': 'punctuation.whitespace.function.leading.c'
+        'name': 'punctuation.whitespace.function.leading.nxc'
       '3':
-        'name': 'entity.name.function.c'
+        'name': 'entity.name.function.nxc'
       '4':
-        'name': 'punctuation.definition.parameters.c'
+        'name': 'punctuation.definition.parameters.nxc'
     'end': '(?<=\\})|(?=#)|(;)'
-    'name': 'meta.function.c'
+    'name': 'meta.function.nxc'
     'patterns': [
       {
         'include': '#comments'
@@ -252,7 +251,7 @@
       }
       {
         'match': '\\b(const|override|final)\\b'
-        'name': 'storage.modifier.c'
+        'name': 'storage.modifier.nxc'
       }
       {
         'include': '#block'
@@ -267,9 +266,9 @@
   'access':
     'captures':
       '1':
-        'name': 'punctuation.separator.variable-access.c'
+        'name': 'punctuation.separator.variable-access.nxc'
       '2':
-        'name': 'variable.other.dot-access.c'
+        'name': 'variable.other.dot-access.nxc'
     'match': '(\\.)([a-zA-Z_][a-zA-Z_0-9]*)\\b(?!\\s*\\()'
   'block':
     'patterns': [
@@ -277,12 +276,12 @@
         'begin': '\\{'
         'beginCaptures':
           '0':
-            'name': 'punctuation.section.block.begin.c'
+            'name': 'punctuation.section.block.begin.nxc'
         'end': '\\}|(?=\\s*#\\s*endif\\b)'
         'endCaptures':
           '0':
-            'name': 'punctuation.section.block.end.c'
-        'name': 'meta.block.c'
+            'name': 'punctuation.section.block.end.nxc'
+        'name': 'meta.block.nxc'
         'patterns': [
           {
             'include': '#block_innards'
@@ -316,11 +315,11 @@
       {
         'captures':
           '1':
-            'name': 'variable.other.c'
+            'name': 'variable.other.nxc'
           '2':
-            'name': 'punctuation.definition.parameters.c'
+            'name': 'punctuation.definition.parameters.nxc'
         'match': '(?x)\n\t\t\t        (?x)\n\t\t\t(?:  \n\t\t\t     (?: (?= \\s )           (?<!else|new|return) (?<=\\w)\\s+      #  or word + space before name\n\t\t\t     )\n\t\t\t)\n\t\t\t(\n\t\t\t\t(?: [A-Za-z_][A-Za-z0-9_]*+ | :: )++    |              # actual name\n\t\t\t\t(?: (?<=operator) (?: [-*&<>=+!]+ | \\(\\) | \\[\\] ) )  # if it is a C++ operator\n\t\t\t)\n\t\t\t \\s*(\\()'
-        'name': 'meta.initialization.c'
+        'name': 'meta.initialization.nxc'
       }
       {
         'include': '#block'
@@ -332,41 +331,41 @@
   'c_function_call':
     'captures':
       '1':
-        'name': 'punctuation.whitespace.function-call.leading.c'
+        'name': 'punctuation.whitespace.function-call.leading.nxc'
       '2':
-        'name': 'support.function.any-method.c'
+        'name': 'support.function.any-method.nxc'
       '4':
-        'name': 'punctuation.definition.parameters.c'
-    'match': '(?x) (?: (?= \\s )  (?:(?<=else|new|return) | (?<!\\w)) (\\s+))?\n\t\t\t(\\b \n\t\t\t\t(?!(while|for|do|if|else|switch|catch|enumerate|return|sizeof|[cr]?iterate)\\s*\\()(?:(?!NS)[A-Za-z_][A-Za-z0-9_]*+\\b | :: )++                  # actual name\n\t\t\t)\n\t\t\t \\s*(\\()'
-    'name': 'meta.function-call.c'
+        'name': 'punctuation.definition.parameters.nxc'
+    'match': '(?x) (?: (?= \\s )  (?:(?<=else|new|return) | (?<!\\w)) (\\s+))?\n\t\t\t(\\b \n\t\t\t\t(?!(while|for|do|if|until|else|switch|catch|enumerate|return|sizeof|[cr]?iterate)\\s*\\()(?:(?!NS)[A-Za-z_][A-Za-z0-9_]*+\\b | :: )++                  # actual name\n\t\t\t)\n\t\t\t \\s*(\\()'
+    'name': 'meta.function-call.nxc'
   'comments':
     'patterns': [
       {
         'captures':
           '1':
-            'name': 'meta.toc-list.banner.block.c'
+            'name': 'meta.toc-list.banner.block.nxc'
         'match': '^/\\* =(\\s*.*?)\\s*= \\*/$\\n?'
-        'name': 'comment.block.c'
+        'name': 'comment.block.nxc'
       }
       {
         'begin': '/\\*'
         'beginCaptures':
           '0':
-            'name': 'punctuation.definition.comment.begin.c'
+            'name': 'punctuation.definition.comment.begin.nxc'
         'end': '\\*/'
         'endCaptures':
           '0':
-            'name': 'punctuation.definition.comment.end.c'
-        'name': 'comment.block.c'
+            'name': 'punctuation.definition.comment.end.nxc'
+        'name': 'comment.block.nxc'
       }
       {
         'match': '\\*/.*\\n'
-        'name': 'invalid.illegal.stray-comment-end.c'
+        'name': 'invalid.illegal.stray-comment-end.nxc'
       }
       {
         'captures':
           '1':
-            'name': 'meta.toc-list.banner.line.c'
+            'name': 'meta.toc-list.banner.line.nxc'
         'match': '^// =(\\s*.*?)\\s*=\\s*$\\n?'
         'name': 'comment.line.banner.cpp'
       }
@@ -408,9 +407,9 @@
   'libc':
     'captures':
       '1':
-        'name': 'punctuation.whitespace.support.function.leading.c'
+        'name': 'punctuation.whitespace.support.function.leading.nxc'
       '2':
-        'name': 'support.function.C99.c'
+        'name': 'support.function.C99.nxc'
     'match': '(\\s*)\\b(hypot(f|l)?|s(scanf|ystem|nprintf|ca(nf|lb(n(f|l)?|ln(f|l)?))|i(n(h(f|l)?|f|l)?|gn(al|bit))|tr(s(tr|pn)|nc(py|at|mp)|c(spn|hr|oll|py|at|mp)|to(imax|d|u(l(l)?|max)|k|f|l(d|l)?)|error|pbrk|ftime|len|rchr|xfrm)|printf|et(jmp|vbuf|locale|buf)|qrt(f|l)?|w(scanf|printf)|rand)|n(e(arbyint(f|l)?|xt(toward(f|l)?|after(f|l)?))|an(f|l)?)|c(s(in(h(f|l)?|f|l)?|qrt(f|l)?)|cos(h(f)?|f|l)?|imag(f|l)?|t(ime|an(h(f|l)?|f|l)?)|o(s(h(f|l)?|f|l)?|nj(f|l)?|pysign(f|l)?)|p(ow(f|l)?|roj(f|l)?)|e(il(f|l)?|xp(f|l)?)|l(o(ck|g(f|l)?)|earerr)|a(sin(h(f|l)?|f|l)?|cos(h(f|l)?|f|l)?|tan(h(f|l)?|f|l)?|lloc|rg(f|l)?|bs(f|l)?)|real(f|l)?|brt(f|l)?)|t(ime|o(upper|lower)|an(h(f|l)?|f|l)?|runc(f|l)?|gamma(f|l)?|mp(nam|file))|i(s(space|n(ormal|an)|cntrl|inf|digit|u(nordered|pper)|p(unct|rint)|finite|w(space|c(ntrl|type)|digit|upper|p(unct|rint)|lower|al(num|pha)|graph|xdigit|blank)|l(ower|ess(equal|greater)?)|al(num|pha)|gr(eater(equal)?|aph)|xdigit|blank)|logb(f|l)?|max(div|abs))|di(v|fftime)|_Exit|unget(c|wc)|p(ow(f|l)?|ut(s|c(har)?|wc(har)?)|error|rintf)|e(rf(c(f|l)?|f|l)?|x(it|p(2(f|l)?|f|l|m1(f|l)?)?))|v(s(scanf|nprintf|canf|printf|w(scanf|printf))|printf|f(scanf|printf|w(scanf|printf))|w(scanf|printf)|a_(start|copy|end|arg))|qsort|f(s(canf|e(tpos|ek))|close|tell|open|dim(f|l)?|p(classify|ut(s|c|w(s|c))|rintf)|e(holdexcept|set(e(nv|xceptflag)|round)|clearexcept|testexcept|of|updateenv|r(aiseexcept|ror)|get(e(nv|xceptflag)|round))|flush|w(scanf|ide|printf|rite)|loor(f|l)?|abs(f|l)?|get(s|c|pos|w(s|c))|re(open|e|ad|xp(f|l)?)|m(in(f|l)?|od(f|l)?|a(f|l|x(f|l)?)?))|l(d(iv|exp(f|l)?)|o(ngjmp|cal(time|econv)|g(1(p(f|l)?|0(f|l)?)|2(f|l)?|f|l|b(f|l)?)?)|abs|l(div|abs|r(int(f|l)?|ound(f|l)?))|r(int(f|l)?|ound(f|l)?)|gamma(f|l)?)|w(scanf|c(s(s(tr|pn)|nc(py|at|mp)|c(spn|hr|oll|py|at|mp)|to(imax|d|u(l(l)?|max)|k|f|l(d|l)?|mbs)|pbrk|ftime|len|r(chr|tombs)|xfrm)|to(b|mb)|rtomb)|printf|mem(set|c(hr|py|mp)|move))|a(s(sert|ctime|in(h(f|l)?|f|l)?)|cos(h(f|l)?|f|l)?|t(o(i|f|l(l)?)|exit|an(h(f|l)?|2(f|l)?|f|l)?)|b(s|ort))|g(et(s|c(har)?|env|wc(har)?)|mtime)|r(int(f|l)?|ound(f|l)?|e(name|alloc|wind|m(ove|quo(f|l)?|ainder(f|l)?))|a(nd|ise))|b(search|towc)|m(odf(f|l)?|em(set|c(hr|py|mp)|move)|ktime|alloc|b(s(init|towcs|rtowcs)|towc|len|r(towc|len))))\\b'
   'line_continuation_character':
     'patterns': [
@@ -418,26 +417,26 @@
         'match': '(\\\\)\\s*\\n'
         'captures':
           '1':
-            'name': 'constant.character.escape.line-continuation.c'
+            'name': 'constant.character.escape.line-continuation.nxc'
       }
     ]
   'numbers':
     'patterns': [
       {
         'match': '\\b((0(x|X)[0-9a-fA-F]*)|(([0-9]+\\.?[0-9]*)|(\\.[0-9]+))((e|E)(\\+|-)?[0-9]+)?)(L|l|UL|ul|u|U|F|f|ll|LL|ull|ULL)?\\b'
-        'name': 'constant.numeric.c'
+        'name': 'constant.numeric.nxc'
       }
     ]
   'parens':
     'begin': '\\('
     'beginCaptures':
       '0':
-        'name': 'punctuation.section.parens.begin.c'
+        'name': 'punctuation.section.parens.begin.nxc'
     'end': '\\)'
     'endCaptures':
       '0':
-        'name': 'punctuation.section.parens.end.c'
-    'name': 'meta.parens.c'
+        'name': 'punctuation.section.parens.end.nxc'
+    'name': 'meta.parens.nxc'
     'patterns': [
       {
         'include': '$base'
@@ -446,44 +445,44 @@
   'pragma-mark':
     'captures':
       '1':
-        'name': 'meta.preprocessor.c'
+        'name': 'meta.preprocessor.nxc'
       '2':
-        'name': 'keyword.control.directive.pragma.pragma-mark.c'
+        'name': 'keyword.control.directive.pragma.pragma-mark.nxc'
       '3':
-        'name': 'punctuation.definition.directive.c'
+        'name': 'punctuation.definition.directive.nxc'
       '4':
-        'name': 'meta.toc-list.pragma-mark.c'
+        'name': 'meta.toc-list.pragma-mark.nxc'
     'match': '^\\s*(((#)\\s*pragma\\s+mark)\\s+(.*))'
     'name': 'meta.section'
   'preprocessor-rule-disabled':
     'begin': '^\\s*(((#)if)\\s+(0)\\b).*'
     'beginCaptures':
       '1':
-        'name': 'meta.preprocessor.c'
+        'name': 'meta.preprocessor.nxc'
       '2':
-        'name': 'keyword.control.directive.conditional.c'
+        'name': 'keyword.control.directive.conditional.nxc'
       '3':
-        'name': 'punctuation.definition.directive.c'
+        'name': 'punctuation.definition.directive.nxc'
       '4':
-        'name': 'constant.numeric.preprocessor.c'
+        'name': 'constant.numeric.preprocessor.nxc'
     'end': '^\\s*(((#)\\s*endif)\\b)'
     'endCaptures':
       '1':
-        'name': 'meta.preprocessor.c'
+        'name': 'meta.preprocessor.nxc'
       '2':
-        'name': 'keyword.control.directive.conditional.c'
+        'name': 'keyword.control.directive.conditional.nxc'
       '3':
-        'name': 'punctuation.definition.directive.c'
+        'name': 'punctuation.definition.directive.nxc'
     'patterns': [
       {
         'begin': '^\\s*(((#)\\s*else)\\b)'
         'beginCaptures':
           '1':
-            'name': 'meta.preprocessor.c'
+            'name': 'meta.preprocessor.nxc'
           '2':
-            'name': 'keyword.control.directive.conditional.c'
+            'name': 'keyword.control.directive.conditional.nxc'
           '3':
-            'name': 'punctuation.definition.directive.c'
+            'name': 'punctuation.definition.directive.nxc'
         'end': '(?=^\\s*#\\s*endif\\b)'
         'patterns': [
           {
@@ -509,31 +508,31 @@
     'begin': '^\\s*(((#)if)\\s+(0)\\b).*'
     'beginCaptures':
       '1':
-        'name': 'meta.preprocessor.c'
+        'name': 'meta.preprocessor.nxc'
       '2':
-        'name': 'keyword.control.directive.conditional.c'
+        'name': 'keyword.control.directive.conditional.nxc'
       '3':
-        'name': 'punctuation.definition.directive.c'
+        'name': 'punctuation.definition.directive.nxc'
       '4':
-        'name': 'constant.numeric.preprocessor.c'
+        'name': 'constant.numeric.preprocessor.nxc'
     'end': '^\\s*(((#)\\s*endif)\\b)'
     'endCaptures':
       '1':
-        'name': 'meta.preprocessor.c'
+        'name': 'meta.preprocessor.nxc'
       '2':
-        'name': 'keyword.control.directive.conditional.c'
+        'name': 'keyword.control.directive.conditional.nxc'
       '3':
-        'name': 'punctuation.definition.directive.c'
+        'name': 'punctuation.definition.directive.nxc'
     'patterns': [
       {
         'begin': '^\\s*(((#)\\s*else\\b))'
         'beginCaptures':
           '1':
-            'name': 'meta.preprocessor.c'
+            'name': 'meta.preprocessor.nxc'
           '2':
-            'name': 'keyword.control.directive.conditional.c'
+            'name': 'keyword.control.directive.conditional.nxc'
           '3':
-            'name': 'punctuation.definition.directive.c'
+            'name': 'punctuation.definition.directive.nxc'
         'end': '(?=^\\s*#\\s*endif\\b)'
         'patterns': [
           {
@@ -559,31 +558,31 @@
     'begin': '^\\s*(((#)if)\\s+(0*1)\\b)'
     'beginCaptures':
       '1':
-        'name': 'meta.preprocessor.c'
+        'name': 'meta.preprocessor.nxc'
       '2':
-        'name': 'keyword.control.directive.conditional.c'
+        'name': 'keyword.control.directive.conditional.nxc'
       '3':
-        'name': 'punctuation.definition.directive.c'
+        'name': 'punctuation.definition.directive.nxc'
       '4':
-        'name': 'constant.numeric.preprocessor.c'
+        'name': 'constant.numeric.preprocessor.nxc'
     'end': '^\\s*(((#)\\s*endif)\\b)'
     'endCaptures':
       '1':
-        'name': 'meta.preprocessor.c'
+        'name': 'meta.preprocessor.nxc'
       '2':
-        'name': 'keyword.control.directive.conditional.c'
+        'name': 'keyword.control.directive.conditional.nxc'
       '3':
-        'name': 'punctuation.definition.directive.c'
+        'name': 'punctuation.definition.directive.nxc'
     'patterns': [
       {
         'begin': '^\\s*(((#)\\s*else)\\b).*'
         'beginCaptures':
           '1':
-            'name': 'meta.preprocessor.c'
+            'name': 'meta.preprocessor.nxc'
           '2':
-            'name': 'keyword.control.directive.conditional.c'
+            'name': 'keyword.control.directive.conditional.nxc'
           '3':
-            'name': 'punctuation.definition.directive.c'
+            'name': 'punctuation.definition.directive.nxc'
         'contentName': 'comment.block.preprocessor.else-branch'
         'end': '(?=^\\s*#\\s*endif\\b)'
         'patterns': [
@@ -609,31 +608,31 @@
     'begin': '^\\s*(((#)if)\\s+(0*1)\\b)'
     'beginCaptures':
       '1':
-        'name': 'meta.preprocessor.c'
+        'name': 'meta.preprocessor.nxc'
       '2':
-        'name': 'keyword.control.directive.conditional.c'
+        'name': 'keyword.control.directive.conditional.nxc'
       '3':
-        'name': 'punctuation.definition.directive.c'
+        'name': 'punctuation.definition.directive.nxc'
       '4':
-        'name': 'constant.numeric.preprocessor.c'
+        'name': 'constant.numeric.preprocessor.nxc'
     'end': '^\\s*(((#)\\s*endif)\\b)'
     'endCaptures':
       '1':
-        'name': 'meta.preprocessor.c'
+        'name': 'meta.preprocessor.nxc'
       '2':
-        'name': 'keyword.control.directive.conditional.c'
+        'name': 'keyword.control.directive.conditional.nxc'
       '3':
-        'name': 'punctuation.definition.directive.c'
+        'name': 'punctuation.definition.directive.nxc'
     'patterns': [
       {
         'begin': '^\\s*(((#)\\s*else)\\b).*'
         'beginCaptures':
           '1':
-            'name': 'meta.preprocessor.c'
+            'name': 'meta.preprocessor.nxc'
           '2':
-            'name': 'keyword.control.directive.conditional.c'
+            'name': 'keyword.control.directive.conditional.nxc'
           '3':
-            'name': 'punctuation.definition.directive.c'
+            'name': 'punctuation.definition.directive.nxc'
         'contentName': 'comment.block.preprocessor.else-branch.in-block'
         'end': '(?=^\\s*#\\s*endif\\b)'
         'patterns': [
@@ -659,19 +658,19 @@
     'begin': '^\\s*(((#)\\s*if(n?def)?)\\b.*?(?:(?=(?://|/\\*))|$))'
     'beginCaptures':
       '1':
-        'name': 'meta.preprocessor.c'
+        'name': 'meta.preprocessor.nxc'
       '2':
-        'name': 'keyword.control.directive.conditional.c'
+        'name': 'keyword.control.directive.conditional.nxc'
       '3':
-        'name': 'punctuation.definition.directive.c'
+        'name': 'punctuation.definition.directive.nxc'
     'end': '^\\s*(((#)\\s*(endif))\\b)'
     'endCaptures':
       '1':
-        'name': 'meta.preprocessor.c'
+        'name': 'meta.preprocessor.nxc'
       '2':
-        'name': 'keyword.control.directive.conditional.c'
+        'name': 'keyword.control.directive.conditional.nxc'
       '3':
-        'name': 'punctuation.definition.directive.c'
+        'name': 'punctuation.definition.directive.nxc'
     'patterns': [
       {
         'include': '$base'
@@ -681,19 +680,19 @@
     'begin': '^\\s*(((#)\\s*if(n?def)?)\\b.*?(?:(?=(?://|/\\*))|$))'
     'beginCaptures':
       '1':
-        'name': 'meta.preprocessor.c'
+        'name': 'meta.preprocessor.nxc'
       '2':
-        'name': 'keyword.control.directive.conditional.c'
+        'name': 'keyword.control.directive.conditional.nxc'
       '3':
-        'name': 'punctuation.definition.directive.c'
+        'name': 'punctuation.definition.directive.nxc'
     'end': '^\\s*(((#)\\s*endif)\\b)'
     'endCaptures':
       '1':
-        'name': 'meta.preprocessor.c'
+        'name': 'meta.preprocessor.nxc'
       '2':
-        'name': 'keyword.control.directive.conditional.c'
+        'name': 'keyword.control.directive.conditional.nxc'
       '3':
-        'name': 'punctuation.definition.directive.c'
+        'name': 'punctuation.definition.directive.nxc'
     'patterns': [
       {
         'include': '#block_innards'
@@ -701,19 +700,19 @@
     ]
   'sizeof':
     'match': '\\b(sizeof)\\b'
-    'name': 'keyword.operator.sizeof.c'
+    'name': 'keyword.operator.sizeof.nxc'
   'strings':
     'patterns': [
       {
         'begin': '"'
         'beginCaptures':
           '0':
-            'name': 'punctuation.definition.string.begin.c'
+            'name': 'punctuation.definition.string.begin.nxc'
         'end': '"'
         'endCaptures':
           '0':
-            'name': 'punctuation.definition.string.end.c'
-        'name': 'string.quoted.double.c'
+            'name': 'punctuation.definition.string.end.nxc'
+        'name': 'string.quoted.double.nxc'
         'patterns': [
           {
             'include': '#string_escaped_char'
@@ -730,12 +729,12 @@
         'begin': '\''
         'beginCaptures':
           '0':
-            'name': 'punctuation.definition.string.begin.c'
+            'name': 'punctuation.definition.string.begin.nxc'
         'end': '\''
         'endCaptures':
           '0':
-            'name': 'punctuation.definition.string.end.c'
-        'name': 'string.quoted.single.c'
+            'name': 'punctuation.definition.string.end.nxc'
+        'name': 'string.quoted.single.nxc'
         'patterns': [
           {
             'include': '#string_escaped_char'
@@ -750,21 +749,21 @@
     'patterns': [
       {
         'match': '\\\\(\\\\|[abefnprtv\'"?]|[0-3]\\d{,2}|[4-7]\\d?|x[a-fA-F0-9]{,2}|u[a-fA-F0-9]{,4}|U[a-fA-F0-9]{,8})'
-        'name': 'constant.character.escape.c'
+        'name': 'constant.character.escape.nxc'
       }
       {
         'match': '\\\\.'
-        'name': 'invalid.illegal.unknown-escape.c'
+        'name': 'invalid.illegal.unknown-escape.nxc'
       }
     ]
   'string_placeholder':
     'patterns': [
       {
         'match': '(?x)%\n    \t\t\t\t\t\t(\\d+\\$)?                             # field (argument #)\n    \t\t\t\t\t\t[#0\\- +\']*                           # flags\n    \t\t\t\t\t\t[,;:_]?                              # separator character (AltiVec)\n    \t\t\t\t\t\t((-?\\d+)|\\*(-?\\d+\\$)?)?              # minimum field width\n    \t\t\t\t\t\t(\\.((-?\\d+)|\\*(-?\\d+\\$)?)?)?         # precision\n    \t\t\t\t\t\t(hh|h|ll|l|j|t|z|q|L|vh|vl|v|hv|hl)? # length modifier\n    \t\t\t\t\t\t[diouxXDOUeEfFgGaACcSspn%]           # conversion type\n    \t\t\t\t\t'
-        'name': 'constant.other.placeholder.c'
+        'name': 'constant.other.placeholder.nxc'
       }
       {
         'match': '%'
-        'name': 'invalid.illegal.placeholder.c'
+        'name': 'invalid.illegal.placeholder.nxc'
       }
     ]
