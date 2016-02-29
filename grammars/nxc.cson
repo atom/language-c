@@ -47,6 +47,10 @@
     'name': 'constant.language.nxc'
   }
   {
+    'match': '\\b([A-Z_0-9]+)\\b'
+    'name': 'constant.language.nxc'
+  }
+  {
     'include': '#sizeof'
   }
   {
