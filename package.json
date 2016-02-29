@@ -6,6 +6,7 @@
     "type": "git",
     "url": "https://github.com/nloomans/language-nxc.git"
   },
+  "main": "./lib/main",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/nloomans/language-nxc/issues"
@@ -13,5 +14,12 @@
   "engines": {
     "atom": "*",
     "node": "*"
+  },
+  "providedServices": {
+    "autocomplete.provider": {
+      "versions": {
+        "2.0.0": "getProvider"
+      }
+    }
   }
 }
