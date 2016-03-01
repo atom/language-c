@@ -1,21 +1,25 @@
 {
-  "version": "0.51.1",
-  "name": "language-c",
-  "description": "Atom language support for C/C++",
-  "homepage": "https://atom.github.io/language-c",
+  "version": "2.2.0",
+  "name": "language-nxc",
+  "description": "Atom language support for NXC",
   "repository": {
     "type": "git",
-    "url": "https://github.com/atom/language-c.git"
+    "url": "https://github.com/nloomans/language-nxc.git"
   },
+  "main": "./lib/main",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/atom/language-c/issues"
+    "url": "https://github.com/nloomans/language-nxc/issues"
   },
   "engines": {
     "atom": "*",
     "node": "*"
   },
-  "devDependencies": {
-    "coffeelint": "^1.10.1"
+  "providedServices": {
+    "autocomplete.provider": {
+      "versions": {
+        "2.0.0": "getProvider"
+      }
+    }
   }
 }
