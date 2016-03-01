@@ -28,8 +28,18 @@ module.exports =
     # save current file
     activeItem.buffer.save()
 
+    command = ''
+
     # generate the command to run
-    command = 'nbc -T=NXT -S=usb '
+    switch process.platform
+      when 'linux'
+        command += '~/.atom/packages/language-nxc/nbc-linux '
+      when 'osx'
+        command += '../nbc-osx ' # TODO: test if this works
+      when 'windows'
+        command += '../nbc-windows.exe '
+
+    command += '-T=NXT -S=usb '
     switch type
       when 'upload'
         command += '-d '
