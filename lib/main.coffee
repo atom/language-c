@@ -35,9 +35,11 @@ module.exports =
       when 'linux'
         command += '~/.atom/packages/language-nxc/nbc-linux '
       when 'osx'
-        command += '../nbc-osx ' # TODO: test if this works
-      when 'windows'
-        command += '../nbc-windows.exe '
+        command += '~/.atom/packages/language-nxc/nbc-osx ' # TODO: test if this works
+      when 'win32'
+        command += '%HOMEPATH%\\.atom\\packages\\language-nxc\\nbc-windows.exe '
+      when 'win64'
+        command += '%HOMEPATH%\\.atom\\packages\\language-nxc\\nbc-windows.exe '
 
     command += '-T=NXT -S=usb '
     switch type
