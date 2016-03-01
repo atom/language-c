@@ -70,7 +70,7 @@ module.exports =
         else
           atom.notifications.addWarning "Robot not connected!",
             detail: "If the robot is connected, please view the trobble " +
-                    "shooting tips at https://www.google.com/"
+                    "shooting tips at https://goo.gl/lWWy0s"
             dismissable: true
       else
           atom.notifications.addSuccess "Sucsesful!"
