@@ -215,7 +215,7 @@
   }
   {
     'comment': 'Reserved for a good pratice types'
-    'match': '\\b([A-Za-z0-9_]+_[esuap])\\b'
+    'match': '\\b([A-Za-z0-9_]+_[aefpsu])\\b'
     'name': 'support.type.good-practice-reserved.c'
   }
   {
