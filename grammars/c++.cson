@@ -1,5 +1,14 @@
-'scopeName': 'source.cpp'
-'fileTypes': [
+# This is a language grammar using the TextMate standard, but in CSON format
+# Grammar Schema: https://manual.macromates.com/en/language_grammars
+# CSON format: https://github.com/bevry/cson
+
+# NOTE: Key names belonging to the TextMate schema go unquoted, e.g. patterns.
+#       User-defined keys -- those that belong to the language definition rather than the TextMate sechema,
+#       such as the IDs in the repository -- are quoted to highlight their non-standard, file-specific nature
+
+'scopeName' : 'source.cpp'
+'name'      : 'C++'
+'fileTypes' : [
   'cc'
   'cpp'
   'cp'
@@ -18,8 +27,9 @@
   'tcc'
   'tpp'
 ]
+
 'firstLineMatch': '(?i)-\\*-[^*]*(Mode:\\s*)?C\\+\\+(\\s*;.*?)?\\s*-\\*-'
-'name': 'C++'
+
 'patterns': [
   {
     'include': '#special_block'
@@ -77,16 +87,21 @@
     'name': 'storage.modifier.cpp'
   }
   {
-    'begin': '(?x)\n    \t\t\t\t(?:  ^                                 # begin-of-line\n    \t\t\t\t  |  (?: (?<!else|new|=) )             #  or word + space before name\n    \t\t\t\t)\n    \t\t\t\t((?:[A-Za-z_][A-Za-z0-9_]*::)*+~[A-Za-z_][A-Za-z0-9_]*) # actual name\n    \t\t\t\t \\s*(\\()                           # start bracket or end-of-line\n    \t\t\t'
+    'begin': '''(?x)
+      (?: ^                     # begin-of-line
+      |   (?: (?<!else|new|=) ) # or word + space before name
+      )
+      # actual name
+      ((?:[A-Za-z_][A-Za-z0-9_]*::)*+~[A-Za-z_][A-Za-z0-9_]*)
+      # start bracket or end-of-line
+      \\s*(\\()
+      '''
     'beginCaptures':
-      '1':
-        'name': 'entity.name.function.cpp'
-      '2':
-        'name': 'punctuation.definition.parameters.begin.c'
+      '1':  'name': 'entity.name.function.cpp'
+      '2':  'name': 'punctuation.definition.parameters.begin.c'
     'end': '\\)'
     'endCaptures':
-      '0':
-        'name': 'punctuation.definition.parameters.end.c'
+      '0':  'name': 'punctuation.definition.parameters.end.c'
     'name': 'meta.function.destructor.cpp'
     'patterns': [
       {
@@ -95,16 +110,21 @@
     ]
   }
   {
-    'begin': '(?x)\n    \t\t\t\t(?:  ^                                 # begin-of-line\n    \t\t\t\t  |  (?: (?<!else|new|=) )             #  or word + space before name\n    \t\t\t\t)\n    \t\t\t\t((?:[A-Za-z_][A-Za-z0-9_]*::)*+~[A-Za-z_][A-Za-z0-9_]*) # actual name\n    \t\t\t\t \\s*(\\()                           # terminating semi-colon\n    \t\t\t'
+    'begin': '''(?x)
+      (?: ^                     # begin-of-line
+      |   (?: (?<!else|new|=) ) #  or word + space before name
+      )
+      # actual name
+      ((?:[A-Za-z_][A-Za-z0-9_]*::)*+~[A-Za-z_][A-Za-z0-9_]*)
+      # terminating semi-colon
+      \\s*(\\()
+      '''
     'beginCaptures':
-      '1':
-        'name': 'entity.name.function.cpp'
-      '2':
-        'name': 'punctuation.definition.parameters.begin.c'
+      '1':  'name': 'entity.name.function.cpp'
+      '2':  'name': 'punctuation.definition.parameters.begin.c'
     'end': '\\)'
     'endCaptures':
-      '0':
-        'name': 'punctuation.definition.parameters.end.c'
+      '0':  'name': 'punctuation.definition.parameters.end.c'
     'name': 'meta.function.destructor.prototype.cpp'
     'patterns': [
       {
@@ -113,6 +133,11 @@
     ]
   }
 ]
+
+# The Repository is a collection of re-usable grammar snippets,
+# saving us from having to copy & paste pieces of regex hundreds of times.
+# An `include` key value refers to a base entry here in the repository
+
 'repository':
   'angle_brackets':
     'begin': '<'
@@ -126,43 +151,53 @@
         'include': '$base'
       }
     ]
+  
+  # repository
   'block':
     'begin': '\\{'
     'beginCaptures':
-      '0':
-        'name': 'punctuation.section.block.begin.c'
+      '0':  'name': 'punctuation.section.block.begin.c'
     'end': '\\}'
     'endCaptures':
-      '0':
-        'name': 'punctuation.section.block.end.c'
+      '0':  'name': 'punctuation.section.block.end.c'
     'name': 'meta.block.cpp'
     'patterns': [
       {
         'captures':
-          '1':
-            'name': 'support.function.any-method.c'
-          '2':
-            'name': 'punctuation.definition.parameters.c'
-        'match': '(?x)\n    \t\t\t\t(\n    \t\t\t\t\t(?!while|for|do|if|else|switch|catch|enumerate|return|r?iterate)(?: \\b[A-Za-z_][A-Za-z0-9_]*+\\b | :: )*+                  # actual name\n    \t\t\t\t)\n    \t\t\t\t \\s*(\\()'
+          '1':  'name': 'support.function.any-method.c'
+          '2':  'name': 'punctuation.definition.parameters.c'
+        'match': '''(?x)
+          (
+            (?!while|for|do|if|else|switch|catch|enumerate|return|r?iterate)
+            (?: \\b[A-Za-z_][A-Za-z0-9_]*+\\b | :: )*+  # actual name
+          )
+          \\s*(\\()
+          '''
         'name': 'meta.function-call.c'
       }
       {
         'include': '$base'
       }
     ]
+  
+  # repository
   'constructor':
     'patterns': [
       {
-        'begin': '(?x)\n    \t\t\t\t(?:  ^\\s*)                             # begin-of-line\n    \t\t\t\t((?!while|for|do|if|else|switch|catch|enumerate|r?iterate)[A-Za-z_][A-Za-z0-9_:]*) # actual name\n    \t\t\t\t \\s*(\\()                            # start bracket or end-of-line\n    \t\t\t'
+        'begin': '''(?x)
+          # begin-of-line
+          (?:  ^\\s*)
+          # actual name
+          ((?!while|for|do|if|else|switch|catch|enumerate|r?iterate)[A-Za-z_][A-Za-z0-9_:]*)
+          # start bracket or end-of-line
+          \\s*(\\()
+          '''
         'beginCaptures':
-          '1':
-            'name': 'entity.name.function.cpp'
-          '2':
-            'name': 'punctuation.definition.parameters.begin.c'
+          '1':  'name': 'entity.name.function.cpp'
+          '2':  'name': 'punctuation.definition.parameters.begin.c'
         'end': '\\)'
         'endCaptures':
-          '0':
-            'name': 'punctuation.definition.parameters.end.c'
+          '0':  'name': 'punctuation.definition.parameters.end.c'
         'name': 'meta.function.constructor.cpp'
         'patterns': [
           {
@@ -171,10 +206,13 @@
         ]
       }
       {
-        'begin': '(?x)\n    \t\t\t\t(:)                            # begin-of-line\n    \t\t\t\t((?=\\s*[A-Za-z_][A-Za-z0-9_:]* # actual name\n    \t\t\t\t \\s*(\\()))                      # start bracket or end-of-line\n    \t\t\t'
+        'begin': '''(?x)
+          (:)                             # begin-of-line
+          ((?=\\s*[A-Za-z_][A-Za-z0-9_:]* # actual name
+          \\s*(\\()))                     # start bracket or end-of-line
+          '''
         'beginCaptures':
-          '1':
-            'name': 'punctuation.definition.parameters.c'
+          '1':  'name': 'punctuation.definition.parameters.c'
         'end': '(?=\\{)'
         'name': 'meta.function.constructor.initializer-list.cpp'
         'patterns': [
@@ -184,46 +222,37 @@
         ]
       }
     ]
+  
+  # repository
   'special_block':
     'patterns': [
       {
         "begin": "\\b(using)\\b\\s*(namespace)\\b\\s*((?:[_A-Za-z][_A-Za-z0-9]*\\b(::)?)*)",
         "beginCaptures": {
-          "1": {
-            "name": "keyword.control.cpp"
-          },
-          "2": {
-            "name": "storage.type.cpp"
-          },
-          "3": {
-            "name": "entity.name.type.cpp"
-          }
-        },
-        "end": "(;)",
+          "1": "name": "keyword.control.cpp"
+          "2": "name": "storage.type.cpp"
+          "3": "name": "entity.name.type.cpp"
+        }
+        "end": "(;)"
         "name": "meta.using-namespace-declaration.cpp"
-      },
+      }
       {
         'begin': '\\b(namespace)\\b\\s*([_A-Za-z][_A-Za-z0-9]*\\b)?+'
         'beginCaptures':
-          '1':
-            'name': 'storage.type.cpp'
-          '2':
-            'name': 'entity.name.type.cpp'
+          '1':  'name': 'storage.type.cpp'
+          '2':  'name': 'entity.name.type.cpp'
         'captures':
-          '1':
-            'name': 'keyword.control.namespace.$2'
+          '1':  'name': 'keyword.control.namespace.$2'
         'end': '(?<=\\})|(?=(;|,|\\(|\\)|>|\\[|\\]|=))'
         'name': 'meta.namespace-block.cpp'
         'patterns': [
           {
             'begin': '\\{'
             'beginCaptures':
-              '0':
-                'name': 'punctuation.definition.scope.cpp'
+              '0':  'name': 'punctuation.definition.scope.cpp'
             'end': '\\}'
             'endCaptures':
-              '0':
-                'name': 'punctuation.definition.scope.cpp'
+              '0':  'name': 'punctuation.definition.scope.cpp'
             'patterns': [
               {
                 'include': '#special_block'
@@ -244,14 +273,10 @@
       {
         'begin': '\\b(class|struct)\\b\\s*([_A-Za-z][_A-Za-z0-9]*\\b)?+(\\s*:\\s*(public|protected|private)\\s*([_A-Za-z][_A-Za-z0-9]*\\b)((\\s*,\\s*(public|protected|private)\\s*[_A-Za-z][_A-Za-z0-9]*\\b)*))?'
         'beginCaptures':
-          '1':
-            'name': 'storage.type.cpp'
-          '2':
-            'name': 'entity.name.type.cpp'
-          '4':
-            'name': 'storage.type.modifier.cpp'
-          '5':
-            'name': 'entity.name.type.inherited.cpp'
+          '1':  'name': 'storage.type.cpp'
+          '2':  'name': 'entity.name.type.cpp'
+          '4':  'name': 'storage.type.modifier.cpp'
+          '5':  'name': 'entity.name.type.inherited.cpp'
           '6':
             'patterns': [
               {
@@ -272,14 +297,11 @@
           {
             'begin': '\\{'
             'beginCaptures':
-              '0':
-                'name': 'punctuation.section.block.begin.cpp'
+              '0':  'name': 'punctuation.section.block.begin.cpp'
             'end': '(\\})(\\s*\\n)?'
             'endCaptures':
-              '1':
-                'name': 'punctuation.section.block.end.cpp'
-              '2':
-                'name': 'invalid.illegal.you-forgot-semicolon.cpp'
+              '1':  'name': 'punctuation.section.block.end.cpp'
+              '2':  'name': 'invalid.illegal.you-forgot-semicolon.cpp'
             'patterns': [
               {
                 'include': '#special_block'
@@ -300,20 +322,17 @@
       {
         'begin': '\\b(extern)(?=\\s*")'
         'beginCaptures':
-          '1':
-            'name': 'storage.modifier.cpp'
+          '1':  'name': 'storage.modifier.cpp'
         'end': '(?<=\\})|(?=\\w)|(?=\\s*#\\s*endif\\b)'
         'name': 'meta.extern-block.cpp'
         'patterns': [
           {
             'begin': '\\{'
             'beginCaptures':
-              '0':
-                'name': 'punctuation.section.block.begin.c'
+              '0':  'name': 'punctuation.section.block.begin.c'
             'end': '\\}|(?=\\s*#\\s*endif\\b)'
             'endCaptures':
-              '0':
-                'name': 'punctuation.section.block.end.c'
+              '0':  'name': 'punctuation.section.block.end.c'
             'patterns': [
               {
                 'include': '#special_block'
