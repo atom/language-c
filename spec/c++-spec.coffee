@@ -124,3 +124,86 @@ describe "C++", ->
       expect(lines[0][1]).toEqual value: ' separated', scopes: ['source.cpp', 'comment.line.double-slash.cpp']
       expect(lines[0][2]).toEqual value: '\\', scopes: ['source.cpp', 'comment.line.double-slash.cpp', 'constant.character.escape.line-continuation.c']
       expect(lines[1][0]).toEqual value: 'comment', scopes: ['source.cpp', 'comment.line.double-slash.cpp']
+
+  describe "firstLineMatch", ->
+    it "recognises Emacs modelines", ->
+      valid = """
+        #-*- C++ -*-
+        #-*- mode: C++ -*-
+        /* -*-c++-*- */
+        // -*- C++ -*-
+        /* -*- mode:C++ -*- */
+        // -*- font:bar;mode:C++ -*-
+        // -*- font:bar;mode:C++;foo:bar; -*-
+        // -*-font:mode;mode:C++-*-
+        // -*- foo:bar mode: c++ bar:baz -*-
+        " -*-foo:bar;mode:c++;bar:foo-*- ";
+        " -*-font-mode:foo;mode:c++;foo-bar:quux-*-"
+        "-*-font:x;foo:bar; mode : c++; bar:foo;foooooo:baaaaar;fo:ba;-*-";
+        "-*- font:x;foo : bar ; mode : C++ ; bar : foo ; foooooo:baaaaar;fo:ba-*-";
+      """
+      for line in valid.split /\n/
+        expect(grammar.firstLineRegex.scanner.findNextMatchSync(line)).not.toBeNull()
+
+      invalid = """
+        /* --*c++-*- */
+        /* -*-- c++ -*-
+        /* -*- -- C++ -*-
+        /* -*- C++C -;- -*-
+        // -*- iC++ -*-
+        // -*- C++; -*-
+        // -*- c++-stuff -*-
+        /* -*- model:c++ -*-
+        /* -*- indent-mode:c++ -*-
+        // -*- font:mode;C++ -*-
+        // -*- mode: -*- C++
+        // -*- mode: complex-c++ -*-
+        // -*-font:mode;mode:c++--*-
+      """
+      for line in invalid.split /\n/
+        expect(grammar.firstLineRegex.scanner.findNextMatchSync(line)).toBeNull()
+
+    it "recognises Vim modelines", ->
+      valid = """
+        vim: se filetype=cpp:
+        # vim: se ft=cpp:
+        # vim: set ft=Cpp:
+        # vim: set filetype=CPP:
+        # vim: ft=CPP
+        # vim: syntax=Cpp
+        # vim: se syntax=CPP:
+        # ex: syntax=CPP
+        # vim:ft=cpP
+        # vim600: ft=cPp
+        # vim>600: set ft=CpP:
+        # vi:noai:sw=3 ts=6 ft=cPP
+        # vi::::::::::noai:::::::::::: ft=cPp
+        # vim:ts=4:sts=4:sw=4:noexpandtab:ft=cpp
+        # vi:: noai : : : : sw   =3 ts   =6 ft  =cpp
+        # vim: ts=4: pi sts=4: ft=cpp: noexpandtab: sw=4:
+        # vim: ts=4 sts=4: ft=cpp noexpandtab:
+        # vim:noexpandtab sts=4 ft=cpp ts=4
+        # vim:noexpandtab:ft=cpp
+        # vim:ts=4:sts=4 ft=cpp:noexpandtab:\x20
+        # vim:noexpandtab titlestring=hi\|there\\\\ ft=cpp ts=4
+      """
+      for line in valid.split /\n/
+        expect(grammar.firstLineRegex.scanner.findNextMatchSync(line)).not.toBeNull()
+
+      invalid = """
+        ex: se filetype=cpp:
+        _vi: se filetype=cpp:
+         vi: se filetype=cpp
+        # vim set ft=c
+        # vim: soft=cpp
+        # vim: hairy-syntax=cpp:
+        # vim set ft=cpp:
+        # vim: setft=cpp:
+        # vim: se ft=cpp backupdir=tmp
+        # vim: set ft=cpp set cmdheight=1
+        # vim:noexpandtab sts:4 ft:cpp ts:4
+        # vim:noexpandtab titlestring=hi\\|there\\ ft=cpp ts=4
+        # vim:noexpandtab titlestring=hi\\|there\\\\\\ ft=cpp ts=4
+      """
+      for line in invalid.split /\n/
+        expect(grammar.firstLineRegex.scanner.findNextMatchSync(line)).toBeNull()
