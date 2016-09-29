@@ -1,5 +1,3 @@
-{buildTextEditor} = require "./helpers"
-
 describe "C", ->
   grammar = null
 
@@ -421,7 +419,7 @@ describe "C", ->
     editor = null
 
     beforeEach ->
-      editor = buildTextEditor()
+      editor = atom.workspace.buildTextEditor()
       editor.setGrammar(grammar)
 
     expectPreservedIndentation = (text) ->
