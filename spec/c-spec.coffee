@@ -631,3 +631,5 @@ describe "C", ->
       """
       for line in invalid.split /\n/
         expect(grammar.firstLineRegex.scanner.findNextMatchSync(line)).toBeNull()
+
+      # -*- coffee -*- # See atom/language-html#138
