@@ -277,7 +277,7 @@
         ]
       }
       {
-        'begin': '\\b(class|struct)\\b\\s*([_A-Za-z][_A-Za-z0-9]*\\b)?+(\\s*:\\s*(public|protected|private|virtual)\\s*([_A-Za-z][_A-Za-z0-9]*\\b)((\\s*,\\s*(public|protected|private)\\s*[_A-Za-z][_A-Za-z0-9]*\\b)*))?'
+        'begin': '\\b(class|struct)\\b\\s*([_A-Za-z][_A-Za-z0-9]*\\b)?+(\\s*:\\s*(public|protected|private|virtual)\\s*([_A-Za-z][_A-Za-z0-9]*\\b)((\\s*,\\s*(public|protected|private|virtual)\\s*[_A-Za-z][_A-Za-z0-9]*\\b)*))?'
         'beginCaptures':
           '1':
             'name': 'storage.type.cpp'
