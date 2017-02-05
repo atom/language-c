@@ -23,10 +23,6 @@
     'name': 'keyword.control.c'
   }
   {
-    'match': '\\b(asm|__asm__|auto|bool|_Bool|char|_Complex|double|enum|float|_Imaginary|int|long|short|signed|struct|typedef|union|unsigned|void)\\b'
-    'name': 'storage.type.c'
-  }
-  {
     'match': '\\b(const|extern|register|restrict|static|volatile|inline)\\b'
     'name': 'storage.modifier.c'
   }
@@ -48,9 +44,6 @@
     'name': 'constant.language.c'
   }
   {
-    'include': '#operators'
-  }
-  {
     'include': '#numbers'
   }
   {
@@ -59,7 +52,7 @@
   {
     'begin': '''(?x)
       ^\\s* ((\\#)\\s*define) \\s+     # define
-      ((?<id>[a-zA-Z_$][\\w$]*))  # macro name
+      ((?<id>[a-zA-Z_]\\w*))  # macro name
       (?:
         (\\()
           (
@@ -186,7 +179,7 @@
     'name': 'meta.preprocessor.c'
     'patterns': [
       {
-        'match': '[a-zA-Z_$][\\w$]*'
+        'match': '[a-zA-Z_]\\w*'
         'name': 'entity.name.function.preprocessor.c'
       }
       {
@@ -208,7 +201,7 @@
         'include': '#strings'
       }
       {
-        'match': '[a-zA-Z_$][\\w$]*'
+        'match': '[a-zA-Z_]\\w*'
         'name': 'entity.other.attribute-name.pragma.preprocessor.c'
       }
       {
@@ -220,104 +213,132 @@
     ]
   }
   {
-    'match': '\\b(u_char|u_short|u_int|u_long|ushort|uint|u_quad_t|quad_t|qaddr_t|caddr_t|daddr_t|dev_t|fixpt_t|blkcnt_t|blksize_t|gid_t|in_addr_t|in_port_t|ino_t|key_t|mode_t|nlink_t|id_t|pid_t|off_t|segsz_t|swblk_t|uid_t|id_t|clock_t|size_t|ssize_t|time_t|useconds_t|suseconds_t)\\b'
-    'name': 'support.type.sys-types.c'
-  }
-  {
-    'match': '\\b(pthread_attr_t|pthread_cond_t|pthread_condattr_t|pthread_mutex_t|pthread_mutexattr_t|pthread_once_t|pthread_rwlock_t|pthread_rwlockattr_t|pthread_t|pthread_key_t)\\b'
-    'name': 'support.type.pthread.c'
-  }
-  {
-    'match': '''(?x) \\b
-      (int8_t|int16_t|int32_t|int64_t|uint8_t|uint16_t|uint32_t|uint64_t|int_least8_t
-      |int_least16_t|int_least32_t|int_least64_t|uint_least8_t|uint_least16_t|uint_least32_t
-      |uint_least64_t|int_fast8_t|int_fast16_t|int_fast32_t|int_fast64_t|uint_fast8_t
-      |uint_fast16_t|uint_fast32_t|uint_fast64_t|intptr_t|uintptr_t|intmax_t|intmax_t
-      |uintmax_t|uintmax_t)
-      \\b'''
-    'name': 'support.type.stdint.c'
-  }
-  {
-    'match': '\\b(noErr|kNilOptions|kInvalidID|kVariableLengthArray)\\b'
-    'name': 'support.constant.mac-classic.c'
-  }
-  {
-    'match': '''(?x) \\b
-      (AbsoluteTime|Boolean|Byte|ByteCount|ByteOffset|BytePtr|CompTimeValue|ConstLogicalAddress|ConstStrFileNameParam
-      |ConstStringPtr|Duration|Fixed|FixedPtr|Float32|Float32Point|Float64|Float80|Float96|FourCharCode|Fract|FractPtr
-      |Handle|ItemCount|LogicalAddress|OptionBits|OSErr|OSStatus|OSType|OSTypePtr|PhysicalAddress|ProcessSerialNumber
-      |ProcessSerialNumberPtr|ProcHandle|Ptr|ResType|ResTypePtr|ShortFixed|ShortFixedPtr|SignedByte|SInt16|SInt32|SInt64
-      |SInt8|Size|StrFileName|StringHandle|StringPtr|TimeBase|TimeRecord|TimeScale|TimeValue|TimeValue64|UInt16|UInt32
-      |UInt64|UInt8|UniChar|UniCharCount|UniCharCountPtr|UniCharPtr|UnicodeScalarValue|UniversalProcHandle|UniversalProcPtr
-      |UnsignedFixed|UnsignedFixedPtr|UnsignedWide|UTF16Char|UTF32Char|UTF8Char)
-      \\b'''
-    'name': 'support.type.mac-classic.c'
-  }
-  {
-    # Reserved POSIX types
-    'match': '\\b([A-Za-z0-9_]+_t)\\b'
-    'name': 'support.type.posix-reserved.c'
-  }
-  {
     'include': '#block'
   }
   {
+    'include': '#operators'
+  }
+  {
     'begin': '''(?x)
-      (?:
-        ^ |
-        (?:
-          (?=\\s)(?<!else|new|return)(?<=\\w)  # word + space before name
-          |
-          (?=\\s*[A-Za-z_])(?<!&&)(?<=[*&>])   # type modifier before name
-        )
+      (?=
+        [A-Za-z_]\\w*        # Type modifier
+        \\s+
+        [A-Za-z_]\\w*        # Function name
+        \\s*\\(              # Opening parentheses
       )
-      (\\s*)(?!(while|for|do|if|else|switch|catch|enumerate|return|sizeof|[cr]?iterate)\\s*\\()
-      (
-        (?:[A-Za-z_][A-Za-z0-9_]*+|::)++  # actual name
-        |
-        (?:(?<=operator)(?:[-*&<>=+!]+|\\(\\)|\\[\\]))
-      )
-      \\s*(?=\\()
     '''
-    'beginCaptures':
+    'end': '(?<=})|(;)'
+    'endCaptures':
       '1':
-        'name': 'punctuation.whitespace.function.leading.c'
-      '3':
-        'name': 'entity.name.function.c'
-      '4':
-        'name': 'punctuation.definition.parameters.c'
-    'end': '(?<=\\})|(?=#)|(;)'
+        'name': 'punctuation.terminator.statement.c'
     'name': 'meta.function.c'
     'patterns': [
       {
         'include': '#comments'
       }
       {
-        'include': '#parens'
+        'match': '[A-Za-z_]\\w*(?=\\s*\\()'
+        'name': 'entity.name.function.c'
       }
       {
-        'match': '\\b(const)\\b'
-        'name': 'storage.modifier.c'
+        'begin': '\\('
+        'beginCaptures':
+          '0':
+            'name': 'punctuation.definition.parameters.begin.bracket.round.c'
+        'end': '\\)'
+        'endCaptures':
+          '0':
+            'name': 'punctuation.definition.parameters.end.bracket.round.c'
+        'name': 'meta.parameters.c'
+        'patterns': [
+          {
+            'match': '\\b(const)\\b'
+            'name': 'storage.modifier.c'
+          }
+          {
+            'include': '#storage-types'
+          }
+          {
+            'match': '[A-Za-z_]\\w*'
+            'name': 'variable.parameter.c'
+          }
+          {
+            'match': ','
+            'name': 'punctuation.separator.delimiter.c'
+          }
+        ]
       }
       {
-        'include': '#block'
+        'begin': '(?=[A-Za-z_]\\w*\\s+[A-Za-z_]\\w*\\s*\\()'
+        'end': '(?=\\s+[A-Za-z_]\\w*\\s*\\()'
+        'name': 'meta.function.return-type.c'
+        'patterns': [
+          {
+            'include': '#storage-types'
+          }
+        ]
+      }
+      {
+        'begin': '{'
+        'beginCaptures':
+          '0':
+            'name': 'punctuation.definition.function.begin.bracket.curly.c'
+        'end': '}'
+        'endCaptures':
+          '0':
+            'name': 'punctuation.definition.function.end.bracket.curly.c'
+        'contentName': 'meta.function.body.c'
+        'patterns': [
+          {
+            'include': '#block_innards'
+          }
+        ]
       }
     ]
+  }
+  {
+    'include': '#method-call'
+  }
+  {
+    'include': '#function-call'
+  }
+  {
+    'include': '#structs'
+  }
+  {
+    'include': '#members'
+  }
+  {
+    'match': ','
+    'name': 'punctuation.separator.delimiter.c'
+  }
+  {
+    'match': ';'
+    'name': 'punctuation.terminator.statement.c'
+  }
+  {
+    'include': '#storage-types'
   }
   {
     'include': '#line_continuation_character'
   }
 ]
 'repository':
-  'access':
-    'captures':
-      '2':
-        'name': 'punctuation.separator.dot-access.c'
-      '3':
-        'name': 'punctuation.separator.pointer-access.c'
-      '4':
-        'name': 'variable.other.member.c'
-    'match': '((\\.)|(->))\\s*(([a-zA-Z_][a-zA-Z_0-9]*)\\b(?!\\s*\\())?'
+  'arguments':
+    'begin': '\\('
+    'beginCaptures':
+      '0':
+        'name': 'punctuation.definition.arguments.begin.bracket.round.c'
+    'end': '\\)'
+    'endCaptures':
+      '0':
+        'name': 'punctuation.definition.arguments.end.bracket.round.c'
+    'name': 'meta.arguments.c'
+    'patterns': [
+      {
+        'include': '$base'
+      }
+    ]
   'block':
     'patterns': [
       {
@@ -349,13 +370,7 @@
         'include': '#preprocessor-rule-conditional-block'
       }
       {
-        'include': '#access'
-      }
-      {
         'include': '#libc'
-      }
-      {
-        'include': '#c_function_call'
       }
       {
         'captures':
@@ -386,32 +401,18 @@
         'include': '$base'
       }
     ]
-  'c_function_call':
-    'captures':
+  'function-call':
+    'begin': '([A-Za-z_$]\\w*)(?=\\s*\\()'
+    'beginCaptures':
       '1':
-        'name': 'punctuation.whitespace.function-call.leading.c'
-      '2':
-        'name': 'support.function.any-method.c'
-      '4':
-        'name': 'punctuation.definition.parameters.c'
-    'match': '''(?x)
-      (?:
-        (?=\\s)
-        (?:(?<=else|new|return) | (?<!\\w)) (\\s+)
-      )?
-
-      # Actual name
-      (
-        \\b
-        (?!
-          (while|for|do|if|else|switch|catch|enumerate|return|sizeof|r?iterate)
-          \\s* \\(
-        )
-        (?:(?!NS)[A-Za-z_][A-Za-z0-9_]*+\\b | ::)++
-      )
-      \\s*(\\() # Opening bracket
-    '''
+        'name': 'entity.name.function.c'
+    'end': '(?<=\\))'
     'name': 'meta.function-call.c'
+    'patterns': [
+      {
+        'include': '#arguments'
+      }
+    ]
   'comments':
     'patterns': [
       {
@@ -519,26 +520,63 @@
             'name': 'constant.character.escape.line-continuation.c'
       }
     ]
+  'members':
+    'patterns': [
+      {
+        # member1 in struct.member1.member2, func().member1.member2
+        'match': '(?:(\\.)|(->))\\s*([a-zA-Z_]\\w*)(?=\\s*(\\.|->)\\s*[a-zA-Z_]\\w*)'
+        'captures':
+          '1':
+            'name': 'punctuation.separator.dot-access.c'
+          '2':
+            'name': 'punctuation.separator.pointer-access.c'
+          '3':
+            'name': 'variable.other.struct.member.c'
+      }
+      {
+        # member in struct.member, func().member
+        'match': '(?:(\\.)|(->))\\s*([a-zA-Z_]\\w*)'
+        'captures':
+          '1':
+            'name': 'punctuation.separator.dot-access.c'
+          '2':
+            'name': 'punctuation.separator.pointer-access.c'
+          '3':
+            'name': 'variable.other.member.c'
+      }
+      {
+        # 123illegal in struct.123illegal, func().123illegal
+        'match': '(?:(\\.)|(->))\\s*([0-9]\\w*)'
+        'captures':
+          '1':
+            'name': 'punctuation.separator.dot-access.c'
+          '2':
+            'name': 'punctuation.separator.pointer-access.c'
+          '3':
+            'name': 'invalid.illegal.identifier.c'
+      }
+    ]
+  'method-call':
+    'begin': '(?:(\\.)|(->))\\s*([A-Za-z_]\\w*)\\s*(?=\\()'
+    'beginCaptures':
+      '1':
+        'name': 'punctuation.separator.dot-access.c'
+      '2':
+        'name': 'punctuation.separator.pointer-access.c'
+      '3':
+        'name': 'entity.name.function.c'
+    'end': '(?<=\\))'
+    'name': 'meta.method-call.c'
+    'patterns': [
+      {
+        'include': '#arguments'
+      }
+    ]
   'numbers':
     'patterns': [
       {
         'match': '\\b((0(x|X)[0-9a-fA-F]*)|(0(b|B)[01]*)|(([0-9]+\\.?[0-9]*)|(\\.[0-9]+))((e|E)(\\+|-)?[0-9]+)?)(L|l|UL|ul|u|U|F|f|ll|LL|ull|ULL)?\\b'
         'name': 'constant.numeric.c'
-      }
-    ]
-  'parens':
-    'begin': '\\('
-    'beginCaptures':
-      '0':
-        'name': 'punctuation.section.parens.begin.c'
-    'end': '\\)'
-    'endCaptures':
-      '0':
-        'name': 'punctuation.section.parens.end.c'
-    'name': 'meta.parens.c'
-    'patterns': [
-      {
-        'include': '$base'
       }
     ]
   'pragma-mark':
@@ -596,7 +634,7 @@
         'name': 'keyword.operator.assignment.c'
       }
       {
-        'match': '%|\\*|/|-|\\+'
+        'match': '%|\\*|/|-(?!>)|\\+'
         'name': 'keyword.operator.c'
       }
       {
@@ -610,16 +648,10 @@
             'name': 'keyword.operator.ternary.c'
         'patterns': [
           {
-            'include': '#access'
-          }
-          {
             'include': '#libc'
           }
           {
-            'include': '#c_function_call'
-          }
-          {
-            'include': '$self'
+            'include': '$base'
           }
         ]
       }
@@ -704,6 +736,71 @@
       {
         'match': '%'
         'name': 'invalid.illegal.placeholder.c'
+      }
+    ]
+  'structs':
+    # struct in struct.member, struct.methodCall()
+    'match': '(?<!\\w)[a-zA-Z_]\\w*(?=\\s*(\\.|->)\\s*\\w+)'
+    'name': 'variable.other.struct.c'
+  'parens':
+    'begin': '\\('
+    'beginCaptures':
+      '0':
+        'name': 'punctuation.section.parens.begin.c'
+    'end': '\\)'
+    'endCaptures':
+      '0':
+        'name': 'punctuation.section.parens.end.c'
+    'name': 'meta.parens.c'
+    'patterns': [
+      {
+        'include': '$base'
+      }
+    ]
+  'storage-types':
+    'patterns': [
+      {
+        'match': '\\b(asm|__asm__|auto|bool|_Bool|char|_Complex|double|enum|float|_Imaginary|int|long|short|signed|struct|typedef|union|unsigned|void)\\b'
+        'name': 'storage.type.c'
+      }
+      {
+        'match': '\\b(u_char|u_short|u_int|u_long|ushort|uint|u_quad_t|quad_t|qaddr_t|caddr_t|daddr_t|dev_t|fixpt_t|blkcnt_t|blksize_t|gid_t|in_addr_t|in_port_t|ino_t|key_t|mode_t|nlink_t|id_t|pid_t|off_t|segsz_t|swblk_t|uid_t|id_t|clock_t|size_t|ssize_t|time_t|useconds_t|suseconds_t)\\b'
+        'name': 'storage.type.sys-types.c'
+      }
+      {
+        'match': '\\b(pthread_attr_t|pthread_cond_t|pthread_condattr_t|pthread_mutex_t|pthread_mutexattr_t|pthread_once_t|pthread_rwlock_t|pthread_rwlockattr_t|pthread_t|pthread_key_t)\\b'
+        'name': 'storage.type.pthread.c'
+      }
+      {
+        'match': '''(?x) \\b
+          (int8_t|int16_t|int32_t|int64_t|uint8_t|uint16_t|uint32_t|uint64_t|int_least8_t
+          |int_least16_t|int_least32_t|int_least64_t|uint_least8_t|uint_least16_t|uint_least32_t
+          |uint_least64_t|int_fast8_t|int_fast16_t|int_fast32_t|int_fast64_t|uint_fast8_t
+          |uint_fast16_t|uint_fast32_t|uint_fast64_t|intptr_t|uintptr_t|intmax_t|intmax_t
+          |uintmax_t|uintmax_t)
+          \\b'''
+        'name': 'storage.type.stdint.c'
+      }
+      {
+        'match': '\\b(noErr|kNilOptions|kInvalidID|kVariableLengthArray)\\b'
+        'name': 'storage.constant.mac-classic.c'
+      }
+      {
+        'match': '''(?x) \\b
+          (AbsoluteTime|Boolean|Byte|ByteCount|ByteOffset|BytePtr|CompTimeValue|ConstLogicalAddress|ConstStrFileNameParam
+          |ConstStringPtr|Duration|Fixed|FixedPtr|Float32|Float32Point|Float64|Float80|Float96|FourCharCode|Fract|FractPtr
+          |Handle|ItemCount|LogicalAddress|OptionBits|OSErr|OSStatus|OSType|OSTypePtr|PhysicalAddress|ProcessSerialNumber
+          |ProcessSerialNumberPtr|ProcHandle|Ptr|ResType|ResTypePtr|ShortFixed|ShortFixedPtr|SignedByte|SInt16|SInt32|SInt64
+          |SInt8|Size|StrFileName|StringHandle|StringPtr|TimeBase|TimeRecord|TimeScale|TimeValue|TimeValue64|UInt16|UInt32
+          |UInt64|UInt8|UniChar|UniCharCount|UniCharCountPtr|UniCharPtr|UnicodeScalarValue|UniversalProcHandle|UniversalProcPtr
+          |UnsignedFixed|UnsignedFixedPtr|UnsignedWide|UTF16Char|UTF32Char|UTF8Char)
+          \\b'''
+        'name': 'storage.type.mac-classic.c'
+      }
+      {
+        # Reserved POSIX types
+        'match': '\\b([A-Za-z0-9_]+_t)\\b'
+        'name': 'storage.type.posix-reserved.c'
       }
     ]
   'preprocessor-rule-conditional':
@@ -865,10 +962,10 @@
       }
     ]
   'preprocessor-rule-conditional-line-parens-innards':
-    'patterns':[
+    'patterns': [
       {
         #the valid "defined" keyword usage
-        'match': '(?:\\bdefined\\b\\s*$)|(?:\\bdefined\\b(?=\\s*\\(*\\s*(?:(?!defined\\b)[a-zA-Z_$][\\w$]*\\b)\\s*\\)*\\s*(?:\\n|//|/\\*|\\?|\\:|&&|\\|\\||\\\\\\s*\\n)))'
+        'match': '(?:\\bdefined\\b\\s*$)|(?:\\bdefined\\b(?=\\s*\\(*\\s*(?:(?!defined\\b)[a-zA-Z_]\\w*\\b)\\s*\\)*\\s*(?:\\n|//|/\\*|\\?|\\:|&&|\\|\\||\\\\\\s*\\n)))'
         'name': 'keyword.control.directive.conditional.c'
       }
       {
@@ -909,7 +1006,7 @@
         'name': 'constant.language.c'
       }
       {
-        'match': '[a-zA-Z_$][\\w$]*'
+        'match': '[a-zA-Z_]\\w*'
         'name': 'entity.name.function.preprocessor.c'
       }
       {
