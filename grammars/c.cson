@@ -286,7 +286,7 @@
         'name': 'entity.name.function.c'
       '4':
         'name': 'punctuation.definition.parameters.c'
-    'end': '(?<=\\})|(?=#)|(;)'
+    'end': '(?<=\\))|(?=#)|(;)'
     'name': 'meta.function.c'
     'patterns': [
       {
