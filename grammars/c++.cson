@@ -21,7 +21,7 @@
 'firstLineMatch': '(?i)-\\*-[^*]*(Mode:\\s*)?C\\+\\+(\\s*;.*?)?\\s*-\\*-'
 'name': 'C++'
 'injections':
-  'L:source.cpp meta.function.c meta.function.return-type.c':
+  'source.cpp meta.function.c meta.function.return-type.c':
     'patterns': [
       {
         'include': '#storage_types'
