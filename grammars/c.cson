@@ -23,9 +23,6 @@
     'name': 'keyword.control.c'
   }
   {
-    'include': '#storage_types'
-  }
-  {
     'match': '\\b(const|extern|register|restrict|static|volatile|inline)\\b'
     'name': 'storage.modifier.c'
   }
@@ -265,21 +262,40 @@
   }
   {
     # FIRST CAPTURE meta.function.c scope (provides an injectable scope, balanced parentheses and prevents unnecessary scope nesting)
+    # TODO: Try to make this C-only
     'begin': '''(?x)
-      (?!(?:while|for|do|if|else|switch|catch|enumerate|return|sizeof|[cr]?iterate|asm|__asm__|auto|bool|_Bool|char|_Complex|double|enum|float|_Imaginary|int|long|short|signed|struct|typedef|union|unsigned|void)\\s*\\()
       (?=
-        (?:[A-Za-z_][A-Za-z0-9_]*+|::)++\\s*\\(  # actual name
-        |
-        (?:(?<=operator)(?:[-*&<>=+!]+|\\(\\)|\\[\\]))\\s*\\(
+        [A-Za-z_]\\w*                                         # Type modifier
+        \\s+
+        (
+          ([A-Za-z_]\\w*+|::)++\\s*\\(                        # Actual name
+          |
+          ((?<=operator)([-*&<>=+!]+|\\(\\)|\\[\\]))\\s*\\(   # Operator overloading (for C++)
+        )
       )
     '''
-    'end': '(?<=\\))(?!\\w)'
+    'end': '(?<=})|(?=;)'
     'name': 'meta.function.c'
     'patterns': [
       {
-        'include': '#function-innards'
+        'include': '#function-body'
+      }
+      {
+        'begin': '\\G'
+        'end': '(?<=\\))'
+        'patterns': [
+          {
+            'include': '#function-innards'
+          }
+        ]
       }
     ]
+  }
+  {
+    'include': '#function-call'
+  }
+  {
+    'include': '#storage_types'
   }
   {
     'include': '#line_continuation_character'
@@ -295,6 +311,21 @@
       '4':
         'name': 'variable.other.member.c'
     'match': '((\\.)|(->))\\s*(([a-zA-Z_][a-zA-Z_0-9]*)\\b(?!\\s*\\())?'
+  'arguments':
+    'begin': '\\('
+    'beginCaptures':
+      '0':
+        'name': 'punctuation.definition.arguments.begin.bracket.round.c'
+    'end': '\\)'
+    'endCaptures':
+      '0':
+        'name': 'punctuation.definition.arguments.end.bracket.round.c'
+    'name': 'meta.arguments.c'
+    'patterns': [
+      {
+        'include': '$base'
+      }
+    ]
   'block':
     'patterns': [
       {
@@ -330,9 +361,6 @@
       }
       {
         'include': '#libc'
-      }
-      {
-        'include': '#c_function_call'
       }
       {
         'captures':
@@ -379,21 +407,17 @@
         'include': '$base'
       }
     ]
-  'c_function_call':
+  'function-call':
     # FIRST CAPTURE meta.function-call.c scope (provides an injectable scope, balanced parentheses and prevents unnecessary scope nesting)
-    'begin': '''(?x)
-      (?!(?:while|for|do|if|else|switch|catch|enumerate|return|sizeof|[cr]?iterate)\\s*\\()
-      (?=
-      (?:[A-Za-z_][A-Za-z0-9_]*+|::)++\\s*\\(  # actual name
-      |
-      (?:(?<=operator)(?:[-*&<>=+!]+|\\(\\)|\\[\\]))\\s*\\(
-      )
-    '''
-    'end': '(?<=\\))(?!\\w)'
+    'begin': '([A-Za-z_]\\w*)(?=\\s*\\()'
+    'beginCaptures':
+      '1':
+        'name': 'entity.name.function.c'
+    'end': '(?<=\\))'
     'name': 'meta.function-call.c'
     'patterns': [
       {
-        'include': '#function-call-innards'
+        'include': '#arguments'
       }
     ]
   'comments':
@@ -510,6 +534,40 @@
         'name': 'constant.numeric.c'
       }
     ]
+  'parameters':
+    'patterns': [
+      {
+        'begin': '\\('
+        'beginCaptures':
+          '0':
+            'name': 'punctuation.definition.parameters.begin.bracket.round.c'
+        'end': '\\)'
+        'endCaptures':
+          '0':
+            'name': 'punctuation.definition.parameters.end.bracket.round.c'
+        'name': 'meta.parameters.c'
+        'patterns': [
+          {
+            'include': '#vararg_ellipses'
+          }
+          {
+            'match': '\\b(const)\\b'
+            'name': 'storage.modifier.c'
+          }
+          {
+            'include': '#storage_types'
+          }
+          {
+            'match': '[A-Za-z_]\\w*'
+            'name': 'variable.parameter.c'
+          }
+          {
+            'match': ','
+            'name': 'punctuation.separator.delimiter.c'
+          }
+        ]
+      }
+    ]
   'parens':
     'begin': '\\('
     'beginCaptures':
@@ -613,10 +671,7 @@
             'include': '#libc'
           }
           {
-            'include': '#c_function_call'
-          }
-          {
-            'include': '$self'
+            'include': '$base'
           }
         ]
       }
@@ -713,6 +768,7 @@
       }
     ]
   'vararg_ellipses':
+    # TODO: Move to C++
     'match': '(?<!\\.)\\.\\.\\.(?!\\.)'
     'name': 'punctuation.vararg-ellipses.c'
   'preprocessor-rule-conditional':
@@ -1663,62 +1719,46 @@
         'include': '#preprocessor-rule-define-line-contents'
       }
     ]
+  'function-body':
+    'patterns': [
+      {
+        'begin': '{'
+        'beginCaptures':
+          '0':
+            'name': 'punctuation.definition.function.begin.bracket.curly.c'
+        'end': '}'
+        'endCaptures':
+          '0':
+            'name': 'punctuation.definition.function.end.bracket.curly.c'
+        'contentName': 'meta.function.body.c'
+        'patterns': [
+          {
+            'include': '#block_innards'
+          }
+        ]
+      }
+    ]
   'function-innards':
     'patterns': [
       {
         'include': '#comments'
       }
       {
-        'include': '#storage_types'
+        'match': '[A-Za-z_]\\w*(?=\\s*\\()'
+        'name': 'entity.name.function.c'
       }
       {
-        'include': '#operators'
+        'include': '#parameters'
       }
       {
-        'include': '#vararg_ellipses'
-      }
-      {
-        'begin': '''(?x)
-          (?!(?:while|for|do|if|else|switch|catch|enumerate|return|sizeof|[cr]?iterate)\\s*\\()
-          (
-          (?:[A-Za-z_][A-Za-z0-9_]*+|::)++  # actual name
-          |
-          (?:(?<=operator)(?:[-*&<>=+!]+|\\(\\)|\\[\\]))
-          )
-          \\s*(\\()
-        '''
-        'beginCaptures':
-          '1':
-            'name': 'entity.name.function.c'
-          '2':
-            'name': 'punctuation.section.arguments.begin.bracket.round.c'
-        'end': '\\)'
-        'endCaptures':
-          '0':
-            'name': 'punctuation.section.arguments.end.bracket.round.c'
+        'begin': '(?=[A-Za-z_]\\w*\\s+[A-Za-z_]\\w*\\s*\\()'
+        'end': '(?=\\s+[A-Za-z_]\\w*\\s*\\()'
+        'name': 'meta.function.return-type.c'
         'patterns': [
           {
-            'include': '#function-innards'
+            'include': '#storage_types'
           }
         ]
-      }
-      {
-        'begin': '\\('
-        'beginCaptures':
-          '0':
-            'name': 'punctuation.section.parens.begin.bracket.round.c'
-        'end': '\\)'
-        'endCaptures':
-          '0':
-            'name': 'punctuation.section.parens.end.bracket.round.c'
-        'patterns': [
-          {
-            'include': '#function-innards'
-          }
-        ]
-      }
-      {
-        'include': '$base'
       }
     ]
   'function-call-innards':
