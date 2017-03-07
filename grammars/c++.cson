@@ -27,6 +27,27 @@
         'include': '#storage_types'
       }
     ]
+  'source.cpp meta.function.c - meta.function.body.c':
+    'patterns': [
+      {
+        'match': '(operator([-*&<>=+!]+|\\(\\)|\\[\\]))(?=\\s*\\()'
+        'captures':
+          '1':
+            'name': 'entity.name.function.cpp'
+          '2':
+            'name': 'keyword.operator.c'
+      }
+      {
+        'begin': '(?=[A-Za-z_]\\w*\\s+(operator([-*&<>=+!]+|\\(\\)|\\[\\]))\\s*\\()'
+        'end': '(?!\\G)'
+        'name': 'meta.function.return-type.c'
+        'patterns': [
+          {
+            'include': '#storage_types'
+          }
+        ]
+      }
+    ]
 'patterns': [
   {
     'include': '#special_block'
@@ -379,6 +400,9 @@
       {
         'match': '\\b(wchar_t|char16_t|char32_t)\\b'
         'name': 'storage.type.cpp'
+      }
+      {
+        'include': 'source.c#storage_types'
       }
     ]
   'strings':

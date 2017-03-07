@@ -226,13 +226,14 @@
     # TODO: Try to make this C-only
     'begin': '''(?x)
       (?=
-        [A-Za-z_]\\w*                                         # Type modifier
+        [A-Za-z_]\\w*                            # Type modifier
         \\s+
         (
-          ([A-Za-z_]\\w*+|::)++\\s*\\(                        # Actual name
+          ([A-Za-z_]\\w*+|::)++                  # Actual name
           |
-          ((?<=operator)([-*&<>=+!]+|\\(\\)|\\[\\]))\\s*\\(   # Operator overloading (for C++)
+          (operator([-*&<>=+!]+|\\(\\)|\\[\\]))  # Operator overloading (for C++)
         )
+        \\s*\\(
       )
     '''
     'end': '(?<=})|(?=;)'
@@ -249,6 +250,9 @@
             'include': '#function-innards'
           }
         ]
+      }
+      {
+        'include': '#comments'
       }
     ]
   }
@@ -1751,7 +1755,7 @@
       }
       {
         'begin': '(?=[A-Za-z_]\\w*\\s+[A-Za-z_]\\w*\\s*\\()'
-        'end': '(?=\\s+[A-Za-z_]\\w*\\s*\\()'
+        'end': '(?!\\G)'
         'name': 'meta.function.return-type.c'
         'patterns': [
           {
