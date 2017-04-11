@@ -16,4 +16,4 @@
       '
 '.source.c, .source.cpp':
   'editor':
-    'foldEndPattern': '(?<!\\*)\\*\\*/|^\\s*\\}'
+    'foldEndPattern': '(?<!\\*)\\*\\}'
