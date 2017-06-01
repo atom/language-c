@@ -28,7 +28,7 @@
     'include': '#strings'
   }
   {
-    'match': '\\b(friend|explicit|virtual|override|final|noexcept)\\b'
+    'match': '\\b(friend|explicit|override|final|noexcept)\\b'
     'name': 'storage.modifier.cpp'
   }
   {
@@ -281,7 +281,7 @@
         ]
       }
       {
-        'begin': '\\b(class|struct)\\b\\s*([_A-Za-z][_A-Za-z0-9]*\\b)?+(\\s*:\\s*(public|protected|private)\\s*([_A-Za-z][_A-Za-z0-9]*\\b)((\\s*,\\s*(public|protected|private)\\s*[_A-Za-z][_A-Za-z0-9]*\\b)*))?'
+        'begin': '\\b(class|struct)\\b\\s*([_A-Za-z][_A-Za-z0-9]*\\b)?+(\\s*:\\s*(public|protected|private|virtual)\\s*([_A-Za-z][_A-Za-z0-9]*\\b)((\\s*,\\s*(public|protected|private|virtual)\\s*[_A-Za-z][_A-Za-z0-9]*\\b)*))?'
         'beginCaptures':
           '1':
             'name': 'storage.type.cpp'
@@ -294,7 +294,7 @@
           '6':
             'patterns': [
               {
-                'match': '(public|protected|private)'
+                'match': '(public|protected|private|virtual)'
                 'name': 'storage.type.modifier.cpp'
               }
               {
