@@ -36,7 +36,7 @@
     'name': 'storage.modifier.cpp'
   }
   {
-    'match': '\\b(catch|operator|try|throw|using)\\b'
+    'match': '\\b(catch|operator|try|throw|using|namespace)\\b'
     'name': 'keyword.control.cpp'
   }
   {
@@ -232,7 +232,7 @@
             "name": "keyword.control.cpp"
           },
           "2": {
-            "name": "storage.type.cpp"
+            "name": "keyword.control.cpp"
           },
           "3": {
             "name": "entity.name.type.cpp"
@@ -245,7 +245,7 @@
         'begin': '\\b(namespace)\\b\\s*([_A-Za-z][_A-Za-z0-9]*\\b)?+'
         'beginCaptures':
           '1':
-            'name': 'storage.type.cpp'
+            'name': 'keyword.control.cpp'
           '2':
             'name': 'entity.name.type.cpp'
         'captures':
