@@ -704,14 +704,23 @@
   'string_placeholder':
     'patterns': [
       {
-        'match': '''(?x) %
-          (\\d+\\$)?                           # field (argument #)
-          [#0\\- +']*                          # flags
+        'match': '''(?x)
+          (%|%\\d+\\$)                         # conversion specification start: either % or %m$ where m is an integer
+          [#0\\- +'I\\*m]*                     # flags: I is gnulibc extention
           [,;:_]?                              # separator character (AltiVec)
-          ((-?\\d+)|\\*(-?\\d+\\$)?)?          # minimum field width
-          (\\.((-?\\d+)|\\*(-?\\d+\\$)?)?)?    # precision
-          (hh|h|ll|l|j|t|z|q|L|vh|vl|v|hv|hl)? # length modifier
-          ((m?\\[((\\^\\]|\\])?[^\\]]+)\\])|m[sc]|[diouxXDOUeEfFgGaACcSspnm]) # conversion type
+          (-?\\d+|\\*\\d+\\$)?                 # width
+          (\\.(\\d+|\\*(\\d+\\$)?))?           # precision
+          (
+            ((hh|h|l|ll|j|z|Z|t)?[diuUoOxXn]{1})|
+            ((l|L)?[fFeEgGaA]{1})|
+            p|                                 # pointer address
+            (l?[cs]{1})|                       # character and string with w_char support
+            (\\[((\\^\\]|\\])?[^\\]]+)\\])|    # scanset
+            m|                                 # Glibc extension
+            ((ll)?[fFeEgGaA]{1})|              # nonstandard GNU's extention
+            ((q|L)?[diuoxXn]{1})|              # BSD and nonstandard GNU's extention
+            [CS]{1}                            # nonstandard SUSv2/3/4's extention
+          )
           | %%                                 # literal %
         '''
         'name': 'constant.other.placeholder.c'
