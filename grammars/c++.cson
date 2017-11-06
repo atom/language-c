@@ -281,33 +281,31 @@
         ]
       }
       {
-        'begin': '\\b(class|struct)\\b\\s*([_A-Za-z][_A-Za-z0-9]*\\b)?+(\\s*:\\s*(public|protected|private)\\s*([_A-Za-z][_A-Za-z0-9]*\\b)((\\s*,\\s*(public|protected|private)\\s*[_A-Za-z][_A-Za-z0-9]*\\b)*))?'
+        'begin': '\\b(class|struct)\\b\\s*([_A-Za-z][_A-Za-z0-9]*\\b)?+(\\s*:\\s*)?'
         'beginCaptures':
           '1':
             'name': 'storage.type.cpp'
           '2':
             'name': 'entity.name.type.cpp'
-          '4':
-            'name': 'storage.type.modifier.cpp'
-          '5':
-            'name': 'entity.name.type.inherited.cpp'
-          '6':
-            'patterns': [
-              {
-                'match': '(public|protected|private)'
-                'name': 'storage.type.modifier.cpp'
-              }
-              {
-                'match': '[_A-Za-z][_A-Za-z0-9]*'
-                'name': 'entity.name.type.inherited.cpp'
-              }
-            ]
         'end': '(?<=\\})|(?=(;|\\(|\\)|>|\\[|\\]|=))'
         'name': 'meta.class-struct-block.cpp'
         'patterns': [
           {
             'include': '#angle_brackets'
           }
+            {
+              'begin': '(virtual\\s*)?(public|protected|private)\\s*(virtual\\s*)?([_A-Za-z][_A-Za-z0-9]*)\\b'
+              'beginCaptures':
+                '1':
+                  'name': 'storage.type.modifier.cpp'
+                '2':
+                  'name': 'storage.type.modifier.cpp'
+                '3':
+                  'name': 'storage.type.modifier.cpp'
+                '4':
+                  'name': 'entity.name.type.inherited.cpp'
+              'end': '(\\{)|(\\s*\\n)|(,)?'
+            }
           {
             'begin': '\\{'
             'beginCaptures':
