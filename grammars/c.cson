@@ -642,7 +642,7 @@
   'strings':
     'patterns': [
       {
-        'begin': '"'
+        'begin': '(?:u8|u|U|L)?"'
         'beginCaptures':
           '0':
             'name': 'punctuation.definition.string.begin.c'
