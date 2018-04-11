@@ -1001,6 +1001,16 @@ describe "Language-C", ->
       expect(lines[6][0]).toEqual value: '#', scopes: ['source.cpp', 'meta.preprocessor.c', 'keyword.control.directive.conditional.c', 'punctuation.definition.directive.c']
       expect(lines[6][1]).toEqual value: 'endif', scopes: ['source.cpp', 'meta.preprocessor.c', 'keyword.control.directive.conditional.c']
 
+      lines = grammar.tokenizeLines '''
+        #ifdef __cplusplus
+        #define EXTERN extern "C"
+        #else
+        #define EXTERN extern
+        #endif
+      '''
+      # TODO
+      expect(lines).toEqual false
+
     it "tokenizes UTF string escapes", ->
       lines = grammar.tokenizeLines '''
         string str = U"\\U01234567\\u0123\\"\\0123\\x123";
