@@ -13,7 +13,7 @@
     'body': '#if 0\n${1:#pragma mark -\n}#pragma mark $2\n#endif\n\n$0'
   'main()':
     'prefix': 'main'
-    'body': 'int main(int argc, char const *argv[]) {\n\t${1:/* code */}\n\treturn 0;\n}'
+    'body': 'int main(int argc, char const *argv[])\n{\n\t${1:/* code */}\n\treturn 0;\n}'
   'For Loop':
     'prefix': 'for'
     'body': 'for (size_t ${1:i} = 0; ${1:i} < ${2:count}; ${1:i}${3:++}) {\n\t${4:/* code */}\n}'
@@ -67,7 +67,7 @@
     'body': 'void ${1:name}(${2:/* arguments */}) {\n\t${3:/* code */}\n}'
   'any function':
     'prefix': 'func'
-    'body': '${1:int} ${2:name}(${3:/* arguments */}) {\n\t${5:/* code */}\n\treturn ${4:0};\n}'
+    'body': '${1:int} ${2:name}(${3:/* arguments */})\n{\n\t${5:/* code */}\n\treturn ${4:0};\n}'
   'write file':
     'prefix': 'wf'
     'body': 'FILE *${1:fp};\n${1:fp} = fopen ("${2:filename.txt}","w");\nif (${1:fp}!=NULL)\n{\n\tfprintf(${1:fp},"${3:Some String\\\\n}");\n\tfclose (${1:fp});\n}'
