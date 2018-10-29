@@ -58,7 +58,7 @@
     'body': 'printf("${1:%s}\\\\n", $2);$3'
   'scanf':
     'prefix': 'scanf'
-    'body': 'scanf(\"${1:%s}\\\\n\", $2);$3'
+    'body': 'scanf(\"\\\\n${1:%s}\", $2);$3'
   'Struct':
     'prefix': 'st'
     'body': 'struct ${1:name_t} {\n\t${2:/* data */}\n};'
