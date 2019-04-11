@@ -74,6 +74,9 @@
   'read file':
     'prefix': 'rf'
     'body': 'FILE *${1:fp};\n${1:fp} = fopen ("${2:filename.txt}","r");\nif (${1:fp}!=NULL)\n{\n\tfscanf(${1:fp},"${3:Some String\\\\n}", ${3:&var});\n\tfclose (${1:fp});\n}'
+  'Function Pointer':
+    'prefix': 'fp'
+    'body': '${1:int} (*${2:name})(${3:/* arguments */});'
 '.source.cpp, .source.objcpp':
   'Enumeration':
     'prefix': 'enum'
