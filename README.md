@@ -10,3 +10,4 @@ from the [C TextMate bundle](https://github.com/textmate/c.tmbundle).
 
 Contributions are greatly appreciated. Please fork this repository and open a
 pull request to add snippets, make grammar tweaks, etc.
+Atom doesn't support in Windows.
