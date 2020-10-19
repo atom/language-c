@@ -111,3 +111,15 @@
   'input file':
     'prefix': 'inf'
     'body': 'std::ifstream ${1:afile}("${2:filename.txt}", std::ios::in);\nif (${1:afile}.is_open()) {\n\tstd::string line;\n\twhile (std::getline(${1:afile}, line)) {\n\t\tstd::cout << line << \'\\\\n\';\n\t}\n\t${1:afile}.close();\n}\nelse {\n\tstd::cerr << "Unable to open file\\\\n";\n}'
+  'dynamic memory allocation - malloc':
+    'prefix': 'mal'
+    'body' : 'malloc(sizeof(${1:name}))'
+   'dynamic memory allocation - calloc':
+    'prefix': 'cal'
+    'body' : 'calloc(sizeof(${1:name}))'
+   'dynamic memory allocation - free':
+     'prefix': 'fr'
+      'body': 'free(${1:name})'
+    
+  
+  
