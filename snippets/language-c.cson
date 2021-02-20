@@ -6,11 +6,11 @@
 
   '#include <>':
     'prefix': 'Inc'
-    'body': '#include <${1:.h}>'
+    'body': '#include <${1:filename}.h>$2'
 
   '#include ""':
     'prefix': 'inc'
-    'body': '#include "${1:.h}"'
+    'body': '#include "${1:filename}.h"$2'
 
   '#pragma mark':
     'prefix': 'mark'
@@ -98,7 +98,7 @@
 
   'scanf':
     'prefix': 'scanf'
-    'body': 'scanf(\"${1:%s}\\\\n\", $2);$3'
+    'body': 'scanf("${1:%s}\\\\n", $2);$3'
 
   'Struct':
     'prefix': 'st'
@@ -116,11 +116,11 @@
     'prefix': 'wf'
     'body': '''
             FILE *${1:fp};
-            ${1:fp} = fopen ("${2:filename.txt}","w");
-            if (${1:fp}!=NULL)
+            ${1:fp} = fopen ("${2:filename.txt}", "w");
+            if (${1:fp} != NULL)
             {
-                fprintf(${1:fp},"${3:Some String\\\\n}");
-                fclose (${1:fp});
+                fprintf(${1:fp}, "${3:Some String\\\\n}");
+                fclose(${1:fp});
             }
             '''
 
@@ -128,11 +128,11 @@
     'prefix': 'rf'
     'body': '''
             FILE *${1:fp};
-            ${1:fp} = fopen ("${2:filename.txt}","r");
-            if (${1:fp}!=NULL)
+            ${1:fp} = fopen ("${2:filename.txt}", "r");
+            if (${1:fp} != NULL)
             {
-                fscanf(${1:fp},"${3:Some String\\\\n}", ${3:&var});
-                fclose (${1:fp});
+                fscanf(${1:fp}, "${3:Some String\\\\n}", ${3:&var});
+                fclose(${1:fp});
             }
             '''
 
@@ -148,12 +148,12 @@
     'prefix': 'cl'
     'body': '''
             class ${1:name_t} {
-            private:
-                ${0:/* data */}
+                private:
+                    ${0:/* data */}
 
-            public:
-                ${1:name_t} (${2:arguments});
-                virtual ~${1:name_t} ();
+                public:
+                    ${1:name_t} (${2:arguments});
+                    virtual ~${1:name_t} ();
             };
             '''
 
@@ -163,7 +163,7 @@
 
   'cout':
     'prefix': 'cout'
-    'body': 'std::cout << \"${1:/* message */}\" << \'\\\\n\';'
+    'body': 'std::cout << "${1:/* message */}" << \'\\\\n\';'
 
   'cin':
     'prefix': 'cin'
@@ -171,7 +171,7 @@
 
   'cerr':
     'prefix': 'cerr'
-    'body': 'std::cerr << \"${1:/* error message */}\" << \'\\\\n\';'
+    'body': 'std::cerr << "${1:/* error message */}" << \'\\\\n\';'
 
   'std::map':
     'prefix': 'map'
@@ -209,8 +209,7 @@
                     std::cout << line << '\\\\n';
                 }
                 ${1:afile}.close();
-            }
-            else {
+            } else {
                 std::cerr << "Unable to open file\\\\n";
             }
             '''
