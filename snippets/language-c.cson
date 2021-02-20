@@ -42,7 +42,7 @@
 
   'do … while':
     'prefix': 'do'
-    'body': 'do {\n\t${0:/* code */}\n} while(${1:/* condition */});'
+    'body': 'do {\n\t${0:/* code */}\n} while (${1:/* condition */});'
 
   'while':
     'prefix': 'while'
@@ -120,7 +120,7 @@
     'prefix': 'wf'
     'body': '''
             FILE *${1:fp};
-            ${1:fp} = fopen ("${2:filename.txt}", "w");
+            ${1:fp} = fopen("${2:filename.txt}", "w");
             if (${1:fp} != NULL) {
                 fprintf(${1:fp}, "${3:Some string\\\\n}");
                 fclose(${1:fp});
@@ -131,7 +131,7 @@
     'prefix': 'rf'
     'body': '''
             FILE *${1:fp};
-            ${1:fp} = fopen ("${2:filename.txt}", "r");
+            ${1:fp} = fopen("${2:filename.txt}", "r");
             if (${1:fp} != NULL) {
                 fscanf(${1:fp}, "${3:Some string\\\\n}", ${3:&var});
                 fclose(${1:fp});
@@ -187,7 +187,7 @@
     'prefix': 'sp'
     'body': 'typedef std::shared_ptr<${2:${1:my_type}_t}> ${3:${4:my_type}_ptr};'
 
-  'template <typename>':
+  'template':
     'prefix': 'tp'
     'body': 'template <typename ${1:T}>'
 
