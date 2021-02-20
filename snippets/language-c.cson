@@ -98,11 +98,15 @@
 
   'fprintf':
     'prefix': 'fprintf'
-    'body': 'fprintf(${1:stderr}, "${2:%s}\\\\n", $3);$4'
+    'body': 'fprintf(${1:stderr}, "${2:%s}\\\\n", ${3:str});$4'
 
   'scanf':
     'prefix': 'scanf'
     'body': 'scanf("${1:%s}\\\\n", ${2:str});$3'
+
+  'fscanf':
+    'prefix': 'fscanf'
+    'body': 'fscanf(${1:fp}, "${2:%s}\\\\n", ${3:str});$4'
 
   'void':
     'prefix': 'void'
