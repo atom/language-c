@@ -28,10 +28,6 @@
     'prefix': 'once'
     'body': '#ifndef ${1:SYMBOL}\n#define $1\n\n${2}\n\n#endif /* end of include guard: $1 */\n'
 
-  'Shared Pointer':
-    'prefix': 'sp'
-    'body': 'typedef std::shared_ptr<${2:${1:my_type}_t}> ${3:${4:my_type}_ptr};'
-
   'Typedef':
     'prefix': 'td'
     'body': 'typedef ${1:int} ${2:MyCustomType};'
@@ -94,11 +90,11 @@
 
   'printf':
     'prefix': 'printf'
-    'body': 'printf("${1:%s}\\\\n", $2);$3'
+    'body': 'printf("${1:%s}\\\\n", ${2:str});$3'
 
   'scanf':
     'prefix': 'scanf'
-    'body': 'scanf("${1:%s}\\\\n", $2);$3'
+    'body': 'scanf("${1:%s}\\\\n", ${2:str});$3'
 
   'Struct':
     'prefix': 'st'
@@ -117,9 +113,8 @@
     'body': '''
             FILE *${1:fp};
             ${1:fp} = fopen ("${2:filename.txt}", "w");
-            if (${1:fp} != NULL)
-            {
-                fprintf(${1:fp}, "${3:Some String\\\\n}");
+            if (${1:fp} != NULL) {
+                fprintf(${1:fp}, "${3:Some string\\\\n}");
                 fclose(${1:fp});
             }
             '''
@@ -129,21 +124,19 @@
     'body': '''
             FILE *${1:fp};
             ${1:fp} = fopen ("${2:filename.txt}", "r");
-            if (${1:fp} != NULL)
-            {
-                fscanf(${1:fp}, "${3:Some String\\\\n}", ${3:&var});
+            if (${1:fp} != NULL) {
+                fscanf(${1:fp}, "${3:Some string\\\\n}", ${3:&var});
                 fclose(${1:fp});
             }
             '''
+  'Enumeration':
+    'prefix': 'enum'
+    'body': 'enum ${1:name} { $0 };'
 
 
 
 # Snippets for C++ and Obj-C++
 '.source.cpp, .source.objcpp':
-  'Enumeration':
-    'prefix': 'enum'
-    'body': 'enum ${1:name} { $0 };'
-
   'Class':
     'prefix': 'cl'
     'body': '''
@@ -184,6 +177,10 @@
   'std::vector':
     'prefix': 'vector'
     'body': 'std::vector<${1:int}> v$2;'
+
+  'Shared Pointer':
+    'prefix': 'sp'
+    'body': 'typedef std::shared_ptr<${2:${1:my_type}_t}> ${3:${4:my_type}_ptr};'
 
   'template <typename>':
     'prefix': 'tp'
