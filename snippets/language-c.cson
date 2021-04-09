@@ -86,7 +86,7 @@
     'body': 'namespace ${1:name} {\n\t$2\n} /* $1 */'
   'cout':
     'prefix': 'cout'
-    'body': 'std::cout << \"${1:/* message */}\" << \'\\\\n\';'
+    'body': 'cout << \"${1:/* message */}\";'
   'cin':
     'prefix': 'cin'
     'body': 'std::cin >> ${1:/* variable */};'
