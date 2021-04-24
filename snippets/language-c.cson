@@ -1,22 +1,49 @@
 '.source.c, .source.cpp, .source.objc, .source.objcpp':
+  'True or False':
+    'prefix': '?'
+    'body': '(${1:something})?${2:1}:${3:0};'
+  '#def':
+    'prefix': 'd'
+    'body': '#define ${1:ll} $2'
   '#ifndef … #define … #endif':
     'prefix': 'def'
     'body': '#ifndef ${1:SYMBOL}\n#define $1 ${2:value}\n#endif'
   '#include <>':
-    'prefix': 'Inc'
+    'prefix': 'inc'
     'body': '#include <${1:.h}>'
   '#include ""':
-    'prefix': 'inc'
+    'prefix': 'Inc'
     'body': '#include "${1:.h}"'
   '#pragma mark':
     'prefix': 'mark'
     'body': '#if 0\n${1:#pragma mark -\n}#pragma mark $2\n#endif\n\n$0'
   'main()':
     'prefix': 'main'
-    'body': 'int main(int argc, char const *argv[]) {\n\t${1:/* code */}\n\treturn 0;\n}'
-  'For Loop':
-    'prefix': 'for'
-    'body': 'for (size_t ${1:i} = 0; ${1:i} < ${2:count}; ${1:i}${3:++}) {\n\t${4:/* code */}\n}'
+    'body': 'int main() {\n\t${1:/* code */}\n\treturn 0;\n}'
+  'For Loop Increase':
+    'prefix': 'fori'
+    'body': 'for (size_t ${1:i} = 0; ${1:i} < ${2:count}; ${1:i}++) {\n\t${4:/* code */}\n}'
+  'For Loop Decrease':
+    'prefix': 'ford'
+    'body': 'for (size_t ${1:i} = ${2:n-1}; ${1:i} > ${3:count}; ${1:i}--) {\n\t${4:/* code */}\n}'
+  'Cout':
+    'prefix':'o'
+    'body': 'cout << ${1:i} << endl;'
+  'Cin':
+    'prefix':'i'
+    'body': 'cin >> ${1:i};'
+  'For Cout Array':
+    'prefix': 'oa'
+    'body': 'for (size_t ${1:i} = 0; ${1:i} < ${2:n}; ${1:i}++) {\n\tcout << ${3:a}[${1:i}] << " ";\n}'
+  'For Cout Array 2D':
+    'prefix': 'oa2'
+    'body': 'for (size_t ${1:i} = 0; ${1:i} < ${2:n}; ${1:i}++) {\n\tfor (size_t ${3:j} = ${4:0}; ${3:j} < ${5:n}; ${3:j}++) {\n\t\tcout << ${6:a}[${1:i}][${3:j}] << " ";\n\t}\n\tcout << endl;\n}'
+  'For Cin Array 2D':
+    'prefix': 'ia2'
+    'body': 'for (size_t ${1:i} = 0; ${1:i} < ${2:n}; ${1:i}++) {\n\tfor (size_t ${3:j} = ${4:0}; ${3:j} < ${5:n}; ${3:j}++) {\n\t\tcin >> ${6:a}[${1:i}][${3:j}];\n\t}\n}'
+  'For Cin Array':
+    'prefix': 'ia'
+    'body': 'for (size_t ${1:i} = 0; ${1:i} < ${2:n}; ${1:i}++) {\n\tcin >> ${3:a}[${1:i}];\n}'
   'Header Include-Guard':
     'prefix': 'once'
     'body': '#ifndef ${1:SYMBOL}\n#define $1\n\n${2}\n\n#endif /* end of include guard: $1 */\n'
@@ -30,7 +57,7 @@
     'prefix': 'do'
     'body': 'do {\n\t${0:/* code */}\n} while(${1:/* condition */});'
   'While Loop':
-    'prefix': 'while'
+    'prefix': 'w'
     'body': 'while (${1:/* condition */}) {\n\t${2:/* code */}\n}'
   'fprintf':
     'prefix': 'fprintf'
@@ -38,6 +65,9 @@
   'If Condition':
     'prefix': 'if'
     'body': 'if (${1:/* condition */}) {\n\t${2:/* code */}\n}'
+  'Else Condition':
+    'prefix': 'else'
+    'body': 'else {\n\t${2:/* code */}\n}'
   'If Else':
     'prefix': 'ife'
     'body': 'if (${1:/* condition */}) {\n\t${2:/* code */}\n} else {\n\t${3:/* code */}\n}'
@@ -86,28 +116,73 @@
     'body': 'namespace ${1:name} {\n\t$2\n} /* $1 */'
   'cout':
     'prefix': 'cout'
-    'body': 'std::cout << \"${1:/* message */}\" << \'\\\\n\';'
+    'body': 'cout << \"${1:/* message */}\" << \'\\\\n\';'
   'cin':
     'prefix': 'cin'
-    'body': 'std::cin >> ${1:/* variable */};'
+    'body': 'cin >> ${1:/* variable */};'
   'cerr':
     'prefix': 'cerr'
-    'body': 'std::cerr << \"${1:/* error message */}\" << \'\\\\n\';'
+    'body': 'cerr << \"${1:/* error message */}\" << \'\\\\n\';'
+  'return 1':
+    'prefix': 'r1'
+    'body': 'return 1;'
+  'return 0':
+    'prefix': 'r0'
+    'body': 'return 0;'
+  'return':
+    'prefix': 'r'
+    'body': 'return $1;'
   'std::map':
     'prefix': 'map'
-    'body': 'std::map<${1:key}, ${2:value}> map$3;'
+    'body': 'map<${1:key}, ${2:value}> map$3;'
+  'std::stack':
+    'prefix': 'stack'
+    'body': '#include <stack>'
+  'std::queue':
+    'prefix': 'que'
+    'body': '#include <queue>'
+  'string':
+    'prefix': 'string'
+    'body': '#include <string>'
+  'std::algorithm':
+    'prefix': 'algo'
+    'body': '#include <algorithm>'
+  'std::cstdlib':
+    'prefix': 'cst'
+    'body': '#include <cstdlib>'
   'std::string':
     'prefix': 'str'
-    'body': 'std::string'
-  'std::vector':
-    'prefix': 'vector'
-    'body': 'std::vector<${1:int}> v$2;'
+    'body': 'string'
+  'std::vector int n':
+    'prefix': 'vec'
+    'body': 'vector <${1:int}> v$2(${3:n});'
+  'std::vector int':
+    'prefix': 'vect'
+    'body': 'vector<${1:int}> v$2;'
+  'std::vector 2D int':
+    'prefix': 'vect2'
+    'body': 'vector< vector <${1:int}> > v$2;'
+  'std::vector 2D int n':
+    'prefix': 'vec2'
+    'body': 'vector< vector <${1:int}> > v$2 (${3:n}, vector <${1:int}> (${4:m}));'
   'template <typename>':
     'prefix': 'tp'
     'body': 'template <typename ${1:T}>'
   'output file':
     'prefix': 'outf'
-    'body': 'std::ofstream ${1:afile}("${2:filename.txt}", std::ios::out);\nif (${1:afile}.is_open()) {\n\t${1:afile} << "${3:This is a line.}\\\\n";\n\t${1:afile}.close();\n}'
+    'body': 'ofstream ${1:afile}("${2:filename.txt}", std::ios::out);\nif (${1:afile}.is_open()) {\n\t${1:afile} << "${3:This is a line.}\\\\n";\n\t${1:afile}.close();\n}'
   'input file':
     'prefix': 'inf'
-    'body': 'std::ifstream ${1:afile}("${2:filename.txt}", std::ios::in);\nif (${1:afile}.is_open()) {\n\tstd::string line;\n\twhile (std::getline(${1:afile}, line)) {\n\t\tstd::cout << line << \'\\\\n\';\n\t}\n\t${1:afile}.close();\n}\nelse {\n\tstd::cerr << "Unable to open file\\\\n";\n}'
+    'body': 'ifstream ${1:afile}("${2:filename.txt}", std::ios::in);\nif (${1:afile}.is_open()) {\n\tstd::string line;\n\twhile (std::getline(${1:afile}, line)) {\n\t\tstd::cout << line << \'\\\\n\';\n\t}\n\t${1:afile}.close();\n}\nelse {\n\tstd::cerr << "Unable to open file\\\\n";\n}'
+  'basic include':
+    'prefix': 'c'
+    'body': '#include <iostream>\n#include <cmath>\n#include <algorithm>\nusing namespace std;\n\nint main() {\n\t${1:/* code */}\n\treturn 0;\n}'
+  'basic ll include':
+    'prefix': 'cl'
+    'body': '#include <iostream>\n#include <cmath>\n#include <algorithm>\n#define ll long long\nusing namespace std;\n\nint main() {\n\t${1:/* code */}\n\treturn 0;\n}'
+  'test include':
+    'prefix': 'ct'
+    'body': '#include <iostream>\n#include <cmath>\n#include <algorithm>\n#include <cstdlib>\nusing namespace std;\n\nint main() {\n\t${1:/* code */}\n\treturn 0;\n}'
+  'test ll include':
+    'prefix': 'ctl'
+    'body': '#include <iostream>\n#include <cmath>\n#include <algorithm>\n#include <cstdlib>\n#define ll long long\nusing namespace std;\n\nint main() {\n\t${1:/* code */}\n\treturn 0;\n}'
