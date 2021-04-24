@@ -94,23 +94,62 @@
     ]
   }
   {
-    'begin': '^\\s*((#)\\s*(error|warning))\\b'
-    'captures':
+    'begin': '^\\s*((#)\\s*(error|warning))\\b\\s*'
+    'beginCaptures':
       '1':
         'name': 'keyword.control.directive.diagnostic.$3.c'
       '2':
         'name': 'punctuation.definition.directive.c'
-    'end': '(?<!\\\\)(?=\\n)|(?=//)|(?=/\\*(?!.*\\\\\\s*\\n))'
+    'end': '(?<!\\\\)(?=\\n)'
     'name': 'meta.preprocessor.diagnostic.c'
     'patterns': [
       {
-        'include': '#comments'
+        # double quoted string patterns for #error/warning lines (terminates at newline w/o line_continuation_character)
+        'begin': '"'
+        'beginCaptures':
+          '0':
+            'name': 'punctuation.definition.string.begin.c'
+        'end': '"|(?<!\\\\)(?=\\s*\\n)'
+        'endCaptures':
+          '0':
+            'name': 'punctuation.definition.string.end.c'
+        'name': 'string.quoted.double.c'
+        'patterns': [
+          {
+            'include': '#line_continuation_character'
+          }
+        ]
       }
       {
-        'include': '#strings'
+        # single quoted string patterns for #error/warning lines (terminates at newline w/o line_continuation_character)
+        'begin': '\''
+        'beginCaptures':
+          '0':
+            'name': 'punctuation.definition.string.begin.c'
+        'end': '\'|(?<!\\\\)(?=\\s*\\n)'
+        'endCaptures':
+          '0':
+            'name': 'punctuation.definition.string.end.c'
+        'name': 'string.quoted.single.c'
+        'patterns': [
+          {
+            'include': '#line_continuation_character'
+          }
+        ]
       }
       {
-        'include': '#line_continuation_character'
+        # unquoted strings patterns for #error/warning lines (terminates at newline w/o line_continuation_character)
+        'begin': '[^\'"]'
+        'end': '(?<!\\\\)(?=\\s*\\n)'
+        'name': 'string.unquoted.single.c'
+        'patterns': [
+          {
+            'include': '#line_continuation_character'
+          }
+          {
+            'include': '#comments'
+          }
+        ]
       }
     ]
   }
