@@ -341,15 +341,15 @@
         'beginCaptures':
           '1':
             'name': 'storage.modifier.cpp'
-        'end': '(?<=\\})|(?=\\w)|(?=\\s*#\\s*endif\\b)'
+        'end': '(?<=})|(?=\\w)|(?=\\s*#\\s*(?:elif|else|endif)\\b)'
         'name': 'meta.extern-block.cpp'
         'patterns': [
           {
-            'begin': '\\{'
+            'begin': '{'
             'beginCaptures':
               '0':
                 'name': 'punctuation.section.block.begin.bracket.curly.c'
-            'end': '\\}|(?=\\s*#\\s*endif\\b)'
+            'end': '}|(?=\\s*#\\s*(?:elif|else|endif)\\b)'
             'endCaptures':
               '0':
                 'name': 'punctuation.section.block.end.bracket.curly.c'
