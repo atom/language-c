@@ -259,6 +259,11 @@
     'name': 'support.type.posix-reserved.c'
   }
   {
+    'comment': 'Reserved for a good pratice types'
+    'match': '\\b([A-Za-z0-9_]+_[aefpsu])\\b'
+    'name': 'support.type.good-practice-reserved.c'
+  }
+  {
     'include': '#block'
   }
   {
