@@ -116,6 +116,22 @@ describe "Language-C", ->
         expect(tokens[1]).toEqual value: '%', scopes: ['source.c', 'string.quoted.double.c']
         expect(tokens[2]).toEqual value: '"', scopes: ['source.c', 'string.quoted.double.c', 'punctuation.definition.string.end.c']
 
+      it "tokenizes utf-8 string literal", ->
+        {tokens} = grammar.tokenizeLine 'char[] s = u8"this is utf-8 string literal"'
+        expect(tokens[6]).toEqual value: 'u8"', scopes: ['source.c', 'string.quoted.double.c', 'punctuation.definition.string.begin.c']
+
+      it "tokenizes 16-bit string literal", ->
+        {tokens} = grammar.tokenizeLine 'char16_t[] s = u"this is 16-bit string literal"'
+        expect(tokens[6]).toEqual value: 'u"', scopes: ['source.c', 'string.quoted.double.c', 'punctuation.definition.string.begin.c']
+
+      it "tokenizes 32-bit string literal", ->
+        {tokens} = grammar.tokenizeLine 'char32_t[] s = U"this is 32-bit string literal"'
+        expect(tokens[6]).toEqual value: 'U"', scopes: ['source.c', 'string.quoted.double.c', 'punctuation.definition.string.begin.c']
+
+      it "tokenizes wide string literal", ->
+        {tokens} = grammar.tokenizeLine 'wchar_t[] s = L"this is wide string literal"'
+        expect(tokens[6]).toEqual value: 'L"', scopes: ['source.c', 'string.quoted.double.c', 'punctuation.definition.string.begin.c']
+
     describe "comments", ->
       it "tokenizes them", ->
         {tokens} = grammar.tokenizeLine '/**/'
