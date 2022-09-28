@@ -1,4 +1,5 @@
-# C/C++ language support in Atom
+##### Atom and all repositories under Atom will be archived on December 15, 2022. Learn more in our [official announcement](https://github.blog/2022-06-08-sunsetting-atom/)
+ # C/C++ language support in Atom
 ![CI Status](https://github.com/atom/language-c/actions/workflows/main.yml/badge.svg)
 
 Adds syntax highlighting and snippets to C/C++ files in Atom.
