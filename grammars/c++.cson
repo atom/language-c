@@ -242,7 +242,7 @@
         "name": "meta.using-namespace-declaration.cpp"
       },
       {
-        'begin': '\\b(namespace)\\b\\s*([_A-Za-z][_A-Za-z0-9]*\\b)?+'
+        'begin': '\\b(namespace)\\b\\s*((?:[_A-Za-z][_A-Za-z0-9]*\\b(::)?)*)'
         'beginCaptures':
           '1':
             'name': 'storage.type.cpp'
