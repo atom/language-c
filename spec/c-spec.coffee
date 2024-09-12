@@ -71,6 +71,9 @@ describe "Language-C", ->
       {tokens} = grammar.tokenizeLine 'myType_t var;'
       expect(tokens[0]).toEqual value: 'myType_t', scopes: ['source.c', 'support.type.posix-reserved.c']
 
+      {tokens} = grammar.tokenizeLine 'myTypeGoodPractice_t var;'
+      expect(tokens[0]).toEqual value: 'myTypeGoodPractice_t', scopes: ['source.c', 'support.type.good-practice-reserved.c']
+
     it "tokenizes 'line continuation' character", ->
       {tokens} = grammar.tokenizeLine 'ma' + '\\' + '\n' + 'in(){};'
       expect(tokens[0]).toEqual value: 'ma', scopes: ['source.c']
